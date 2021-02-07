@@ -1,16 +1,13 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StoreManager {
 
-    private ArrayList<Product> product;
 
-    Product product1 = new Product("milk", 01,4.00);
-    //Inventory product2 = new Inventory("unknown", 1, id_quantity);
+    /**
+     * Main method
+     * Calling methods and testing Product class and Inventory class will be in here
+     */
+    public static void main(String[] args) {
 
-
-    public void printCourseList() {
-        for (Product c : product) {
-            System.out.println(c.getName() + " Id:" + c.getId() + " Price:"+c.getPrice());
-        }
     }
 }
