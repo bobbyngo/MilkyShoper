@@ -32,7 +32,7 @@ public class Inventory {
      * the Inventory!)
      */
     public int gettingQuantity (int id) {
-        for (int i : id_quantity.keySet() ) {
+        for (Integer i : id_quantity.keySet() ) {
             if (i == id) {
                 return getId_quantity().get(i);
             }else {
