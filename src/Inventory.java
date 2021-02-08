@@ -8,9 +8,23 @@ public class Inventory {
     /**
      * Constructor of Inventory
      */
-    public Inventory(HashMap infoProduct, HashMap id_quantity){
-        this.infoProduct = infoProduct;
-        this.id_quantity = id_quantity;
+    public Inventory(){
+        Product p1 = new Product("2% milk", 01, 4.30);
+        Product p2 = new Product("chocolate milk", 02, 3.30);
+        Product p3 = new Product("goat milk", 03, 5.00);
+        /**
+         * Initialize the id-product
+         */
+        infoProduct.put(01,p1);
+        infoProduct.put(02,p2);
+        infoProduct.put(03,p3);
+
+        /**
+         * Initialize the id-quantity
+         */
+        id_quantity.put(01,1);
+        id_quantity.put(02,2);
+        id_quantity.put(03,0);
     }
 
     /**
