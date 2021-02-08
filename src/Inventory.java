@@ -9,9 +9,9 @@ public class Inventory {
      * Constructor of Inventory
      */
     public Inventory(){
-        Product p1 = new Product("2% milk", 01, 4.30);
-        Product p2 = new Product("chocolate milk", 02, 3.30);
-        Product p3 = new Product("goat milk", 03, 5.00);
+        Product p1 = new Product("1% milk", 01, 4.30);
+        Product p2 = new Product("2% milk", 02, 3.30);
+        Product p3 = new Product("3% milk", 03, 5.00);
         /**
          * Initialize the id-product
          */
@@ -68,7 +68,7 @@ public class Inventory {
             } else {
                 if (id_quantity.get(id) - amount < 0){
                     return -1;
-                //}else {
+                    //}else {
                     //id_quantity.put(id, id_quantity.get(id) - amount);
                 }
             }
