@@ -51,7 +51,8 @@ public class Inventory {
             if (i.equals(p)) {
                 id_quantity.put(p.getId(), amount + id_quantity.get(p.getId()));
             }else {
-                id_quantity.put(p.getId(),amount);
+                //New product add
+                infoProduct.put(p.getId(),p);
             }
         }
     }
@@ -70,6 +71,7 @@ public class Inventory {
                 if (id_quantity.get(id) - amount < 0){
                     System.out.println(-1);
                     //return -1;
+
                     //}else {
                     //id_quantity.put(id, id_quantity.get(id) - amount);
                 }
