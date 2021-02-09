@@ -61,19 +61,23 @@ public class Inventory {
      * have negative stock, and you cannot delete Products from the Inventory; if a Product’s stock
      * reaches 0, leave it.).
      */
-    public int removingQuantity (int id,int amount) {
+    public void removingQuantity (int id,int amount) {
         if (id_quantity.containsKey(id)) {
             if (id_quantity.get(id) == 0) {
-                return 0;
+                //return 0;
+                System.out.println(id_quantity.get(id));
             } else {
                 if (id_quantity.get(id) - amount < 0){
-                    return -1;
+                    System.out.println(-1);
+                    //return -1;
                     //}else {
                     //id_quantity.put(id, id_quantity.get(id) - amount);
                 }
             }
+            id_quantity.put(id, id_quantity.get(id) - amount);
         }
-        return id_quantity.put(id, id_quantity.get(id) - amount);
+        System.out.println("The id is not in Product");
+        //return id_quantity.put(id, id_quantity.get(id) - amount);
     }
 
     /**
