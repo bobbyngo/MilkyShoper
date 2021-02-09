@@ -82,7 +82,8 @@ public class Inventory {
     public void gettingProduct (int id) {
         for (Integer i : infoProduct.keySet()) {
             if (i.equals(id)) ;
-            System.out.println(infoProduct.get(i));
+            System.out.println("The Product name: "+  infoProduct.get(i).getName()
+                    + "ID: "+ infoProduct.get(i).getId() + "price " + infoProduct.get(i).getPrice());
         }
     }
 
