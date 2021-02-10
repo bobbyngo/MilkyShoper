@@ -77,8 +77,9 @@ public class Inventory {
                 }
             }
             id_quantity.put(id, id_quantity.get(id) - amount);
+        }else {
+            System.out.println("The id is not in Product");
         }
-        System.out.println("The id is not in Product");
         //return id_quantity.put(id, id_quantity.get(id) - amount);
     }
 
