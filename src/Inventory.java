@@ -53,7 +53,7 @@ public class Inventory {
                 System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + getId_quantity().get(id) + " additional wares.");
             } else {
                 //New product add
-                infoProduct.put(id,);
+                id_quantity.put(id,amount);
             }
     }
 
