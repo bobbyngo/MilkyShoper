@@ -89,9 +89,10 @@ public class Inventory {
      */
     public void gettingProduct (int id) {
         for (Integer i : infoProduct.keySet()) {
-            if (i.equals(id)) ;
-            System.out.println("The Product name: "+  infoProduct.get(i).getName()
-                    + "ID: "+ infoProduct.get(i).getId() + "price " + infoProduct.get(i).getPrice());
+            if (i.equals(id)) {
+                System.out.println("The Product name: " + infoProduct.get(i).getName()
+                        + ", ID: " + infoProduct.get(i).getId() + ", price " + infoProduct.get(i).getPrice());
+            }
         }
     }
 
@@ -103,10 +104,6 @@ public class Inventory {
         return id_quantity;
     }
 
-    public void setId_quantity(HashMap<Integer, Integer> id_quantity) {
-        this.id_quantity = id_quantity;
-    }
-
     /**
      * Set and get methods for the hashmap id and product in stock
      */
@@ -115,8 +112,5 @@ public class Inventory {
         return infoProduct;
     }
 
-    public void setInfoProduct(HashMap<Integer, Product> infoProduct) {
-        this.infoProduct = infoProduct;
-    }
 }
 

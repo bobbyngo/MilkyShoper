@@ -52,9 +52,18 @@ public class StoreManager {
         StoreManager store = new StoreManager();
 
         /**
+         * Checking the Product info with id
+         */
+        System.out.print("\n==================================\nProduct Information with Given ID:\n==================================\n");
+        store.inventory.gettingProduct(0);
+        store.inventory.gettingProduct(1);
+        store.inventory.gettingProduct(2);
+
+
+        /**
          * Checking the stocks BEFORE transaction
          */
-        System.out.print("\n==================================\nWares prior to transaction:-\n==================================\n");
+        System.out.print("\n==================================\nWares prior to transaction:\n==================================\n");
         store.checkStock(0);
         store.checkStock(1);
         store.checkStock(2);
@@ -76,9 +85,15 @@ public class StoreManager {
 
 
 
-
-
-
+        /**
+         * Updating the stock
+         */
+        Product p1 = new Product("1% milk", 0, 4.30);
+        Product p2 = new Product("2% milk", 1, 3.30);
+        Product p3 = new Product("3% milk", 2, 5.00);
+        store.inventory.addingQuantity(p1,2);
+        store.inventory.addingQuantity(p2,1);
+        store.inventory.addingQuantity(p3,3);
 
 
     }
