@@ -1,3 +1,8 @@
+// GABRIEL BENNI KELLEY EVENSEN
+// 101119814
+// Ngo Huu Gia Bao
+// 101163137
+
 import java.util.HashMap;
 
 public class Inventory {
@@ -36,9 +41,6 @@ public class Inventory {
             if (i == id) {
                 return getId_quantity().get(i);
             }
-//            else {
-//                return -1;
-//            }
         }
         return -1;
     }
@@ -50,7 +52,7 @@ public class Inventory {
     public void addingQuantity (int id,int amount) {
         if (id_quantity.containsKey(id)) {
                 id_quantity.put(id, amount + id_quantity.get(id));
-                System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + getId_quantity().get(id) + " additional wares.");
+                System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
             } else {
                 //New product add
                 id_quantity.put(id,amount);

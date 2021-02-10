@@ -1,9 +1,10 @@
-import java.lang.reflect.Array;
+// GABRIEL BENNI KELLEY EVENSEN
+// 101119814
+// Ngo Huu Gia Bao
+// 101163137
+
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 
 public class StoreManager {
@@ -83,24 +84,15 @@ public class StoreManager {
         store.checkStock(2);
 
         /**
-         * Updating the stock
-         */
-//        Product p1 = new Product("1% milk", 0, 4.30);
-//        Product p2 = new Product("2% milk", 1, 3.30);
-//        Product p3 = new Product("3% milk", 2, 5.00);
-
-
-        /**
          * Adding products to our inventory. Refilling.
          */
+        System.out.print("\n==================================\nWares after refill:-\n==================================\n");
+
         store.inventory.addingQuantity(0,2);
-        store.inventory.addingQuantity(1,1);
-        store.inventory.addingQuantity(2,3);
-
-        System.out.print("\n==================================\nWares after transaction:-\n==================================\n");
         store.checkStock(0);
+        store.inventory.addingQuantity(1,1);
         store.checkStock(1);
+        store.inventory.addingQuantity(2,3);
         store.checkStock(2);
-
     }
 }
