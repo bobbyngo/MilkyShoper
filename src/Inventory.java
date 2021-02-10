@@ -47,15 +47,14 @@ public class Inventory {
      * Add a specified amount of stock for a given Product to the inventory (Note: new Products can be
      * added!).
      */
-    public void addingQuantity (Product p,int amount) {
-        for (Product i: infoProduct.values()) {
-            if (i.equals(p)) {
-                id_quantity.put(p.getId(), amount + id_quantity.get(p.getId()));
+    public void addingQuantity (int id,int amount) {
+        if (id_quantity.containsKey(id)) {
+                id_quantity.put(id, amount + id_quantity.get(id));
+                System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + getId_quantity().get(id) + " additional wares.");
             } else {
                 //New product add
-                infoProduct.put(p.getId(),p);
+                infoProduct.put(id,);
             }
-        }
     }
 
     /**
@@ -63,24 +62,13 @@ public class Inventory {
      * have negative stock, and you cannot delete Products from the Inventory; if a Product’s stock
      * reaches 0, leave it.).
      */
-    public void removingQuantity (int id,int amount) {
+    public void removingQuantity (int id, int amount) {
         if (id_quantity.containsKey(id)) {
             if (id_quantity.get(id) - amount < 0) {
                 System.err.println("[" + getInfoProduct().get(id).getName() + "] has insufficient wares. Transaction nullified.");
             } else {
                 id_quantity.put(id, id_quantity.get(id) - amount);
             }
-//            if (id_quantity.get(id) == 0) {
-//                System.out.println(id_quantity.get(id));
-//            }
-//            else {
-//                if (id_quantity.get(id) - amount < 0){
-//
-//                }
-//            }
-//        }
-//        System.out.println("The id is not in Product");
-//        return id_quantity.put(id, id_quantity.get(id) - amount);
         }
     }
 

@@ -59,7 +59,6 @@ public class StoreManager {
         store.inventory.gettingProduct(1);
         store.inventory.gettingProduct(2);
 
-
         /**
          * Checking the stocks BEFORE transaction
          */
@@ -83,18 +82,25 @@ public class StoreManager {
         store.checkStock(1);
         store.checkStock(2);
 
-
-
         /**
          * Updating the stock
          */
-        Product p1 = new Product("1% milk", 0, 4.30);
-        Product p2 = new Product("2% milk", 1, 3.30);
-        Product p3 = new Product("3% milk", 2, 5.00);
-        store.inventory.addingQuantity(p1,2);
-        store.inventory.addingQuantity(p2,1);
-        store.inventory.addingQuantity(p3,3);
+//        Product p1 = new Product("1% milk", 0, 4.30);
+//        Product p2 = new Product("2% milk", 1, 3.30);
+//        Product p3 = new Product("3% milk", 2, 5.00);
 
+
+        /**
+         * Adding products to our inventory. Refilling.
+         */
+        store.inventory.addingQuantity(0,2);
+        store.inventory.addingQuantity(1,1);
+        store.inventory.addingQuantity(2,3);
+
+        System.out.print("\n==================================\nWares after transaction:-\n==================================\n");
+        store.checkStock(0);
+        store.checkStock(1);
+        store.checkStock(2);
 
     }
 }
