@@ -18,7 +18,8 @@ public class StoreManager {
     public void processTransaction(Integer arr[][]){
         for (Integer i = 0; i < arr.length; i++){
             if (arr[i][1] > product_inventory.gettingQuantity(arr[i][0])){
-                new IllegalArgumentException("Product:" + arr[i][0] + " insufficient stock. (" + product_inventory.gettingQuantity(arr[i][0]) + ")" );
+                new IllegalArgumentException("Product:" + arr[i][0]
+                        + " insufficient stock. (" + product_inventory.gettingQuantity(arr[i][0]) + ")" );
                 continue;
             } else {
                 product_inventory.removingQuantity(arr[i][0], arr[i][1]);
