@@ -61,6 +61,7 @@ public class StoreManager {
 
         /**
          * Processing transactions
+         * Note:- I have intentionally included errors to prove that part works
          */
         Integer[][] product_2d_array = {{0, 2}, {1, 2}, {2, 1}};
         store.processTransaction(product_2d_array);
