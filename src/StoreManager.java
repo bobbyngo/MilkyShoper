@@ -1,30 +1,38 @@
-import java.sql.Array;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+
 
 public class StoreManager {
-    private Inventory product_inventory = new Inventory();
+    private Inventory inventory = new Inventory();
 
     /**
-     * Method to check how much stock of a given Product is in the Inventory
+     * Method for getting stocks
      */
-    public void getProductAmount(Product product){
-        System.out.println(product_inventory.gettingQuantity(product.getId()));
+    public void checkStock(int id){
+        System.out.println( "Product:- " + inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id) );
     }
 
     /**
      * Method to process a transaction given an Array of Product information [ [productID, buyQuantity], ...]
      */
-    public void processTransaction(Integer arr[][]){
-        for (Integer i = 0; i < arr.length; i++){
-            if (arr[i][1] > product_inventory.gettingQuantity(arr[i][0])){
-                new IllegalArgumentException("Product:" + arr[i][0]
-                        + " insufficient stock. (" + product_inventory.gettingQuantity(arr[i][0]) + ")" );
-                continue;
-            } else {
-                product_inventory.removingQuantity(arr[i][0], arr[i][1]);
+    public void processTransaction(Integer[][] product_array){
+        double total = 0.00;
+        Map<Integer, Integer> product_map = new HashMap<Integer, Integer>(product_array.length);
+        for (Integer[] mapping : product_array)
+        {
+            product_map.put(mapping[0], mapping[1]);
+
+            if (inventory.getId_quantity().get(mapping[0]) - mapping[1] >= 0) {
+                total += mapping[1]*inventory.getInfoProduct().get(mapping[0]).getPrice();
             }
+
+            inventory.removingQuantity(mapping[0], mapping[1]);
         }
+        System.out.println("\n=============\nReceipt:-\n=============\n Your total is $" + total);
     }
 
     /**
@@ -34,12 +42,42 @@ public class StoreManager {
      */
     public static void main(String[] args) {
         /**
-         * Kindly put your test cases below, dearest TA.
+         * Kindly put your test cases below, dearest TA
          */
-        StoreManager store1 = new StoreManager();
 
-        System.out.println(store1.product_inventory.getId_quantity());
-//        Integer arr[][] = new Integer[2][1];
-//        store1.processTransaction();
+        /**
+         * Creating the StoreManager upon starting
+         */
+        StoreManager store = new StoreManager();
+
+        /**
+         * Checking the stocks BEFORE transaction
+         */
+        System.out.print("\n==================================\nWares prior to transaction:-\n==================================\n");
+        store.checkStock(0);
+        store.checkStock(1);
+        store.checkStock(2);
+
+        /**
+         * Processing transactions
+         */
+        Integer[][] product_2d_array = {{0, 2}, {1, 2}, {2, 1}};
+        store.processTransaction(product_2d_array);
+
+        /**
+         * Checking the stocks AFTER transaction
+         */
+        System.out.print("\n==================================\nWares after transaction:-\n==================================\n");
+        store.checkStock(0);
+        store.checkStock(1);
+        store.checkStock(2);
+
+
+
+
+
+
+
+
     }
 }
