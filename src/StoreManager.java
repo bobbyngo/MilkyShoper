@@ -42,7 +42,8 @@ public class StoreManager {
      */
     public static void main(String[] args) {
         /**
-         * Kindly put your test cases below, dearest TA
+         * Kindly put your test cases below, dearest TA.
+         * I've put some tests below, I hope it might help.
          */
 
         /**
