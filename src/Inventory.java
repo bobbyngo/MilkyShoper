@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Inventory {
     private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, Product)
-    private HashMap<Integer, Integer> id_quantity = new HashMap<>(); //(id, quantity)
+    private HashMap<Integer, Integer> idQuantity = new HashMap<>(); //(id, quantity)
 
 
     /**
@@ -27,9 +27,9 @@ public class Inventory {
         /**
          * Initialize the id-quantity
          */
-        id_quantity.put(0,1);
-        id_quantity.put(1,2);
-        id_quantity.put(2,0);
+        idQuantity.put(0,1);
+        idQuantity.put(1,2);
+        idQuantity.put(2,0);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Inventory {
      * the Inventory!)
      */
     public int gettingQuantity (int id) {
-        for (Integer i : id_quantity.keySet()) {
+        for (Integer i : idQuantity.keySet()) {
             if (i == id) {
                 return getId_quantity().get(i);
             }
@@ -50,12 +50,12 @@ public class Inventory {
      * added!).
      */
     public void addingQuantity (int id,int amount) {
-        if (id_quantity.containsKey(id)) {
-                id_quantity.put(id, amount + id_quantity.get(id));
+        if (idQuantity.containsKey(id)) {
+                idQuantity.put(id, amount + idQuantity.get(id));
                 System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
             } else {
                 //New product add
-                id_quantity.put(id,amount);
+                idQuantity.put(id,amount);
             }
     }
 
@@ -65,11 +65,11 @@ public class Inventory {
      * reaches 0, leave it.).
      */
     public void removingQuantity (int id, int amount) {
-        if (id_quantity.containsKey(id)) {
-            if (id_quantity.get(id) - amount < 0) {
+        if (idQuantity.containsKey(id)) {
+            if (idQuantity.get(id) - amount < 0) {
                 System.out.println("\n[" + getInfoProduct().get(id).getName() + "] has insufficient wares. Transaction nullified.");
             } else {
-                id_quantity.put(id, id_quantity.get(id) - amount);
+                idQuantity.put(id, idQuantity.get(id) - amount);
             }
         }
     }
@@ -91,7 +91,7 @@ public class Inventory {
      * Set and Get methods for the hashmap id and quantity in stock
      */
     public HashMap<Integer, Integer> getId_quantity() {
-        return id_quantity;
+        return idQuantity;
     }
 
     /**
