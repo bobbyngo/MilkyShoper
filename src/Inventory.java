@@ -39,7 +39,7 @@ public class Inventory {
     public int gettingQuantity (int id) {
         for (Integer i : idQuantity.keySet()) {
             if (i == id) {
-                return getId_quantity().get(i);
+                return getIdQuantity().get(i);
             }
         }
         return -1;
@@ -77,20 +77,25 @@ public class Inventory {
     /**
      * Get information on a Product given a Product ID
      */
-    public void gettingProduct (int id) {
-        for (Integer i : infoProduct.keySet()) {
-            if (i.equals(id)) {
-                System.out.println("The Product name: " + infoProduct.get(i).getName()
-                        + ", ID: " + infoProduct.get(i).getId() + ", price " + infoProduct.get(i).getPrice());
-            }
+    public Product gettingProduct (int id) {
+        //for (Integer i : infoProduct.keySet()) {
+            //if (i.equals(id)) {
+                //System.out.println("The Product name: " + infoProduct.get(i).getName()
+                        //+ ", ID: " + infoProduct.get(i).getId() + ", price " + infoProduct.get(i).getPrice());
+            //}
+        //}
+
+        if(infoProduct.containsKey(id) == false){
+            System.out.println("There is no product has the given id");
         }
+        return infoProduct.get(id);
     }
 
 
     /**
      * Set and Get methods for the hashmap id and quantity in stock
      */
-    public HashMap<Integer, Integer> getId_quantity() {
+    public HashMap<Integer, Integer> getIdQuantity() {
         return idQuantity;
     }
 

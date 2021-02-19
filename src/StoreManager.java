@@ -27,7 +27,7 @@ public class StoreManager {
         {
             product_map.put(mapping[0], mapping[1]);
 
-            if (inventory.getId_quantity().get(mapping[0]) - mapping[1] >= 0) {
+            if (inventory.getIdQuantity().get(mapping[0]) - mapping[1] >= 0) {
                 total += mapping[1]*inventory.getInfoProduct().get(mapping[0]).getPrice();
             }
 
@@ -56,9 +56,17 @@ public class StoreManager {
          * Checking the Product info with id
          */
         System.out.print("\n==================================\nProduct Information with Given ID:\n==================================\n");
-        store.inventory.gettingProduct(0);
-        store.inventory.gettingProduct(1);
-        store.inventory.gettingProduct(2);
+        System.out.println("Name: "+ store.inventory.gettingProduct(0).getName() +
+                ", price: " + store.inventory.gettingProduct(0).getPrice() +
+                ", id: " + store.inventory.gettingProduct(0).getId());
+
+        System.out.println("Name: "+ store.inventory.gettingProduct(1).getName() +
+                ", price: " + store.inventory.gettingProduct(1).getPrice() +
+                ", id: " + store.inventory.gettingProduct(1).getId());
+
+        System.out.println("Name: "+ store.inventory.gettingProduct(2).getName() +
+                ", price: " + store.inventory.gettingProduct(2).getPrice() +
+                ", id: " + store.inventory.gettingProduct(2).getId());
 
         /**
          * Checking the stocks BEFORE transaction
