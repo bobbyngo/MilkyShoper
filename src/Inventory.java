@@ -4,6 +4,7 @@
 // 101163137
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Inventory {
     private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, Product)
@@ -17,19 +18,33 @@ public class Inventory {
         Product p1 = new Product("1% milk", 0, 4.30);
         Product p2 = new Product("2% milk", 1, 3.30);
         Product p3 = new Product("3% milk", 2, 5.00);
+        Product p4 = new Product("goat milk", 3, 6.99);
+        Product p5 = new Product("camel milk", 4, 30.99);
         /**
          * Initialize the id-product
          */
         infoProduct.put(0,p1);
         infoProduct.put(1,p2);
         infoProduct.put(2,p3);
+        infoProduct.put(3,p4);
+        infoProduct.put(4,p5);
 
         /**
          * Initialize the id-quantity
          */
-        idQuantity.put(0,1);
-        idQuantity.put(1,2);
-        idQuantity.put(2,0);
+        idQuantity.put(0,20);
+        idQuantity.put(1,60);
+        idQuantity.put(2,39);
+        idQuantity.put(3,80);
+        idQuantity.put(4,25);
+    }
+
+    /**
+     * Get all the ID of the product from the HashMap
+     * @return Set of Integer
+     */
+    public Set<Integer> getAvailableID () {
+        return infoProduct.keySet();
     }
 
     /**
@@ -49,13 +64,15 @@ public class Inventory {
      * Add a specified amount of stock for a given Product to the inventory (Note: new Products can be
      * added!).
      */
-    public void addingQuantity (int id,int amount) {
+    public void addingQuantity (Product product,int amount) {
+        int id = product.getId();
         if (idQuantity.containsKey(id)) {
                 idQuantity.put(id, amount + idQuantity.get(id));
                 System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
             } else {
                 //New product add
-                idQuantity.put(id,amount);
+                infoProduct.put(id, product);
+                idQuantity.put(id, amount);
             }
     }
 

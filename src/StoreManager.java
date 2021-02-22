@@ -3,12 +3,20 @@
 // Ngo Huu Gia Bao
 // 101163137
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 
 public class StoreManager {
     private Inventory inventory = new Inventory();
+
+    private int cartID = -1;
+    //private ArrayList <Integer> shoppingCart
+
+
+    /**
+     *                                         MILESTONE 1
+     */
 
     /**
      * Method for getting stocks
@@ -17,7 +25,7 @@ public class StoreManager {
         System.out.println( "Product:- " + inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id) );
     }
 
-    /**
+    /***
      * Method to process a transaction given an Array of Product information [ [productID, buyQuantity], ...]
      */
     public void processTransaction(Integer[][] product_array){
@@ -35,6 +43,54 @@ public class StoreManager {
         }
         System.out.println("\n=============\nReceipt:-\n=============\n Your total is $" + total);
     }
+
+
+    /**
+     *                                         MILESTONE 2
+     */
+
+
+    /**
+     * This method retrieve the quantity of the Product to give the access to the StoreView
+     * through the gettingQuantity method in the Inventory class
+     * @return hashmap with ID and Quantity
+     */
+    public HashMap<Integer, Integer> getQuantity() {
+        return inventory.getIdQuantity();
+    }
+
+    /**
+     * This method retrieve the information of the Product to give the access to the StoreView
+     * through the gettingProduct method in the Inventory class
+     * @return HashMap with ID and Product
+     */
+    public HashMap<Integer, Product> getProduct() {
+        return inventory.getInfoProduct();
+    }
+
+    /**
+     * This method retrieve the ID of of the Product to give the access to the StoreView
+     * through the gettingProduct method in the Inventory class
+     * @return Set of Integer
+     */
+    public Set<Integer> getKeySet () {
+        return inventory.getAvailableID();
+    }
+
+    /**
+     * This method will return number from 1 to 100 distinctively
+     */
+    public void assignNewCartID() {
+        cartID ++;
+
+
+    }
+
+
+
+
+
+
 
     /**
      * Main method
@@ -96,11 +152,19 @@ public class StoreManager {
          */
         System.out.print("\n==================================\nWares after refill:-\n==================================\n");
 
-        store.inventory.addingQuantity(0,2);
+        Product p1 = new Product("1% milk", 0, 4.30);
+        Product p2 = new Product("2% milk", 1, 3.30);
+        Product p3 = new Product("3% milk", 2, 5.00);
+
+        store.inventory.addingQuantity(p1,2);
         store.checkStock(0);
-        store.inventory.addingQuantity(1,1);
+        store.inventory.addingQuantity(p2,1);
         store.checkStock(1);
-        store.inventory.addingQuantity(2,3);
+        store.inventory.addingQuantity(p3,3);
         store.checkStock(2);
+
+        for(int i = 0; i < store.getQuantity().size(); i++){
+            System.out.println("1");
+        }
     }
 }

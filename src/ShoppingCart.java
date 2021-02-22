@@ -9,5 +9,11 @@ import java.util.HashMap;
 
 public class ShoppingCart {
 
+    //ArrayList <Integer> cartID = new ArrayList<>();
+    private int cartID;
+
+    public ShoppingCart (int cartID) {
+        this.cartID = cartID;
+    }
 
 }
