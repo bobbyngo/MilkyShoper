@@ -22,42 +22,49 @@ public class StoreView {
         this.cartID = cartID;
     }
 
-    public void helpDisplay(){
+    private void helpDisplay(){
         System.out.println("browse | addToCart | removeItems | checkout | quit");
     }
 
-    public void browseDisplay() {
+    private void browseDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\---------------BROWSE---------------/\n");
-        System.out.println("Stock | Product Name | Unit Price");
+        System.out.println("Stock | ID | Product Name | Unit Price");
 
         for (Integer i : sm.getKeySet()) {
             System.out.println(sm.getQuantity().get(i) + " | "
+                    + sm.getProduct().get(i).getId() + " | "
                     + sm.getProduct().get(i).getName() + " | "
-                    + sm.getProduct().get(i).getPrice());
+                    + "$" + sm.getProduct().get(i).getPrice());
         }
     }
 
 
-    public void addDisplay() {
+    private void addDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\----------------ADD----------------/\n");
+        System.out.println("Stock | ID | Product Name | Unit Price | Option");
+
+        for (Integer i : sm.getKeySet()) {
+            System.out.println(sm.getQuantity().get(i) + " | "
+                    + sm.getProduct().get(i).getId() + " | "
+                    + sm.getProduct().get(i).getName() + " | "
+                    + "$" + sm.getProduct().get(i).getPrice()
+                    + i );
+        }
     }
 
-    public void removeDisplay() {
+    private void removeDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\---------------REMOVE---------------/\n");
     }
 
-    public void checkOutDisplay() {
+    private void checkOutDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\--------------CHECKOUT--------------/\n");
     }
 
-    public static void main (String args[]) {
-        StoreManager sm1 = new StoreManager();
-        StoreView sv1 = new StoreView(sm1,1);
-
+    public boolean displayUI() {
         //Create scanner object
         Scanner myObj = new Scanner(System.in);
         System.out.println("\nType help for the list of commands\nEnter command: ");
@@ -67,23 +74,23 @@ public class StoreView {
         while (!demand.equals("quit")) {
 
             if (demand.equals("help")) {
-                sv1.helpDisplay();
+                helpDisplay();
             }
 
             if (demand.equals("browse")){
-                sv1.browseDisplay();
+                browseDisplay();
             }
 
             if (demand.equals("addToCart")){
-                sv1.addDisplay();
+                addDisplay();
             }
 
             if (demand.equals("removeItems")){
-                sv1.removeDisplay();
+                removeDisplay();
             }
 
             if (demand.equals("checkout")){
-                sv1.checkOutDisplay();
+                checkOutDisplay();
             }
 
             if (!demand.equals("quit")){
@@ -92,6 +99,44 @@ public class StoreView {
                 demand = myObj.nextLine();
             }
         }
+        return false;
+    }
 
+    public static void main (String args[]) {
+
+        StoreManager sm = new StoreManager();
+        StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv3 = new StoreView(sm, sm.assignNewCartID());
+
+        StoreView[] users = {sv1, sv2, sv3};
+        int activeSV = users.length;
+
+        Scanner sc = new Scanner(System.in);
+        while (activeSV > 0) {
+            System.out.print("CHOOSE YOUR STOREVIEW >>> ");
+
+            int choice = sc.nextInt();
+            if (choice < users.length && choice >= 0) {
+                if (users[choice] != null) {
+                    String chooseAnother = "";
+
+                    while (!chooseAnother.equals("y") && !chooseAnother.equals("Y")) {
+                        // this implementation of displayGUI waits for input and displays the page
+                        // corresponding to the user's input. it does this once, and then returns
+                        // true if the user entered 'checkout' or 'quit'.
+                        if (users[choice].displayUI()) {
+                            users[choice] = null;
+                            activeSV--;
+                            break;
+                        }
+                        System.out.print("GO TO ANOTHER STOREVIEW? (y) >>> ");
+                        chooseAnother = sc.next();
+                    }
+                }
+            }else {
+                System.out.println("Please choose number in the range [0, " + (users.length - 1) + "]");
+            }
+        }
     }
 }

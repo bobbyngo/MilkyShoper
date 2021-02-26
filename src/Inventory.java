@@ -68,7 +68,7 @@ public class Inventory {
         int id = product.getId();
         if (idQuantity.containsKey(id)) {
                 idQuantity.put(id, amount + idQuantity.get(id));
-                System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
+                //System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
             } else {
                 //New product add
                 infoProduct.put(id, product);
