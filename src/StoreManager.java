@@ -9,7 +9,8 @@ import java.util.*;
 
 public class StoreManager {
     private Inventory inventory = new Inventory();
-    private int cartID = -1;
+    //private int cartID = -1;
+    private ShoppingCart sc = new ShoppingCart();
     private ArrayList<ShoppingCart>shoppingCart = new ArrayList<>();
 
 
@@ -77,19 +78,31 @@ public class StoreManager {
     }
 
     /**
-     * This method will return number from 1 to 100 distinctively
+     * This method will return number distinctively
      * TODO: Change to hashmap
+     * TODO: THIS FUNCTION MAY CAUSE THE REASON WHY THE HASHMAP OF THE INVENTORY DID NOT UPDATE
      */
+
     public int assignNewCartID() {
-        this.cartID ++;
+/*        this.cartID ++;
         ShoppingCart sc = new ShoppingCart(cartID);
         //sc.cart.add(this.cartID);
         shoppingCart.add(sc);
-        return this.cartID;
+        return this.cartID;*/
+
+        return sc.getCartID();
+    }
+
+    public HashMap<Integer, Integer> getCustomerCart() {
+        return sc.getCustomerCart();
     }
 
     public void removeCartInventory (int id, int quantity) {
-        inventory.removingQuantity(id, quantity);
+        sc.addCustomerProduct(id, quantity);
+    }
+
+    public void addCartInventory (int id, int quantity) {
+        sc.removeCustomerProduct(id, quantity);
     }
 
 

@@ -23,7 +23,7 @@ public class StoreView {
     }
 
     private void helpDisplay(){
-        System.out.println("browse | addToCart | removeItems | checkout | quit");
+        System.out.println("browse | add | remove | checkout | quit");
     }
 
     private void browseDisplay() {
@@ -39,29 +39,70 @@ public class StoreView {
         }
     }
 
-
+    /**
+     * TODO: add and remove method doesn't work perfectly, after adding or removing, the inventory class does not display correctly
+     * BUT the function work
+     *
+     */
     private void addDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\----------------ADD----------------/\n");
-        System.out.println("Stock | ID | Product Name | Unit Price | Option");
+        System.out.println("Stock | ID | Product Name | Unit Price ");
 
         for (Integer i : sm.getKeySet()) {
             System.out.println(sm.getQuantity().get(i) + " | "
                     + sm.getProduct().get(i).getId() + " | "
                     + sm.getProduct().get(i).getName() + " | "
-                    + "$" + sm.getProduct().get(i).getPrice()
-                    + i );
+                    + "$" + sm.getProduct().get(i).getPrice());
+        }
+        System.out.println("\nPlease choose the ID of the Product to add");
+        Scanner myObj = new Scanner(System.in);
+        int id = myObj.nextInt();
+
+        if (sm.getQuantity().containsKey(id)) {
+            System.out.println("\nPlease choose the amount want to add");
+            myObj = new Scanner(System.in);
+            int quantity = myObj.nextInt();
+            sm.removeCartInventory(id, quantity);
+        }else {
+            System.out.println("\nYour ID is not available " +
+                                "\nPlease choose the available ID");
         }
     }
 
     private void removeDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\---------------REMOVE---------------/\n");
+
+        checkOutDisplay();
+
+        System.out.println("\nPlease choose the ID of the Product to remove");
+        Scanner myObj = new Scanner(System.in);
+        int id = myObj.nextInt();
+
+        if (sm.getCustomerCart().containsKey(id)) {
+            System.out.println("\nPlease choose the amount want to remove");
+            myObj = new Scanner(System.in);
+            int quantity = myObj.nextInt();
+            sm.addCartInventory(id, quantity);
+        }else {
+            System.out.println("\nYour ID is not available " +
+                    "\nPlease choose the available ID");
+        }
     }
 
     private void checkOutDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
-        System.out.println("\\--------------CHECKOUT--------------/\n");
+        System.out.println("\\-------------CHECK OUT-------------/\n");
+        System.out.println("\\--------------YOUR CART--------------/\n");
+        System.out.println("Amount | ID | Product Name | Unit Price");
+
+        for (Integer i : sm.getCustomerCart().keySet()) {
+            System.out.println(sm.getCustomerCart().get(i) + " | "
+                    + sm.getProduct().get(i).getId() + " | "
+                    + sm.getProduct().get(i).getName() + " | "
+                    + "$" + sm.getCustomerCart().get(i) * sm.getProduct().get(i).getPrice());
+        }
     }
 
     public boolean displayUI() {
@@ -81,11 +122,11 @@ public class StoreView {
                 browseDisplay();
             }
 
-            if (demand.equals("addToCart")){
+            if (demand.equals("add")){
                 addDisplay();
             }
 
-            if (demand.equals("removeItems")){
+            if (demand.equals("remove")){
                 removeDisplay();
             }
 
