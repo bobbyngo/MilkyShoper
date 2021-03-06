@@ -25,8 +25,6 @@ public class ShoppingCart extends Inventory{
             //Add product id with the amount to the customer's cart
             customerCart.put(id, amount);
 
-            //Remove the product id with the amount from the inventory
-            removingQuantity(id, amount);
         }else {
             System.out.println("\nThe amount you entered is more than what we have");
         }

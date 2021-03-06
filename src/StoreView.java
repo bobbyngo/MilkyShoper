@@ -59,11 +59,14 @@ public class StoreView {
         Scanner myObj = new Scanner(System.in);
         int id = myObj.nextInt();
 
+
         if (sm.getQuantity().containsKey(id)) {
             System.out.println("\nPlease choose the amount want to add");
             myObj = new Scanner(System.in);
             int quantity = myObj.nextInt();
+
             sm.removeCartInventory(id, quantity);
+            
         }else {
             System.out.println("\nYour ID is not available " +
                                 "\nPlease choose the available ID");
@@ -71,24 +74,30 @@ public class StoreView {
     }
 
     private void removeDisplay() {
-        System.out.println("|----------THE COURSE STORE----------|");
-        System.out.println("\\---------------REMOVE---------------/\n");
+        if (sm.getCustomerCart().size() == 0){
+            System.out.println("Your cart is empty, nothing to remove");
 
-        checkOutDisplay();
+        } else {
+            System.out.println("|----------THE COURSE STORE----------|");
+            System.out.println("\\---------------REMOVE---------------/\n");
 
-        System.out.println("\nPlease choose the ID of the Product to remove");
-        Scanner myObj = new Scanner(System.in);
-        int id = myObj.nextInt();
+            checkOutDisplay();
 
-        if (sm.getCustomerCart().containsKey(id)) {
-            System.out.println("\nPlease choose the amount want to remove");
-            myObj = new Scanner(System.in);
-            int quantity = myObj.nextInt();
-            sm.addCartInventory(id, quantity);
-        }else {
-            System.out.println("\nYour ID is not available " +
-                    "\nPlease choose the available ID");
+            System.out.println("\nPlease choose the ID of the Product to remove");
+            Scanner myObj = new Scanner(System.in);
+            int id = myObj.nextInt();
+
+            if (sm.getCustomerCart().containsKey(id)) {
+                System.out.println("\nPlease choose the amount want to remove");
+                myObj = new Scanner(System.in);
+                int quantity = myObj.nextInt();
+                sm.addCartInventory(id, quantity);
+            }else {
+                System.out.println("\nYour ID is not available " +
+                        "\nPlease choose the available ID");
+            }
         }
+
     }
 
     private void checkOutDisplay() {
@@ -142,6 +151,8 @@ public class StoreView {
         }
         return false;
     }
+
+
 
     public static void main (String args[]) {
 

@@ -82,12 +82,18 @@ public class Inventory {
      * reaches 0, leave it.).
      */
     public void removingQuantity (int id, int amount) {
-        if (idQuantity.containsKey(id)) {
-            if (idQuantity.get(id) - amount < 0) {
-                System.out.println("\n[" + getInfoProduct().get(id).getName() + "] has insufficient wares. Transaction nullified.");
-            } else {
-                idQuantity.put(id, idQuantity.get(id) - amount);
+        if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
+            idQuantity.put(id, idQuantity.get(id) - amount);
+
+
+            //remove the product if the quantity == 0
+            if (idQuantity.get(id) == 0) {
+                //remove the id quantity
+                idQuantity.remove(id);
+                //remove id product
+                infoProduct.remove(id);
             }
+
         }
     }
 

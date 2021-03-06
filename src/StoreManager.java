@@ -11,7 +11,7 @@ public class StoreManager {
     private Inventory inventory = new Inventory();
     //private int cartID = -1;
     private ShoppingCart sc = new ShoppingCart();
-    private ArrayList<ShoppingCart>shoppingCart = new ArrayList<>();
+    //private ArrayList<ShoppingCart>shoppingCart = new ArrayList<>();
 
 
     /**
@@ -98,12 +98,18 @@ public class StoreManager {
     }
 
     public void removeCartInventory (int id, int quantity) {
+
+        //Remove quantity of the given id from the inventory
+        inventory.removingQuantity(id, quantity);
+
+        //Add quantity of the given id to the customer cart
         sc.addCustomerProduct(id, quantity);
     }
 
     public void addCartInventory (int id, int quantity) {
         sc.removeCustomerProduct(id, quantity);
     }
+
 
 
     /**
