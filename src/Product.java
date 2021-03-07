@@ -2,6 +2,7 @@
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
+
 public class Product {
     private final String name;
     private final int id;

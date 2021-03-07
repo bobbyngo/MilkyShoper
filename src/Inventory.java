@@ -116,9 +116,6 @@ public class Inventory {
             //}
         //}
 
-        if(infoProduct.containsKey(id) == false){
-            System.out.println("There is no product has the given id");
-        }
         return infoProduct.get(id);
     }
 

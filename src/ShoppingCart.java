@@ -3,19 +3,20 @@
 // Ngo Huu Gia Bao
 // 101163137
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class ShoppingCart {
 
-    private static int shopId = 0;
     private int cartID;
     private HashMap <Integer, Integer> customerCart = new HashMap<>(); //id quantity
-    //private HashMap<Integer, Product> customerCartInfo = new HashMap<>(); //(id, Product)
 
-    public ShoppingCart () {
-        this.cartID = shopId++;
+    /**
+     * The constructor of the ShoppingCart class
+     * @param cartID int, the cartID of the ShoppingCart class
+     */
+    public ShoppingCart (int cartID) {
+        this.cartID = cartID;
     }
 
     /**
