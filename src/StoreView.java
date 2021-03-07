@@ -13,7 +13,7 @@ public class StoreView {
     private int cartID;
 
     /**
-     * Constructor
+     * Constructor for the StoreView
      * @param sm
      * @param cartID
      */
@@ -22,10 +22,17 @@ public class StoreView {
         this.cartID = cartID;
     }
 
+    /**
+     * The helpDisplay method will give the information about the command lines
+     */
     private void helpDisplay(){
         System.out.println("browse | add | remove | checkout | quit");
     }
 
+    /**
+     * The browseDisplay will print out all the information about the products that exist in the inventory
+     * with the give format
+     */
     private void browseDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\---------------BROWSE---------------/\n");
@@ -40,9 +47,8 @@ public class StoreView {
     }
 
     /**
-     * TODO: add and remove method doesn't work perfectly, after adding or removing, the inventory class does not display correctly
-     * BUT the function work
-     *
+     * The addDisplay will be called when the user want to add the items into their cart. This methods will called the removeCartInventory
+     * method in the StoreManager class which will add the items into their cart and remove the items from the Inventory.
      */
     private void addDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
@@ -73,6 +79,10 @@ public class StoreView {
         }
     }
 
+    /**
+     * The removeDisplay will be called when the user want to remove items from their cart. This methods will called the addCartInventory
+     * method in the StoreManager class which will remove the items from their cart and add the items back to the Inventory.
+     */
     private void removeDisplay() {
         if (sm.getCustomerCart().size() == 0){
             System.out.println("Your cart is empty, nothing to remove");
@@ -106,6 +116,9 @@ public class StoreView {
 
     }
 
+    /**
+     * The checkOutDisplay will print out the information of the products in the customer's cart with the total price
+     */
     private void checkOutDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\-------------CHECK OUT-------------/\n");

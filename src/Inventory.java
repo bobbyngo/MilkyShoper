@@ -50,6 +50,8 @@ public class Inventory {
     /**
      * Get the amount of stock for a given Product ID (Note: it is possible the Product does not exist in
      * the Inventory!)
+     * @param id int, the id that the user wants to get the info
+     * @return int, the quantity of the given id
      */
     public int gettingQuantity (int id) {
         for (Integer i : idQuantity.keySet()) {
@@ -63,6 +65,8 @@ public class Inventory {
     /**
      * Add a specified amount of stock for a given Product to the inventory (Note: new Products can be
      * added!).
+     * @param product Product, the product that will be added
+     * @param amount int, the amount or quantity wanted to be added
      */
     public void addingQuantity (Product product,int amount) {
         int id = product.getId();
@@ -79,7 +83,9 @@ public class Inventory {
     /**
      * Remove a specified amount of stock for a given Product ID from the inventory (Note: you cannot
      * have negative stock, and you cannot delete Products from the Inventory; if a Product’s stock
-     * reaches 0, leave it.).
+     * reaches 0, leave it).
+     * @param id int, the id of the product
+     * @param amount, int the amount of the product to remove
      */
     public void removingQuantity (int id, int amount) {
         if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
@@ -100,6 +106,7 @@ public class Inventory {
 
     /**
      * Get information on a Product given a Product ID
+     * @param id int, the id of the product
      */
     public Product gettingProduct (int id) {
         //for (Integer i : infoProduct.keySet()) {
@@ -117,14 +124,16 @@ public class Inventory {
 
 
     /**
-     * Set and Get methods for the hashmap id and quantity in stock
+     * Get methods for the hashmap id and quantity in stock
+     * @return idQuantity, the HashMap storing the id and quantity in the Inventory class
      */
     public HashMap<Integer, Integer> getIdQuantity() {
         return idQuantity;
     }
 
     /**
-     * Set and get methods for the hashmap id and product in stock
+     * Get methods for the hashmap id and product in stock
+     * @return infoProduct, the HashMap storing the id and the Product in the Inventory class
      */
 
     public HashMap<Integer, Product> getInfoProduct() {
