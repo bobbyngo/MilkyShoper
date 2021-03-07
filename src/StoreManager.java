@@ -100,7 +100,10 @@ public class StoreManager {
 
     public void removeCartInventory (int id, int quantity) {
 
-        //Add quantity of the given id to the customer cart
+        //Because the addCustomerProduct will check the availability of the product of the inventory class
+        // so if we remove the product from the inventory first, we cannot add product to the cart
+
+        //Add quantity of the given id to the customer cart first
         sc.addCustomerProduct(id, quantity, this.inventory);
 
         //Remove quantity of the given id from the inventory
@@ -115,12 +118,15 @@ public class StoreManager {
      */
     public void addCartInventory (int id, int quantity) {
 
-        //Remove the quantity of the given id from the cart
-        sc.removeCustomerProduct(id, quantity);
+        //Because the removeCustomerProduct check the product of the customer not the inventory so we could
+        //swap other way around
 
         //Add product with id back the amount to the inventory
         int originalAmount = inventory.getIdQuantity().get(id);
         inventory.getIdQuantity().put(id, originalAmount + quantity);
+
+        //Remove the quantity of the given id from the cart
+        sc.removeCustomerProduct(id, quantity);
 
     }
 

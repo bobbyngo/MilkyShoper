@@ -38,7 +38,7 @@ public class ShoppingCart {
                 customerCart.remove(id);
             }
         }else {
-            System.out.println("\nThe amount you want to remove exceeding the amount in your cart");
+            System.out.println("\nInventory: The amount you want to remove exceeding the amount in your cart");
         }
     }
 

@@ -109,7 +109,7 @@ public class StoreView {
     private void checkOutDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\-------------CHECK OUT-------------/\n");
-        System.out.println("\\--------------YOUR CART--------------/\n");
+        System.out.println("\\-------------YOUR CART------------/\n");
         if (sm.getCustomerCart().size() == 0){
             System.out.println("Your cart is empty");
 
