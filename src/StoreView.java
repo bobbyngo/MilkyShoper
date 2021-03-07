@@ -66,7 +66,7 @@ public class StoreView {
             int quantity = myObj.nextInt();
 
             sm.removeCartInventory(id, quantity);
-            
+
         }else {
             System.out.println("\nYour ID is not available " +
                                 "\nPlease choose the available ID");
@@ -80,8 +80,14 @@ public class StoreView {
         } else {
             System.out.println("|----------THE COURSE STORE----------|");
             System.out.println("\\---------------REMOVE---------------/\n");
+            System.out.println("Stock | ID | Product Name | Unit Price ");
 
-            checkOutDisplay();
+            for (Integer i : sm.getCustomerCart().keySet()) {
+                System.out.println(sm.getCustomerCart().get(i) + " | "
+                        + sm.getProduct().get(i).getId() + " | "
+                        + sm.getProduct().get(i).getName() + " | "
+                        + "$" + sm.getCustomerCart().get(i) * sm.getProduct().get(i).getPrice());
+            }
 
             System.out.println("\nPlease choose the ID of the Product to remove");
             Scanner myObj = new Scanner(System.in);
@@ -104,13 +110,18 @@ public class StoreView {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\-------------CHECK OUT-------------/\n");
         System.out.println("\\--------------YOUR CART--------------/\n");
-        System.out.println("Amount | ID | Product Name | Unit Price");
+        if (sm.getCustomerCart().size() == 0){
+            System.out.println("Your cart is empty");
 
-        for (Integer i : sm.getCustomerCart().keySet()) {
-            System.out.println(sm.getCustomerCart().get(i) + " | "
-                    + sm.getProduct().get(i).getId() + " | "
-                    + sm.getProduct().get(i).getName() + " | "
-                    + "$" + sm.getCustomerCart().get(i) * sm.getProduct().get(i).getPrice());
+        }else {
+            System.out.println("Amount | ID | Product Name | Unit Price");
+
+            for (Integer i : sm.getCustomerCart().keySet()) {
+                System.out.println(sm.getCustomerCart().get(i) + " | "
+                        + sm.getProduct().get(i).getId() + " | "
+                        + sm.getProduct().get(i).getName() + " | "
+                        + "$" + sm.getCustomerCart().get(i) * sm.getProduct().get(i).getPrice());
+            }
         }
     }
 

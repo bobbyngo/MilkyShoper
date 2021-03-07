@@ -9,8 +9,8 @@ import java.util.*;
 
 public class StoreManager {
     private Inventory inventory = new Inventory();
-    //private int cartID = -1;
     private ShoppingCart sc = new ShoppingCart();
+    //private int cartID = -1;
     //private ArrayList<ShoppingCart>shoppingCart = new ArrayList<>();
 
 
@@ -97,17 +97,31 @@ public class StoreManager {
         return sc.getCustomerCart();
     }
 
+
     public void removeCartInventory (int id, int quantity) {
+
+        //Add quantity of the given id to the customer cart
+        sc.addCustomerProduct(id, quantity, this.inventory);
 
         //Remove quantity of the given id from the inventory
         inventory.removingQuantity(id, quantity);
 
-        //Add quantity of the given id to the customer cart
-        sc.addCustomerProduct(id, quantity);
     }
 
+    /**
+     * TODO : need to be fixed
+     * @param id
+     * @param quantity
+     */
     public void addCartInventory (int id, int quantity) {
+
+        //Remove the quantity of the given id from the cart
         sc.removeCustomerProduct(id, quantity);
+
+        //Add product with id back the amount to the inventory
+        int originalAmount = inventory.getIdQuantity().get(id);
+        inventory.getIdQuantity().put(id, originalAmount + quantity);
+
     }
 
 

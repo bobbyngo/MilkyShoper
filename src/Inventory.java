@@ -86,14 +86,15 @@ public class Inventory {
             idQuantity.put(id, idQuantity.get(id) - amount);
 
 
-            //remove the product if the quantity == 0
+/*          //remove the product if the quantity == 0     (The manual said we should not remove when the stock = 0)
             if (idQuantity.get(id) == 0) {
                 //remove the id quantity
                 idQuantity.remove(id);
                 //remove id product
                 infoProduct.remove(id);
-            }
-
+            }*/
+        }else {
+            System.out.println("\nInventory: The amount you entered is more than what we have");
         }
     }
 

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ShoppingCart extends Inventory{
+public class ShoppingCart {
+
     private static int shopId = 0;
     private int cartID;
     private HashMap <Integer, Integer> customerCart = new HashMap<>(); //id quantity
@@ -20,13 +21,10 @@ public class ShoppingCart extends Inventory{
     /**
      * TODO Create methods to add and remove in Store Manager
      */
-    public void addCustomerProduct (int id, int amount) {
-        if (amount <= getIdQuantity().get(id) && getIdQuantity().containsKey(id)) {
+    public void addCustomerProduct (int id, int amount, Inventory inventory) {
+        if (amount <= inventory.getIdQuantity().get(id) && inventory.getIdQuantity().containsKey(id)) {
             //Add product id with the amount to the customer's cart
             customerCart.put(id, amount);
-
-        }else {
-            System.out.println("\nThe amount you entered is more than what we have");
         }
     }
 
@@ -35,16 +33,12 @@ public class ShoppingCart extends Inventory{
             //Remove product with id from the amount to the customer's cart
             customerCart.put(id, customerCart.get(id) - amount);
 
-            //Add product with id back the amount to the inventory
-            int originalAmount = getIdQuantity().get(id);
-            getIdQuantity().put(id, originalAmount + amount);
-
             //Remove products that have 0 quantity in the customer cart
             if (customerCart.get(id) == 0) {
-                customerCart.remove(id, customerCart.get(id));
+                customerCart.remove(id);
             }
         }else {
-            System.out.println("\nThe amount you want remove exceeding the amount in your cart");
+            System.out.println("\nThe amount you want to remove exceeding the amount in your cart");
         }
     }
 
