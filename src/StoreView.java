@@ -2,6 +2,13 @@
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
+/**
+ * A class representing the view of the store
+ *
+ * @author Gabriel Benni Kelley Evensen, 101119814
+ * @author Ngo Huu Gia Bao, 101163137
+ * @version 1.0
+ */
 
 import java.util.Scanner;
 
@@ -128,14 +135,6 @@ public class StoreView {
 
         }else {
             System.out.println("Amount | ID | Product Name | Unit Price");
-
-/*            for (Integer i : sm.getCustomerCart(cartID).keySet()) {
-                System.out.println(sm.getCustomerCart(cartID).get(i) + " | "
-                        + sm.getProduct().get(i).getId() + " | "
-                        + sm.getProduct().get(i).getName() + " | "
-                        + "$" + sm.getCustomerCart(cartID).get(i) * sm.getProduct().get(i).getPrice());
-            }*/
-
             //Display the total
             System.out.println(sm.processTransaction(cartID));
         }
@@ -178,15 +177,11 @@ public class StoreView {
         }
 
         if (demand.equals("quit")){             //if quit without checkout the product will be added back to the inventory
-/*                myObj = new Scanner(System.in);
-            System.out.println("\nType help for the list of commands \nEnter command: ");
-            demand = myObj.nextLine();*/
             sm.emptyCustomerCart(cartID);
             System.out.println("Good bye");
             return true;
 
         }
-        //}
         return false;
     }
 

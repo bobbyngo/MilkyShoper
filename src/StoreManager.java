@@ -2,7 +2,13 @@
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
-
+/**
+ * A class representing the managing system of the store
+ *
+ * @author Gabriel Benni Kelley Evensen, 101119814
+ * @author Ngo Huu Gia Bao, 101163137
+ * @version 2.0
+ */
 import java.util.*;
 
 
@@ -161,19 +167,19 @@ public class StoreManager {
                     .append(" | ")
 
                     //get the id of the product given the id i
-                    .append(inventory.gettingProduct(i).getId())
+                    .append(inventory.getProduct(i).getId())
                     .append(" | ")
 
                     //get the name of the product given the id i
-                    .append(inventory.gettingProduct(i).getName())
+                    .append(inventory.getProduct(i).getName())
                     .append(" | ")
 
                     //get the price of the product given the id i and multiply with the quantity
-                    .append(inventory.gettingProduct(i).getPrice() * shoppingCart.get(cartID).getCustomerCart().get(i))
+                    .append(inventory.getProduct(i).getPrice() * shoppingCart.get(cartID).getCustomerCart().get(i))
                     .append("\n");
 
 
-            total += inventory.gettingProduct(i).getPrice() * shoppingCart.get(cartID).getCustomerCart().get(i);
+            total += inventory.getProduct(i).getPrice() * shoppingCart.get(cartID).getCustomerCart().get(i);
 
         }
         shoppingCart.remove(cartID);
@@ -201,77 +207,4 @@ public class StoreManager {
             shoppingCart.get(cartID).getCustomerCart().remove(i);
         }
     }
-
-
-    /**
-     * Main method
-     * Calling methods and testing Product class and Inventory class will be in here
-     * Creating objects in main
-     */
-//    public static void main(String[] args) {
-//        /**
-//         * Kindly put your test cases below, dearest TA.
-//         * I've put some tests below, I hope it might help.
-//         */
-//
-//        /**
-//         * Creating the StoreManager upon starting
-//         */
-//        StoreManager store = new StoreManager();
-//
-//        /**
-//         * Checking the Product info with id
-//         */
-//        System.out.print("\n==================================\nProduct Information with Given ID:\n==================================\n");
-//        System.out.println("Name: "+ store.inventory.gettingProduct(0).getName() +
-//                ", price: " + store.inventory.gettingProduct(0).getPrice() +
-//                ", id: " + store.inventory.gettingProduct(0).getId());
-//
-//        System.out.println("Name: "+ store.inventory.gettingProduct(1).getName() +
-//                ", price: " + store.inventory.gettingProduct(1).getPrice() +
-//                ", id: " + store.inventory.gettingProduct(1).getId());
-//
-//        System.out.println("Name: "+ store.inventory.gettingProduct(2).getName() +
-//                ", price: " + store.inventory.gettingProduct(2).getPrice() +
-//                ", id: " + store.inventory.gettingProduct(2).getId());
-//
-//        /**
-//         * Checking the stocks BEFORE transaction
-//         */
-//        System.out.print("\n==================================\nWares prior to transaction:\n==================================\n");
-//        store.checkStock(0);
-//        store.checkStock(1);
-//        store.checkStock(2);
-//
-//        /**
-//         * Processing transactions
-//         * Note:- I have intentionally included errors to prove that part works
-//         */
-//        Integer[][] product_2d_array = {{0, 2}, {1, 2}, {2, 1}};
-//        store.processTransaction(product_2d_array);
-//
-//        /**
-//         * Checking the stocks AFTER transaction
-//         */
-//        System.out.print("\n==================================\nWares after transaction:-\n==================================\n");
-//        store.checkStock(0);
-//        store.checkStock(1);
-//        store.checkStock(2);
-//
-//        /**
-//         * Adding products to our inventory. Refilling.
-//         */
-//        System.out.print("\n==================================\nWares after refill:-\n==================================\n");
-//
-//        Product p1 = new Product("1% milk", 0, 4.30);
-//        Product p2 = new Product("2% milk", 1, 3.30);
-//        Product p3 = new Product("3% milk", 2, 5.00);
-//
-//        store.inventory.addingQuantity(p1,2);
-//        store.checkStock(0);
-//        store.inventory.addingQuantity(p2,1);
-//        store.checkStock(1);
-//        store.inventory.addingQuantity(p3,3);
-//        store.checkStock(2);
-    //   }
 }

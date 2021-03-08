@@ -2,7 +2,13 @@
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
-
+/**
+ * A class representing a shopping cart
+ *
+ * @author Gabriel Benni Kelley Evensen, 101119814
+ * @author Ngo Huu Gia Bao, 101163137
+ * @version 2.0
+ */
 import java.util.HashMap;
 
 

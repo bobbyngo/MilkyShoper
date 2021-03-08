@@ -2,7 +2,13 @@
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
-
+/**
+ * A class representing the Inventory of the store
+ *
+ * @author Gabriel Benni Kelley Evensen, 101119814
+ * @author Ngo Huu Gia Bao, 101163137
+ * @version 2.0
+ */
 import java.util.HashMap;
 import java.util.Set;
 
@@ -63,24 +69,6 @@ public class Inventory {
     }
 
     /**
-     * Add a specified amount of stock for a given Product to the inventory (Note: new Products can be
-     * added!).
-     * @param product Product, the product that will be added
-     * @param amount int, the amount or quantity wanted to be added
-     */
-    public void addingQuantity (Product product,int amount) {
-        int id = product.getId();
-        if (idQuantity.containsKey(id)) {
-                idQuantity.put(id, amount + idQuantity.get(id));
-                //System.out.println("[" + getInfoProduct().get(id).getName() + "] now has " + amount + " additional wares.");
-            } else {
-                //New product add
-                infoProduct.put(id, product);
-                idQuantity.put(id, amount);
-            }
-    }
-
-    /**
      * Remove a specified amount of stock for a given Product ID from the inventory (Note: you cannot
      * have negative stock, and you cannot delete Products from the Inventory; if a Product’s stock
      * reaches 0, leave it).
@@ -90,15 +78,6 @@ public class Inventory {
     public void removingQuantity (int id, int amount) {
         if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
             idQuantity.put(id, idQuantity.get(id) - amount);
-
-
-/*          //remove the product if the quantity == 0     (The manual said we should not remove when the stock = 0)
-            if (idQuantity.get(id) == 0) {
-                //remove the id quantity
-                idQuantity.remove(id);
-                //remove id product
-                infoProduct.remove(id);
-            }*/
         }else {
             System.out.println("\nInventory: The amount you entered is more than what we have");
         }
@@ -108,14 +87,7 @@ public class Inventory {
      * Get information on a Product given a Product ID
      * @param id int, the id of the product
      */
-    public Product gettingProduct (int id) {
-        //for (Integer i : infoProduct.keySet()) {
-            //if (i.equals(id)) {
-                //System.out.println("The Product name: " + infoProduct.get(i).getName()
-                        //+ ", ID: " + infoProduct.get(i).getId() + ", price " + infoProduct.get(i).getPrice());
-            //}
-        //}
-
+    public Product getProduct (int id) {
         return infoProduct.get(id);
     }
 
