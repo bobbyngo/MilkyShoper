@@ -115,6 +115,11 @@ public class StoreManager {
         //so if we remove the product from the inventory first, we cannot add product to the cart
 
         //Add quantity of the given id to the customer cart first
+
+        //If enough stock i invetory:
+        // Add product to the cart
+
+
         shoppingCart.get(cartID).addCustomerProduct(id, quantity, this.inventory);
 
         //Remove quantity of the given id from the inventory
