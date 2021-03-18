@@ -1,4 +1,4 @@
-// GABRIEL BENNI KELLEY EVENSEN
+package stores;// GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
@@ -18,20 +18,20 @@ public class ShoppingCart {
     private HashMap <Integer, Integer> customerCart = new HashMap<>(); //id quantity
 
     /**
-     * The constructor of the ShoppingCart class
-     * @param cartID int, the cartID of the ShoppingCart class
+     * The constructor of the stores.ShoppingCart class
+     * @param cartID int, the cartID of the stores.ShoppingCart class
      */
     public ShoppingCart (int cartID) {
         this.cartID = cartID;
     }
 
     /**
-     * The addCustomerProduct will check if the input quantity is smaller or equal to the quantity in the idQuantity HashMap (Inventory class)
-     * and the input id is contained on the Inventory class or not. If yes, the method will add the input id
+     * The addCustomerProduct will check if the input quantity is smaller or equal to the quantity in the idQuantity HashMap (stores.Inventory class)
+     * and the input id is contained on the stores.Inventory class or not. If yes, the method will add the input id
      * and quantity to the customerCart HashMap.
      * @param id int, the id of the product
      * @param amount int, the amount or the quantity that the customer wants to add
-     * @param inventory Inventory, the inventory object that we are referring to
+     * @param inventory stores.Inventory, the inventory object that we are referring to
      */
     public void addCustomerProduct (int id, int amount, Inventory inventory) {
         if (amount <= inventory.getIdQuantity().get(id) && inventory.getIdQuantity().containsKey(id)) {
@@ -57,7 +57,7 @@ public class ShoppingCart {
                 customerCart.remove(id);
             }
         }else {
-            System.out.println("\nInventory: The amount you want to remove exceeding the amount in your cart");
+            System.out.println("\nstores.Inventory: The amount you want to remove exceeding the amount in your cart");
         }
     }
 

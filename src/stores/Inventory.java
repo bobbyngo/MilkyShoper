@@ -1,24 +1,27 @@
+package stores;
 // GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
 /**
- * A class representing the Inventory of the store
+ * A class representing the stores.Inventory of the store
  *
  * @author Gabriel Benni Kelley Evensen, 101119814
  * @author Ngo Huu Gia Bao, 101163137
  * @version 2.0
  */
+import stores.Product;
+
 import java.util.HashMap;
 import java.util.Set;
 
 public class Inventory {
-    private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, Product)
+    private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, stores.Product)
     private HashMap<Integer, Integer> idQuantity = new HashMap<>(); //(id, quantity)
 
 
     /**
-     * Constructor of Inventory
+     * Constructor of stores.Inventory
      */
     public Inventory(){
         Product p1 = new Product("1% milk", 0, 4.30);
@@ -54,8 +57,8 @@ public class Inventory {
     }
 
     /**
-     * Get the amount of stock for a given Product ID (Note: it is possible the Product does not exist in
-     * the Inventory!)
+     * Get the amount of stock for a given stores.Product ID (Note: it is possible the stores.Product does not exist in
+     * the stores.Inventory!)
      * @param id int, the id that the user wants to get the info
      * @return int, the quantity of the given id
      */
@@ -69,8 +72,8 @@ public class Inventory {
     }
 
     /**
-     * Remove a specified amount of stock for a given Product ID from the inventory (Note: you cannot
-     * have negative stock, and you cannot delete Products from the Inventory; if a Product’s stock
+     * Remove a specified amount of stock for a given stores.Product ID from the inventory (Note: you cannot
+     * have negative stock, and you cannot delete Products from the stores.Inventory; if a stores.Product’s stock
      * reaches 0, leave it).
      * @param id int, the id of the product
      * @param amount, int the amount of the product to remove
@@ -79,12 +82,12 @@ public class Inventory {
         if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
             idQuantity.put(id, idQuantity.get(id) - amount);
         }else {
-            System.out.println("\nInventory: The amount you entered is more than what we have");
+            System.out.println("\nstores.Inventory: The amount you entered is more than what we have");
         }
     }
 
     /**
-     * Get information on a Product given a Product ID
+     * Get information on a stores.Product given a stores.Product ID
      * @param id int, the id of the product
      */
     public Product getProduct (int id) {
@@ -94,7 +97,7 @@ public class Inventory {
 
     /**
      * Get methods for the hashmap id and quantity in stock
-     * @return idQuantity, the HashMap storing the id and quantity in the Inventory class
+     * @return idQuantity, the HashMap storing the id and quantity in the stores.Inventory class
      */
     public HashMap<Integer, Integer> getIdQuantity() {
         return idQuantity;
@@ -102,7 +105,7 @@ public class Inventory {
 
     /**
      * Get methods for the hashmap id and product in stock
-     * @return infoProduct, the HashMap storing the id and the Product in the Inventory class
+     * @return infoProduct, the HashMap storing the id and the stores.Product in the stores.Inventory class
      */
 
     public HashMap<Integer, Product> getInfoProduct() {

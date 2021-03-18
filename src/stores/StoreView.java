@@ -1,4 +1,4 @@
-// GABRIEL BENNI KELLEY EVENSEN
+package stores;// GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
@@ -18,7 +18,7 @@ public class StoreView {
     private int cartID;
 
     /**
-     * Constructor for the StoreView
+     * Constructor for the stores.StoreView
      * @param sm
      * @param cartID
      */
@@ -41,7 +41,7 @@ public class StoreView {
     private void browseDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\---------------BROWSE---------------/\n");
-        System.out.println("Stock | ID | Product Name | Unit Price");
+        System.out.println("Stock | ID | stores.Product Name | Unit Price");
 
         for (Integer i : sm.getKeySet()) {
             System.out.println(sm.getQuantity().get(i) + " | "
@@ -53,12 +53,12 @@ public class StoreView {
 
     /**
      * The addDisplay will be called when the user want to add the items into their cart. This methods will called the removeCartInventory
-     * method in the StoreManager class which will add the items into their cart and remove the items from the Inventory.
+     * method in the stores.StoreManager class which will add the items into their cart and remove the items from the stores.Inventory.
      */
     private void addDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\----------------ADD----------------/\n");
-        System.out.println("Stock | ID | Product Name | Unit Price ");
+        System.out.println("Stock | ID | stores.Product Name | Unit Price ");
 
         for (Integer i : sm.getKeySet()) {
             System.out.println(sm.getQuantity().get(i) + " | "
@@ -66,7 +66,7 @@ public class StoreView {
                     + sm.getProduct().get(i).getName() + " | "
                     + "$" + sm.getProduct().get(i).getPrice());
         }
-        System.out.println("\nPlease choose the ID of the Product to add");
+        System.out.println("\nPlease choose the ID of the stores.Product to add");
         Scanner myObj = new Scanner(System.in);
         int id = myObj.nextInt();
 
@@ -86,7 +86,7 @@ public class StoreView {
 
     /**
      * The removeDisplay will be called when the user want to remove items from their cart. This methods will called the addCartInventory
-     * method in the StoreManager class which will remove the items from their cart and add the items back to the Inventory.
+     * method in the stores.StoreManager class which will remove the items from their cart and add the items back to the stores.Inventory.
      */
     private void removeDisplay() {
         if (sm.getCustomerCart(cartID).size() == 0){
@@ -95,7 +95,7 @@ public class StoreView {
         } else {
             System.out.println("|----------THE COURSE STORE----------|");
             System.out.println("\\---------------REMOVE---------------/\n");
-            System.out.println("Stock | ID | Product Name | Unit Price ");
+            System.out.println("Stock | ID | stores.Product Name | Unit Price ");
 
             for (Integer i : sm.getCustomerCart(cartID).keySet()) {
                 System.out.println(sm.getCustomerCart(cartID).get(i) + " | "
@@ -104,7 +104,7 @@ public class StoreView {
                         + "$" + sm.getCustomerCart(cartID).get(i) * sm.getProduct().get(i).getPrice());
             }
 
-            System.out.println("\nPlease choose the ID of the Product to remove");
+            System.out.println("\nPlease choose the ID of the stores.Product to remove");
             Scanner myObj = new Scanner(System.in);
             int id = myObj.nextInt();
 
@@ -134,14 +134,14 @@ public class StoreView {
             System.out.println("Your cart is empty");
 
         }else {
-            System.out.println("Amount | ID | Product Name | Unit Price");
+            System.out.println("Amount | ID | stores.Product Name | Unit Price");
             //Display the total
             System.out.println(sm.processTransaction(cartID));
         }
     }
 
     /**
-     * This method will display the user interface, it will display all the functions that the StoreView has such as add items,
+     * This method will display the user interface, it will display all the functions that the stores.StoreView has such as add items,
      * remove items, help, browse the store, check out and quit.
      * @return true if the user enters quit, otherwise false
      */
