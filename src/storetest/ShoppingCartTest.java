@@ -9,4 +9,20 @@ import org.junit.jupiter.api.*;
 import stores.*;
 
 public class ShoppingCartTest {
+
+    @BeforeAll
+    public static void init() {
+
+    }
+
+    @Test
+    public void testAddCustomerProduct() {
+
+    }
+
+    @Test
+    public void testRemoveCustomerProduct() {
+
+    }
+
 }

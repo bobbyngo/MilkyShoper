@@ -10,4 +10,24 @@ import stores.*;
 
 public class InventoryTest {
 
+    @BeforeAll
+    public static void init() {
+
+    }
+
+    @Test
+    public void testGetAvailableID() {
+
+    }
+
+    @Test
+    public void testGettingQuantity() {
+
+    }
+
+    @Test
+    public void testRemovingQuantity() {
+
+    }
+
 }

@@ -9,4 +9,36 @@ import org.junit.jupiter.api.*;
 import stores.*;
 
 public class StoreManagerTest {
+
+    //Questions about constructor test??
+    @BeforeAll
+    public static void init() {
+
+    }
+
+    @Test
+    public void testAssignNewCartID() {
+
+    }
+
+    @Test
+    public void testRemoveCartInventory() {
+
+    }
+
+    @Test
+    public void testAddCartInventory() {
+
+    }
+
+
+    @Test
+    public void testProcessTransaction() {
+
+    }
+
+    @Test
+    public void testEmptyCustomerCart () {
+
+    }
 }

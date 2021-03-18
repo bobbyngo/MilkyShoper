@@ -10,4 +10,34 @@ import stores.*;
 
 public class StoreViewTest {
 
+    @BeforeAll
+    public static void init() {
+
+    }
+
+    @Test
+    public void testAssignNewCartID() {
+
+    }
+
+    @Test
+    public void testRemoveCartInventory() {
+
+    }
+
+    @Test
+    public void testAddCartInventory() {
+
+    }
+
+
+    @Test
+    public void testProcessTransaction() {
+
+    }
+
+    @Test
+    public void testEmptyCustomerCart () {
+
+    }
 }
