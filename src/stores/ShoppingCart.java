@@ -16,6 +16,7 @@ public class ShoppingCart {
 
     private int cartID;
     private HashMap <Integer, Integer> customerCart = new HashMap<>(); //id quantity
+    private StoreManager storeManager = new StoreManager();
 
     /**
      * The constructor of the stores.ShoppingCart class
@@ -31,13 +32,12 @@ public class ShoppingCart {
      * and quantity to the customerCart HashMap.
      * @param id int, the id of the product
      * @param amount int, the amount or the quantity that the customer wants to add
-     * @param inventory stores.Inventory, the inventory object that we are referring to
      */
-    public void addCustomerProduct (int id, int amount, Inventory inventory) {
-        if (amount <= inventory.getIdQuantity().get(id) && inventory.getIdQuantity().containsKey(id)) {
+    public void addCustomerProduct (int id, int amount) {
+        //if (amount <= storeManager.getQuantity().get(id) && storeManager.getQuantity().containsKey(id)) {
             //Add product id with the amount to the customer's cart
             customerCart.put(id, amount);
-        }
+        //}
     }
 
     /**
@@ -48,7 +48,7 @@ public class ShoppingCart {
      * @param amount int, the amount or the quantity that the customer wants to remove
      */
     public void removeCustomerProduct (int id, int amount) {
-        if (amount <= customerCart.get(id) && customerCart.containsKey(id)) {
+        //if (amount <= customerCart.get(id) && customerCart.containsKey(id)) {
             //Remove product with id from the amount to the customer's cart
             customerCart.put(id, customerCart.get(id) - amount);
 
@@ -56,9 +56,9 @@ public class ShoppingCart {
             if (customerCart.get(id) == 0) {
                 customerCart.remove(id);
             }
-        }else {
-            System.out.println("\nstores.Inventory: The amount you want to remove exceeding the amount in your cart");
-        }
+        //}else {
+            //System.out.println("\nstores.Inventory: The amount you want to remove exceeding the amount in your cart");
+        //}
     }
 
     /**

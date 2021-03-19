@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import stores.*;
 
 public class ShoppingCartTest {
+    private static ShoppingCart sc;
 
     @BeforeAll
     public static void init() {

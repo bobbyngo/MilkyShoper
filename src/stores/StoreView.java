@@ -90,7 +90,7 @@ public class StoreView {
      */
     private void removeDisplay() {
         if (sm.getCustomerCart(cartID).size() == 0){
-            System.out.println("Your cart is empty, nothing to remove");
+            System.out.println("Your cart is empty, nothing to remove\n");
 
         } else {
             System.out.println("|----------THE COURSE STORE----------|");
@@ -131,7 +131,7 @@ public class StoreView {
         System.out.println("\\-------------CHECK OUT-------------/\n");
         System.out.println("\\-------------YOUR CART------------/\n");
         if (sm.getCustomerCart(cartID).size() == 0){
-            System.out.println("Your cart is empty");
+            System.out.println("Your cart is empty, The amount to pay is $0\n");
 
         }else {
             System.out.println("Amount | ID | stores.Product Name | Unit Price");

@@ -79,11 +79,12 @@ public class Inventory {
      * @param amount, int the amount of the product to remove
      */
     public void removingQuantity (int id, int amount) {
-        if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
+        //if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
             idQuantity.put(id, idQuantity.get(id) - amount);
-        }else {
+        //}
+        /*else {
             System.out.println("\nstores.Inventory: The amount you entered is more than what we have");
-        }
+        }*/
     }
 
     /**

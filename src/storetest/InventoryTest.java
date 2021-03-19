@@ -9,9 +9,11 @@ import org.junit.jupiter.api.*;
 import stores.*;
 
 public class InventoryTest {
+    private static Inventory inventory;
 
     @BeforeAll
     public static void init() {
+        inventory = new Inventory();
 
     }
 

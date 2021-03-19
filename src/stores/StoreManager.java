@@ -122,14 +122,18 @@ public class StoreManager {
 
         //Add quantity of the given id to the customer cart first
 
-        //If enough stock i invetory:
+        //If enough stock i inventory:
         // Add product to the cart
 
+        if (quantity <= inventory.getIdQuantity().get(id) && inventory.getIdQuantity().containsKey(id)) {
+            shoppingCart.get(cartID).addCustomerProduct(id, quantity);
 
-        shoppingCart.get(cartID).addCustomerProduct(id, quantity, this.inventory);
+            //Remove quantity of the given id from the inventory
+            inventory.removingQuantity(id, quantity);
+        }else {
+            System.out.println("StoreManager: The amount you entered is more than what we have in the Inventory\n");
+        }
 
-        //Remove quantity of the given id from the inventory
-        inventory.removingQuantity(id, quantity);
     }
 
 
@@ -141,16 +145,23 @@ public class StoreManager {
      * @param cartID int, the unique cart ID of the customer
      */
     public void addCartInventory (int id, int quantity, int cartID) {
+        //Access to the shoppingCart hashmap to get the ShoppingCart value based on the key cartID, then accessing to the
+        //customerCart hashmap inside the ShoppingCart class,
+        //then get the quantity value of the customerCart hashmap by using the key id
 
-        //Because the removeCustomerProduct check the product of the customer not the inventory so we could
-        //swap other way around
+        if (quantity <= shoppingCart.get(cartID).getCustomerCart().get(id) && shoppingCart.get(cartID).getCustomerCart().containsKey(id)) {
+            //Because the removeCustomerProduct check the product of the customer not the inventory so we could
+            //swap other way around
 
-        //Add product with id back the amount to the inventory
-        int originalAmount = inventory.getIdQuantity().get(id);
-        inventory.getIdQuantity().put(id, originalAmount + quantity);
+            //Add product with id back the amount to the inventory
+            int originalAmount = inventory.getIdQuantity().get(id);
+            inventory.getIdQuantity().put(id, originalAmount + quantity);
 
-        //Remove the quantity of the given id from the cart
-        shoppingCart.get(cartID).removeCustomerProduct(id, quantity);
+            //Remove the quantity of the given id from the cart
+            shoppingCart.get(cartID).removeCustomerProduct(id, quantity);
+        }else {
+            System.out.println("StoreManager: The amount you want to remove exceeding the amount in your cart\n");
+        }
     }
 
 
