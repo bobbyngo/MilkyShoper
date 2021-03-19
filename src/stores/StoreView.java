@@ -68,20 +68,25 @@ public class StoreView {
         }
         System.out.println("\nPlease choose the ID of the stores.Product to add");
         Scanner myObj = new Scanner(System.in);
-        int id = myObj.nextInt();
 
+        try {
+            int id = myObj.nextInt();
+            if (sm.getQuantity().containsKey(id)) {
+                System.out.println("\nPlease choose the amount want to add");
+                myObj = new Scanner(System.in);
+                int quantity = myObj.nextInt();
 
-        if (sm.getQuantity().containsKey(id)) {
-            System.out.println("\nPlease choose the amount want to add");
-            myObj = new Scanner(System.in);
-            int quantity = myObj.nextInt();
+                sm.removeCartInventory(id, quantity, cartID);
 
-            sm.removeCartInventory(id, quantity, cartID);
-
-        }else {
-            System.out.println("\nYour ID is not available " +
-                                "\nPlease choose the available ID");
+            }else {
+                System.out.println("\nYour ID is not available " +
+                        "\nPlease choose the available ID");
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Please enter valid choice \n");
         }
+
     }
 
     /**
@@ -182,13 +187,18 @@ public class StoreView {
             return true;
 
         }
+
+        if ((!demand.equals("help") && !demand.equals("browse") && !demand.equals("add") &&
+        !demand.equals("remove") && !demand.equals("checkout") && !demand.equals("quit"))) {
+            System.out.println("Please enter the valid command");
+            System.out.println("Type help for the list of commands\n");
+        }
         return false;
     }
 
 
 
     public static void main (String args[]) {
-
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
@@ -198,32 +208,47 @@ public class StoreView {
         Scanner sc = new Scanner(System.in);
         while (activeSV > 0) {
             System.out.print("CHOOSE YOUR STOREVIEW >>> ");
-            int choice = sc.nextInt();
-            if (choice < users.length && choice >= 0) {
-                if (users[choice] != null) {
-                    String chooseAnother = "";
-                    while (!chooseAnother.equals("y") && !chooseAnother.equals("Y")) {
-                        // this implementation of displayGUI waits for input and displays the page
-                        // corresponding to the user's input. it does this once, and then returns
-                        // true if the user entered 'checkout' or 'quit'.
-                        if (users[choice].displayUI()) {
-                            users[choice] = null;
-                            activeSV--;
-                            break;
+
+            int choice;
+
+            //Try-catch Exception block, if the user input invalid storeview number, the error will be displayed
+            try {
+                choice = sc.nextInt();
+            }catch (Exception e){
+                System.out.println(e);
+                System.out.println("Your store view choosing is not valid");
+                System.out.println("Please try again\n");
+                break;
+            }
+
+                if (choice < users.length && choice >= 0) {
+                    if (users[choice] != null) {
+                        String chooseAnother = "";
+                        while (!chooseAnother.equals("y") && !chooseAnother.equals("Y")) {
+                            // this implementation of displayGUI waits for input and displays the page
+                            // corresponding to the user's input. it does this once, and then returns
+                            // true if the user entered 'checkout' or 'quit'.
+                            if (users[choice].displayUI()) {
+                                users[choice] = null;
+                                activeSV--;
+                                break;
+                            }
+                            System.out.println("GO TO ANOTHER STOREVIEW? (y) ");
+                            System.out.println("IF NOT YOU CAN ENTER ANYTHING ");
+                            chooseAnother = sc.next();
                         }
-                        System.out.println("GO TO ANOTHER STOREVIEW? (y) ");
-                        System.out.println("IF NOT YOU CAN ENTER ANYTHING ");
-                        chooseAnother = sc.next();
+                    } else {
+                        System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
                     }
                 } else {
-                    System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
+                    System.out.println(
+                            String.format("MAIN > ERROR > BAD CHOICE\nPLEASE CHOOSE IN RANGE [%d, %d]",
+                                    0, users.length - 1)
+                    );
                 }
-            } else {
-                System.out.println(
-                        String.format("MAIN > ERROR > BAD CHOICE\nPLEASE CHOOSE IN RANGE [%d, %d]",
-                                0, users.length - 1)
-                );
-            }
+            /*} catch (Exception e) {
+                System.out.println(e);
+            }*/
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
     }
