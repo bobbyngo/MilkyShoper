@@ -4,6 +4,13 @@ package storetest;
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
+/**
+ * A class representing the tests in ShoppingCart.java
+ *
+ * @author Gabriel Benni Kelley Evensen, 101119814
+ * @author Ngo Huu Gia Bao, 101163137
+ * @version 1.0
+ */
 
 import org.junit.jupiter.api.*;
 import stores.*;

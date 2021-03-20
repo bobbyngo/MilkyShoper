@@ -26,7 +26,7 @@ public class StoreManager {
      * Method for getting stocks
      */
     public void checkStock(int id){
-        System.out.println( "stores.Product:- " + inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id) );
+        System.out.println( "stores.Product:- " + this.inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id) );
     }
 
     /***
