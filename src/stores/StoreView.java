@@ -246,9 +246,6 @@ public class StoreView {
                                     0, users.length - 1)
                     );
                 }
-            /*} catch (Exception e) {
-                System.out.println(e);
-            }*/
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
     }
