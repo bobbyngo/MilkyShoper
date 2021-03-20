@@ -23,6 +23,7 @@ public class StoreManagerTest {
     private static StoreManager sm;
     private static ShoppingCart sc1;
     private static ShoppingCart sc2;
+    private static Inventory inventory;
 
     /**
      * Method to initialize required variables
@@ -31,7 +32,7 @@ public class StoreManagerTest {
     public static void init() {
         sm = new StoreManager();
         sc1 = new ShoppingCart(sm.assignNewCartID());
-
+        inventory = new Inventory();
     }
 
     /**
@@ -45,17 +46,23 @@ public class StoreManagerTest {
     /**
      * Method to test the removeCartInventory() method in StoreManager.java
      */
-//    @Test
-//    public void testRemoveCartInventory() {
-//        sm.addCartInventory(0, 20, sc1.getCartID());
-//        sm.removeCartInventory(0, 10, sc1.getCartID());
-//        assertEquals(10, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The removeCartInventory() method returned unexpected result.");
-//    }
-//
-//    @Test
-//    public void testAddCartInventory() {
-//
-//    }
+    @Test
+    public void testRemoveCartInventory() {
+        sc1.addCustomerProduct(0, 20);
+        sm.removeCartInventory(0, 10, sc1.getCartID());
+        assertEquals(10, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The removeCartInventory() method returned unexpected result.");
+    }
+
+    /*
+    * Method to test the addCartInventory() method in StoreManager.java
+    */
+    @Test
+    public void testAddCartInventory() {
+//        sc1.addCustomerProduct(0, 10);
+//        sc1.removeCustomerProduct(0, 5);
+        sm.addCartInventory(0, 5, sc1.getCartID());
+        assertEquals(5, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The addCartInventory() method returned unexpected result.");
+    }
 
 
 //    /**
@@ -68,11 +75,14 @@ public class StoreManagerTest {
 //                "10 | 0 | 1% milk | 43.0\n" +
 //                "The total is: 43.0\n", sm.getInventory().getIdQuantity().get(0));
 //    }
-//
+
+    /*
+    * Method to test the emptyCustomerCart method in Storemanager.java
+    * */
     @Test
     public void testEmptyCustomerCart () {
-        sc1.addCustomerProduct(0, 20);
         sm.emptyCustomerCart(sc1.getCartID());
-        assertEquals(0, sm.getInventory().getIdQuantity().get(0));
+        assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The addCartInventory() method returned unexpected result." );
+
     }
 }
