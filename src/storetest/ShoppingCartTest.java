@@ -12,8 +12,10 @@ package storetest;
  * @version 1.0
  */
 
+import java.util.*;
 import org.junit.jupiter.api.*;
 import stores.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShoppingCartTest {
     private static ShoppingCart sc;

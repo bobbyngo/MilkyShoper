@@ -16,7 +16,6 @@ import java.util.*;
 import org.junit.jupiter.api.*;
 import stores.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class InventoryTest {
     private static Inventory inventory;

@@ -16,13 +16,10 @@ import java.util.*;
 import org.junit.jupiter.api.*;
 import stores.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import stores.*;
 
 public class StoreManagerTest {
     private static StoreManager sm;
     private static ShoppingCart sc1;
-    private static ShoppingCart sc2;
 
     /**
      * Method to initialize required variables
@@ -31,7 +28,6 @@ public class StoreManagerTest {
     public static void init() {
         sm = new StoreManager();
         sc1 = new ShoppingCart(sm.assignNewCartID());
-
     }
 
     /**
@@ -67,25 +63,25 @@ public class StoreManagerTest {
         sm.addCartInventory(0, 5, sc1.getCartID());
         
         assertEquals(20, sm.getInventory().getIdQuantity().get(0),
-                "The customerCart hashmap in the Shopping Cart class is not added \n");
+                "The customerCart hashmap in the Shopping Cart class is not added");
     }
 
 
-//    /**
-//     * Method to test the processTransaction method in StoreManager.java
-//     */
-//    @Test
-//    public void testProcessTransaction() {
-//
-//        assertEquals(
-//                "10 | 0 | 1% milk | 43.0\n" +
-//                "The total is: 43.0\n", sm.getInventory().getIdQuantity().get(0));
-//    }
-//
+    /**
+     * Method to test the processTransaction method in StoreManager.java
+     */
+    @Test
+    public void testProcessTransaction() {
+        sm.removeCartInventory(0, 10, sc1.getCartID());
+        assertEquals("10 | 0 | 1% milk | 43.0\n" + "The total is: 43.0", sm.processTransaction(sc1.getCartID()), "The assignNewCartID() method returned unexpected result.");
+    }
+
+    /**
+     * Method to test the processTransaction method in StoreManager.java
+     */
     @Test
     public void testEmptyCustomerCart () {
-        sc1.addCustomerProduct(0, 20);
-        sm.emptyCustomerCart(sc1.getCartID());
-        assertEquals(0, sm.getInventory().getIdQuantity().get(0));
+        sm.emptyCustomerCart(0);
+        assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0));
     }
 }
