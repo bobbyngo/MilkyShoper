@@ -30,7 +30,8 @@ public class StoreManagerTest {
     @BeforeAll
     public static void init() {
         sm = new StoreManager();
-        sc1 = new ShoppingCart(0);
+        sc1 = new ShoppingCart(sm.assignNewCartID());
+
     }
 
     /**
@@ -44,26 +45,34 @@ public class StoreManagerTest {
     /**
      * Method to test the removeCartInventory() method in StoreManager.java
      */
-    @Test
-    public void testRemoveCartInventory() {
-        sm.addCartInventory(0, 20, 0);
-        sm.removeCartInventory(0, 10, 0);
-        assertEquals(10, sm.getCustomerCart(0), "The removeCartInventory() method returned unexpected result.");
-    }
-
-    @Test
-    public void testAddCartInventory() {
-
-    }
+//    @Test
+//    public void testRemoveCartInventory() {
+//        sm.addCartInventory(0, 20, sc1.getCartID());
+//        sm.removeCartInventory(0, 10, sc1.getCartID());
+//        assertEquals(10, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The removeCartInventory() method returned unexpected result.");
+//    }
 //
+//    @Test
+//    public void testAddCartInventory() {
 //
+//    }
+
+
+//    /**
+//     * Method to test the processTransaction method in StoreManager.java
+//     */
 //    @Test
 //    public void testProcessTransaction() {
 //
+//        assertEquals(
+//                "10 | 0 | 1% milk | 43.0\n" +
+//                "The total is: 43.0\n" +
+//                "Good bye", sm.getInventory().getIdQuantity().get(0));
 //    }
 //
-//    @Test
-//    public void testEmptyCustomerCart () {
-//
-//    }
+    @Test
+    public void testEmptyCustomerCart () {
+        sm.emptyCustomerCart(sc1.getCartID());
+//        assertEquals();
+    }
 }

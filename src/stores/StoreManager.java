@@ -80,9 +80,23 @@ public class StoreManager {
      * @return Set of Integer
      */
     public Set<Integer> getKeySet () {
-        return inventory.getAvailableID();
+        return this.inventory.getAvailableID();
     }
 
+    /**
+     * Method for getting the inventory
+     * @return inventory
+     */
+    public Inventory getInventory(){
+        return this.inventory;
+    }
+
+    /**
+     * Method for getting the shopping cart
+     */
+    public HashMap<Integer, ShoppingCart> getShoppingCart(){
+        return this.shoppingCart;
+    }
 
     /**
      * This method will add the cartID as a key and the stores.ShoppingCart object as the value to organize.
