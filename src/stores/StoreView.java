@@ -111,18 +111,24 @@ public class StoreView {
 
             System.out.println("\nPlease choose the ID of the stores.Product to remove");
             Scanner myObj = new Scanner(System.in);
-            int id = myObj.nextInt();
 
-            if (sm.getCustomerCart(cartID).containsKey(id)) {
-                System.out.println("\nPlease choose the amount want to remove");
-                myObj = new Scanner(System.in);
-                int quantity = myObj.nextInt();
+            try {
+                int id = myObj.nextInt();
 
-                sm.addCartInventory(id, quantity, cartID);
+                if (sm.getCustomerCart(cartID).containsKey(id)) {
+                    System.out.println("\nPlease choose the amount want to remove");
+                    myObj = new Scanner(System.in);
+                    int quantity = myObj.nextInt();
 
-            }else {
-                System.out.println("\nYour ID is not available " +
-                        "\nPlease choose the available ID");
+                    sm.addCartInventory(id, quantity, cartID);
+
+                } else {
+                    System.out.println("\nYour ID is not available " +
+                            "\nPlease choose the available ID");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                System.out.println("Please enter valid choice \n");
             }
         }
 
