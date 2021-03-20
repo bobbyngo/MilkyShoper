@@ -73,7 +73,7 @@ public class StoreManagerTest {
     @Test
     public void testProcessTransaction() {
         sm.removeCartInventory(0, 10, sc1.getCartID());
-        assertEquals("10 | 0 | 1% milk | 43.0\n" + "The total is: 43.0", sm.processTransaction(sc1.getCartID()), "The assignNewCartID() method returned unexpected result.");
+        assertEquals("10 | 0 | 1% milk | 43.0\n" + "The total is: 43.0", sm.processTransaction(sc1.getCartID()), "The testProcessTransaction() method returned unexpected result.");
     }
 
     /**
@@ -82,6 +82,6 @@ public class StoreManagerTest {
     @Test
     public void testEmptyCustomerCart () {
         sm.emptyCustomerCart(0);
-        assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0));
+        assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The emptyCustomerCart() method returned unexpected result.");
     }
 }
