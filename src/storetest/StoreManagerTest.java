@@ -45,12 +45,20 @@ public class StoreManagerTest {
     /**
      * Method to test the removeCartInventory() method in StoreManager.java
      */
-//    @Test
-//    public void testRemoveCartInventory() {
-//        sm.addCartInventory(0, 20, sc1.getCartID());
-//        sm.removeCartInventory(0, 10, sc1.getCartID());
-//        assertEquals(10, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The removeCartInventory() method returned unexpected result.");
-//    }
+    @Test
+    public void testRemoveCartInventory() {
+
+        sm.removeCartInventory(0, 5, sc1.getCartID());
+
+        //Test customer cart is added or not
+        assertEquals(5, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0),
+                "The customerCart hashmap in the Shopping Cart class is not added \n");
+
+        //Test inventory is removed or not
+        assertEquals(15, sm.getInventory().getIdQuantity().get(0),
+                "The idQuantity hashmap in the Inventory class is not removed\n");
+    }
+
 //
 //    @Test
 //    public void testAddCartInventory() {
