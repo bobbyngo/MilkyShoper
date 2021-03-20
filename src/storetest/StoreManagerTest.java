@@ -63,9 +63,10 @@ public class StoreManagerTest {
      */
     @Test
     public void testAddCartInventory() {
+        sm.removeCartInventory(0, 5, sc1.getCartID());
         sm.addCartInventory(0, 5, sc1.getCartID());
-        sc1.addCustomerProduct(0, 5);
-        assertEquals(5, sm.getInventory().getIdQuantity().get(0),
+        
+        assertEquals(20, sm.getInventory().getIdQuantity().get(0),
                 "The customerCart hashmap in the Shopping Cart class is not added \n");
     }
 
