@@ -66,13 +66,13 @@ public class StoreManagerTest {
 //
 //        assertEquals(
 //                "10 | 0 | 1% milk | 43.0\n" +
-//                "The total is: 43.0\n" +
-//                "Good bye", sm.getInventory().getIdQuantity().get(0));
+//                "The total is: 43.0\n", sm.getInventory().getIdQuantity().get(0));
 //    }
 //
     @Test
     public void testEmptyCustomerCart () {
+        sc1.addCustomerProduct(0, 20);
         sm.emptyCustomerCart(sc1.getCartID());
-//        assertEquals();
+        assertEquals(0, sm.getInventory().getIdQuantity().get(0));
     }
 }
