@@ -61,9 +61,9 @@ public class StoreManagerTest {
     public void testAddCartInventory() {
         sm.removeCartInventory(0, 5, sc1.getCartID());
         sm.addCartInventory(0, 5, sc1.getCartID());
-        
+
         assertEquals(20, sm.getInventory().getIdQuantity().get(0),
-                "The customerCart hashmap in the Shopping Cart class is not added");
+                "The customerCart hashmap in the Inventory class is not added");
     }
 
 
@@ -83,5 +83,7 @@ public class StoreManagerTest {
     public void testEmptyCustomerCart () {
         sm.emptyCustomerCart(0);
         assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The emptyCustomerCart() method returned unexpected result.");
+        assertEquals(5, sm.getInventory().getIdQuantity().size());
+        assertEquals(5, sm.getInventory().getInfoProduct().size());
     }
 }
