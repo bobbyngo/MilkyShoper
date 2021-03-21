@@ -12,7 +12,6 @@ package storetest;
  * @version 1.0
  */
 
-import java.util.*;
 import org.junit.jupiter.api.*;
 import stores.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,8 +23,8 @@ public class StoreManagerTest {
     /**
      * Method to initialize required variables
      */
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
         sm = new StoreManager();
         sc1 = new ShoppingCart(sm.assignNewCartID());
     }
