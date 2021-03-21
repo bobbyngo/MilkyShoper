@@ -35,7 +35,7 @@ public class StoreManagerTest {
      */
     @Test
     public void testAssignNewCartID() {
-        assertEquals(0, sm.assignNewCartID(), "The assignNewCartID() method returned unexpected result.");
+        assertEquals(1, sm.assignNewCartID(), "The assignNewCartID() method returned unexpected result.");
     }
 
     /**
