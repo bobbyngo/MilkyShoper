@@ -11,11 +11,24 @@ package stores;// GABRIEL BENNI KELLEY EVENSEN
  */
 
 import java.util.Scanner;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.Math;
 
 public class StoreView {
 
     private StoreManager sm;
     private int cartID;
+    private final JFrame frame;                                     // Declaring the JFrame
+    private JLabel headerLabel;                                     // Declaring the header label
+    private JPanel mainPanel, headerPanel, bodyPanel, footerPanel;  // Declaring the required panels
+    private ArrayList<JPanel> itemsList;                           // Declaring the panels inside of the body panel
+    private JButton quitButton;                                     // Declaring the button to generate a new palette
 
     /**
      * Constructor for the stores.StoreView
@@ -25,6 +38,70 @@ public class StoreView {
     public StoreView(StoreManager sm, int cartID){
         this.sm = sm;
         this.cartID = cartID;
+
+        this.frame = new JFrame("The Milky Way");           // Initializing the JFrame
+        this.itemsList = new ArrayList<>();                    // Initializing the body panels ArrayList<JPanel>
+
+        this.headerLabel = new JLabel(
+                "Kindly select from one of our milk kinds, below:-"
+        );                                                      // Declaring and initializing the label for the header panel
+
+        this.mainPanel = new JPanel(new BorderLayout());        // Initializing the main panel; recommended BorderLayout
+        this.headerPanel = new JPanel();                        // Initializing the header panel
+        this.bodyPanel = new JPanel(new GridLayout());          // Initializing body panel; recommended GridLayout
+        this.footerPanel = new JPanel(new GridBagLayout());     // Initializing footer panel; recommended GridBagLayout
+
+        this.quitButton = new JButton("Quit");                          // Initializing the "Generate Palette" button
+        this.quitButton.addActionListener(new ActionListener() {            // Listener attached to the button, i.e., if clicked carry out below code
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {          // If the action is performed carry out below code
+                frame.setVisible(false);                                    // Setting the frame visibility of the frame to FALSE
+                frame.dispose();                                            // Disposing of the frame
+            }
+        });
+
+    }
+
+    /**
+     * Method responsible for managing the GUI.
+     * Adding the body, header, and footer panels to the main panel.
+     * Setting up the lock panel operation.
+     * Packing and adding the main panel to the frame.
+     * Setting up frame closing menu, and setting frame visibility to TRUE.
+     */
+    public void displayGUI(){
+        this.headerPanel.setPreferredSize(new Dimension(250, 100)); // Setting dimensions
+        this.footerPanel.setPreferredSize(new Dimension(250, 100)); // ""
+
+        this.headerPanel.add(this.headerLabel);                         // Adding header label to the header panel
+        this.footerPanel.add(this.quitButton);                          // Adding the "Generate Palette" button to footer panel
+
+        this.mainPanel.add(this.headerPanel, BorderLayout.PAGE_START);  // Adding the header panel to the main panel; at the page start
+        this.mainPanel.add(this.bodyPanel, BorderLayout.CENTER);        // Adding the body panel to the main panel; at the page centre
+        this.mainPanel.add(this.footerPanel, BorderLayout.PAGE_END);    // Adding the footer panel to the main panel; at the page end
+
+        this.frame.add(this.mainPanel);                                 // Adding the main panel to the frame
+        this.frame.pack();                                              // Packing the frame
+
+        this.frame.addWindowListener(new WindowAdapter() {                                          // Listener attached to the frame, i.e., if close clicked carry out below code
+            @Override
+            public void windowClosing(WindowEvent we) {                                             // When the action is that of a window closing carry out below code
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
+                        == JOptionPane.OK_OPTION) {
+                    // close it down!
+                    frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
+                    frame.dispose();                                                                // Disposing of the frame
+                }
+            }
+        });
+        this.frame.setVisible(true);                                                                // Setting the frame visibility of the frame to TRUE
+    }
+
+    /*
+     * Method reponsible for managing the buttons that lock the body panels; i.e., the colour changing panels
+     * */
+    public void storeAddRemoveOperation(){
+        
     }
 
     /**
