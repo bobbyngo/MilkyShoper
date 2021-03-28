@@ -24,9 +24,9 @@ public class Inventory {
      * Constructor of stores.Inventory
      */
     public Inventory(){
-        Product p1 = new Product("1% milk", 0, 4.30);
-        Product p2 = new Product("2% milk", 1, 3.30);
-        Product p3 = new Product("3% milk", 2, 5.00);
+        Product p1 = new Product("2% milk", 0, 4.30);
+        Product p2 = new Product("cow milk", 1, 3.30);
+        Product p3 = new Product("buffalo milk", 2, 5.00);
         Product p4 = new Product("goat milk", 3, 6.99);
         Product p5 = new Product("camel milk", 4, 30.99);
         /**

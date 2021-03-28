@@ -70,14 +70,37 @@ public class StoreView {
         this.sm = sm;
         this.cartID = cartID;
 
-        storeViewGenerator();
+        //storeViewGenerator();
+
+        this.frame = new JFrame("Milk Store");
+        this.mainPanel = new JPanel(new BorderLayout());            // Initializing the main panel; BorderLayout
+        this.headerPanel = new JPanel();                            // Initializing the header panel
+        this.bodyPanel = new JPanel(new BorderLayout());            // Initializing the body panel
+        this.storePanel = new JPanel(new BorderLayout());           // Initializing the store panel
+        this.cartPanel = new JPanel(new BorderLayout());            // Initializing the cart panel
+
+        this.headerLabel.setText("The Milky Way");                                // Initializing the header label
+        this.headerLabel.setFont(new Font("Serif", Font.BOLD, 24));     // Setting the font of the header label
+        this.storeLabel.setText("Store");                                         // Initializing the store label
+        this.storeLabel.setFont(new Font("Serif", Font.BOLD, 18));      // Setting the font of the store label
+        this.cartLabel.setText("Cart");                                           // Initializing the cart label
+        this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
+
+        this.quitBtn = new JButton("Quit");
+        quitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
     }
 
 //    ##################################
 //    GUI Methods
 //    ##################################
 
-    private void storeViewGenerator(){
+/*    private void storeViewGenerator(){
         this.frame = new JFrame("Milk Store");
         this.mainPanel = new JPanel(new BorderLayout());            // Initializing the main panel; BorderLayout
         this.headerPanel = new JPanel();                            // Initializing the header panel
@@ -101,7 +124,7 @@ public class StoreView {
             }
         });
 
-    }
+    }*/
 
     public void displayGUI(){
         this.bodyPanel.setPreferredSize(new Dimension(250, 100));
@@ -409,5 +432,7 @@ public class StoreView {
                 }
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
+
+        sv1.displayGUI();
     }
 }
