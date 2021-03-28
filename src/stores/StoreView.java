@@ -59,18 +59,15 @@ public class StoreView {
     GridBagConstraints c = new GridBagConstraints();
 
 
-
-
     /**
      * Constructor for the stores.StoreView
+     *
      * @param sm
      * @param cartID
      */
-    public StoreView(StoreManager sm, int cartID){
+    public StoreView(StoreManager sm, int cartID) {
         this.sm = sm;
         this.cartID = cartID;
-
-        //storeViewGenerator();
 
         this.frame = new JFrame("Milk Store");
         this.mainPanel = new JPanel(new BorderLayout());            // Initializing the main panel; BorderLayout
@@ -78,6 +75,9 @@ public class StoreView {
         this.bodyPanel = new JPanel(new BorderLayout());            // Initializing the body panel
         this.storePanel = new JPanel(new BorderLayout());           // Initializing the store panel
         this.cartPanel = new JPanel(new BorderLayout());            // Initializing the cart panel
+        this.headerLabel = new JLabel();
+        this.storeLabel = new JLabel();
+        this.cartLabel = new JLabel();
 
         this.headerLabel.setText("The Milky Way");                                // Initializing the header label
         this.headerLabel.setFont(new Font("Serif", Font.BOLD, 24));     // Setting the font of the header label
@@ -96,37 +96,7 @@ public class StoreView {
         });
     }
 
-//    ##################################
-//    GUI Methods
-//    ##################################
-
-/*    private void storeViewGenerator(){
-        this.frame = new JFrame("Milk Store");
-        this.mainPanel = new JPanel(new BorderLayout());            // Initializing the main panel; BorderLayout
-        this.headerPanel = new JPanel();                            // Initializing the header panel
-        this.bodyPanel = new JPanel(new BorderLayout());            // Initializing the body panel
-        this.storePanel = new JPanel(new BorderLayout());           // Initializing the store panel
-        this.cartPanel = new JPanel(new BorderLayout());            // Initializing the cart panel
-
-        this.headerLabel.setText("The Milky Way");                                // Initializing the header label
-        this.headerLabel.setFont(new Font("Serif", Font.BOLD, 24));     // Setting the font of the header label
-        this.storeLabel.setText("Store");                                         // Initializing the store label
-        this.storeLabel.setFont(new Font("Serif", Font.BOLD, 18));      // Setting the font of the store label
-        this.cartLabel.setText("Cart");                                           // Initializing the cart label
-        this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
-
-        this.quitBtn = new JButton("Quit");
-        quitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.setVisible(false);
-                frame.dispose();
-            }
-        });
-
-    }*/
-
-    public void displayGUI(){
+    public void displayGUI() {
         this.bodyPanel.setPreferredSize(new Dimension(250, 100));
         this.headerPanel.setPreferredSize(new Dimension(250, 100));
 
@@ -134,19 +104,15 @@ public class StoreView {
         this.storePanel.add(this.storeLabel);
         this.cartPanel.add(this.cartLabel);
 
-        createStorePanels();
-
-    }
-
-    private void createStorePanels(){
-
-        InputStream imageStream = this.getClass().getResourceAsStream("src/stores/milk.jpg"); // Getting the milk image
+        InputStream imageStream = this.getClass().getResourceAsStream("milk.jpg"); // Getting the milk image
         BufferedImage image = null;
+
         try {
             image = ImageIO.read(imageStream);                            // Assigning to image
         } catch (IOException e) {                                         // Catch for I/O exceptions
             e.printStackTrace();                                          // Print error to StackTrace
         }
+
         JLabel picLabel = new JLabel(new ImageIcon(image));               // Assigning the image to a JLabel
         picLabel.setPreferredSize(new Dimension(30, 30));     // Setting the preferred image dimension
 
@@ -197,8 +163,31 @@ public class StoreView {
                 }
             });
             itemInStorePanel.add(btn, c);   // Adding the button to the item panel
+            this.storePanel.add(itemInStorePanel);
         }
+
+        this.bodyPanel.add(storePanel);
+
+        this.mainPanel.add(headerPanel);
+        this.mainPanel.add(bodyPanel);
+
+        this.frame.add(this.mainPanel);                                 // Adding the main panel to the frame
+        this.frame.pack();                                              // Packing the frame
+
+        this.frame.addWindowListener(new WindowAdapter() {                                          // Listener attached to the frame, i.e., if close clicked carry out below code
+            @Override
+            public void windowClosing(WindowEvent we) {                                             // When the action is that of a window closing carry out below code
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
+                        == JOptionPane.OK_OPTION) {
+                    // close it down!
+                    frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
+                    frame.dispose();                                                                // Disposing of the frame
+                }
+            }
+        });
+        this.frame.setVisible(true);
     }
+
 
 
 //    ##################################
@@ -389,6 +378,9 @@ public class StoreView {
         StoreView sv3 = new StoreView(sm, sm.assignNewCartID());
         StoreView[] users = {sv1, sv2, sv3};
         int activeSV = users.length;
+        sv1.displayGUI();
+
+
         Scanner sc = new Scanner(System.in);
         while (activeSV > 0) {
             System.out.print("CHOOSE YOUR STOREVIEW >>> ");
@@ -433,6 +425,5 @@ public class StoreView {
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
 
-        sv1.displayGUI();
     }
 }
