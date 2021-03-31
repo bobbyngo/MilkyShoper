@@ -37,24 +37,41 @@ public class StoreView {
 
     // Declaring the panels
     private JPanel mainPanel;
-    private JPanel headerPanel;             // Declaring the header panel will hold simply the header label
-    private JPanel bodyPanel;               // Declaring the body panel will hold the store panel and the cart panel
-    private JPanel storePanel;              // Declaring the store panel which will hold the items of the store
-    private JPanel cartPanel;               // Declaring the cart panel which will display the items in your cart
-//    private JPanel itemInStorePanel;        // Declaring the item panel which will house the information on each item in the store
-//    private JPanel itemInCartPanel;         // "" in the cart
+    private JPanel headerPanel;                     // Declaring the header panel will hold simply the header label
+    private JPanel bodyPanel;                        // Declaring the body panel will hold the store panel and the cart panel
+
+    private JPanel storePanel;                      // Declaring the store panel which will hold the storePanelHeader and storePanelBody
+    private JPanel storePanelHeader;                // Declaring the store header panel which will display the label
+    private JPanel storePanelBody;                  // Declaring the store body panel which will hold the items of the store
+    private JPanel cartPanel;                       // Declaring the cart panel which will hold the cartPanelHeader and cartPanelBody
+    private JPanel cartPanelHeader;                 // Declaring the cart header panel which will display the label
+    private JPanel cartPanelBody;                   // Declaring the cart body panel which will display the items in your cart
+
+    private JPanel footerPanel;
+//    private JPanel itemInStorePanel;              // Declaring the item panel which will house the information on each item in the store
+//    private JPanel itemInCartPanel;               // "" in the cart
+
+    private JPanel productPanel;
+    private JLabel productImage;
+    private JPanel productInfo;
+    private JPanel productSlideBar;
+    private JPanel productButton;
 
     // Declaring the header label, the items list, and the quit button
-    private JLabel headerLabel;             // Declaring the header label; "The Milky Way"
-    private JLabel storeLabel;              // Declaring the store label; "Store"
-    private JLabel cartLabel;               // Declaring the cart label; "Cart"
-    private ArrayList<JPanel> itemsList;    // Declaring the panels inside of the body panel may not be needed
-    private boolean[] itemOutOfStock;       // Declaring the array of booleans to check if an item is out of stock
-    private JButton quitBtn;                // Declaring the button to generate a new palette
-    private JButton addItemToCartBtn;       // Declaring the button to add items FROM the store TO the cart
-    private JButton addItemToStoreBtn;      // Declaring the button to REMOVE items from the cart TO the store (i.e., add to the store from the cart)
-    private JSlider addItemsToCartSld;      // Declaring the slider for how many of a certain item to add to cart
-    private JSlider addItemsToStoreSld;     // Declaring the slider for how many of a certain item to remove from the cart
+    private JLabel headerLabel;                     // Declaring the header label; "The Milky Way"
+    private JLabel storeLabel;                      // Declaring the store label; "Store"
+    private JLabel cartLabel;                       // Declaring the cart label; "Cart"
+    private ArrayList<JPanel> itemsList;            // Declaring the panels inside of the body panel may not be needed
+
+    private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
+
+    private JButton addItemToCartBtn;               // Declaring the button to add items FROM the store TO the cart
+    private JButton addItemToStoreBtn;              // Declaring the button to REMOVE items from the cart TO the store (i.e., add to the store from the cart)
+
+    private JSlider addItemsToCartSld;              // Declaring the slider for how many of a certain item to add to cart
+    private JSlider addItemsToStoreSld;             // Declaring the slider for how many of a certain item to remove from the cart
+
+    private JButton changeStoreButton;              // Change store view button
 
     GridBagConstraints c = new GridBagConstraints();
 
@@ -69,15 +86,33 @@ public class StoreView {
         this.sm = sm;
         this.cartID = cartID;
 
+        //We have 4 layouts: main panel (border) -> panel body (gird layout) -> store, cart (box layout) -> product layout ()
+
         this.frame = new JFrame("Milk Store");
-        this.mainPanel = new JPanel(new BorderLayout());            // Initializing the main panel; BorderLayout
-        this.headerPanel = new JPanel();                            // Initializing the header panel
-        this.bodyPanel = new JPanel(new BorderLayout());            // Initializing the body panel
-        this.storePanel = new JPanel(new BorderLayout());           // Initializing the store panel
-        this.cartPanel = new JPanel(new BorderLayout());            // Initializing the cart panel
+        this.mainPanel = new JPanel(new BorderLayout());                // Initializing the main panel; BorderLayout
+        this.headerPanel = new JPanel();                                // Initializing the header panel
+        this.bodyPanel = new JPanel(new GridLayout());                  // Initializing the body panel
+
+        this.storePanel = new JPanel(new BorderLayout());               // Initializing the store panel
+        this.storePanelHeader = new JPanel(new FlowLayout());
+        this.storePanelBody = new JPanel();
+        this.storePanelBody.setLayout(new BoxLayout(storePanelBody, BoxLayout.Y_AXIS));
+
+
+        this.cartPanel = new JPanel(new BorderLayout());                // Initializing the cart panel
+        this.cartPanelHeader = new JPanel(new BorderLayout());
+        this.cartPanelBody = new JPanel(new GridLayout());
+
+        this.productPanel = new JPanel(new GridLayout(0,1));   //Making the panel for the product
+
+        this.footerPanel = new JPanel(new GridBagLayout());
+
         this.headerLabel = new JLabel();
         this.storeLabel = new JLabel();
         this.cartLabel = new JLabel();
+
+        //Initializing for product panel
+
 
         this.headerLabel.setText("The Milky Way");                                // Initializing the header label
         this.headerLabel.setFont(new Font("Serif", Font.BOLD, 24));     // Setting the font of the header label
@@ -86,25 +121,54 @@ public class StoreView {
         this.cartLabel.setText("Cart");                                           // Initializing the cart label
         this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
 
-        this.quitBtn = new JButton("Quit");
-        quitBtn.addActionListener(new ActionListener() {
+        //This button will allow the customer to switch the store view
+        this.changeStoreButton = new JButton("Change Store View");
+        changeStoreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                frame.setVisible(false);
-                frame.dispose();
+
             }
         });
     }
 
-    public void displayGUI() {
-        this.bodyPanel.setPreferredSize(new Dimension(250, 100));
-        this.headerPanel.setPreferredSize(new Dimension(250, 100));
+    private void productDisplay () throws IOException {
+    // add to body panel
+
+        InputStream in = getClass().getResourceAsStream("2%milk.png");
+        BufferedImage image = ImageIO.read(in);
+
+        Image resizeImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+
+        JLabel imagePanel = new JLabel(new ImageIcon(resizeImage));
+
+        JLabel imagePanel2 = new JLabel(new ImageIcon(resizeImage));
+
+        this.productPanel.setBackground(new Color(255, 0,0));
+
+        this.productPanel.add(imagePanel);
+        this.productPanel.add(imagePanel2);
+        //this.productPanel.add(imagePanel);
+
+        this.storePanelBody.add(productPanel);
+
+
+
+    }
+
+    public void displayGUI() throws IOException {
+        this.headerPanel.setPreferredSize(new Dimension(600, 100));
+        this.bodyPanel.setPreferredSize(new Dimension(600, 400));
+        this.footerPanel.setPreferredSize(new Dimension(600, 100));
+        this.storePanel.setPreferredSize(new Dimension(300,100));
+        this.cartPanel.setPreferredSize(new Dimension(300,100));
 
         this.headerPanel.add(this.headerLabel);
-        this.storePanel.add(this.storeLabel);
-        this.cartPanel.add(this.cartLabel);
+        this.footerPanel.add(this.changeStoreButton);
+        this.storePanelHeader.add(this.storeLabel);
+        this.cartPanelHeader.add(this.cartLabel);
 
-        InputStream imageStream = this.getClass().getResourceAsStream("milk.jpg"); // Getting the milk image
+
+       /* InputStream imageStream = this.getClass().getResourceAsStream("milk.jpg"); // Getting the milk image
         BufferedImage image = null;
 
         try {
@@ -114,7 +178,7 @@ public class StoreView {
         }
 
         JLabel picLabel = new JLabel(new ImageIcon(image));               // Assigning the image to a JLabel
-        picLabel.setPreferredSize(new Dimension(30, 30));     // Setting the preferred image dimension
+        picLabel.setPreferredSize(new Dimension(10, 10));     // Setting the preferred image dimension
 
         for (Integer i : sm.getKeySet()) {
             JPanel itemInStorePanel = new JPanel(new GridBagLayout());
@@ -163,28 +227,43 @@ public class StoreView {
                 }
             });
             itemInStorePanel.add(btn, c);   // Adding the button to the item panel
-            this.storePanel.add(itemInStorePanel);
-        }
+            this.storePanelBody.add(itemInStorePanel);
+        }*/
 
+
+        productDisplay();
+
+        //Add storePanel to the main body panel
+        this.storePanel.add(storePanelHeader, BorderLayout.PAGE_START);
+        this.storePanel.add(storePanelBody, BorderLayout.CENTER);
         this.bodyPanel.add(storePanel);
 
-        this.mainPanel.add(headerPanel);
-        this.mainPanel.add(bodyPanel);
+
+        this.cartPanel.add(cartPanelHeader, BorderLayout.PAGE_START);
+        this.cartPanel.add(cartPanelBody, BorderLayout.CENTER);
+        this.bodyPanel.add(cartPanel);
+
+        this.mainPanel.add(headerPanel, BorderLayout.PAGE_START);
+        this.mainPanel.add(bodyPanel, BorderLayout.CENTER);
+        this.mainPanel.add(footerPanel,BorderLayout.PAGE_END);
 
         this.frame.add(this.mainPanel);                                 // Adding the main panel to the frame
         this.frame.pack();                                              // Packing the frame
 
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.frame.addWindowListener(new WindowAdapter() {                                          // Listener attached to the frame, i.e., if close clicked carry out below code
             @Override
             public void windowClosing(WindowEvent we) {                                             // When the action is that of a window closing carry out below code
-                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
-                        == JOptionPane.OK_OPTION) {
-                    // close it down!
-                    frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
-                    frame.dispose();                                                                // Disposing of the frame
-                }
+            if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
+                    == JOptionPane.OK_OPTION) {
+                // close it down!
+                frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
+                frame.dispose();                                                                // Disposing of the frame
+            }
             }
         });
+
+        //Set the visible of the frame
         this.frame.setVisible(true);
     }
 
@@ -371,7 +450,7 @@ public class StoreView {
 
 
 
-    public static void main (String args[]) {
+    public static void main (String args[]) throws IOException {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
