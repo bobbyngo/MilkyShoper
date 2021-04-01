@@ -239,6 +239,8 @@ public class StoreView {
             });
             itemInStorePanel.add(btn, c);   // Adding the button to the item panel
             this.storePanelBody.add(itemInStorePanel);
+            
+            //For loop ended here
         }
         //Vertical scrollable
         JScrollPane scrollableTextArea = new JScrollPane(this.storePanelBody);
