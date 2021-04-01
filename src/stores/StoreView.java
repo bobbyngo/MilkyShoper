@@ -34,7 +34,9 @@ public class StoreView {
 
     // Declaring the frame
     private JFrame frame;
-
+    /*
+        We don't necessarily need these fields as attributes to the storeView only the JFrame should be a field
+     */
     // Declaring the panels
     private JPanel mainPanel;
     private JPanel headerPanel;                     // Declaring the header panel will hold simply the header label
@@ -130,7 +132,18 @@ public class StoreView {
             }
         });
     }
-
+        /*
+        You should create helper methods specific to each component try to delegate work so that the logic isn't all in one method
+        You could have a method to populate one panel, another to populate something else etc..
+        Make sure you implement logic ASAP -> don't overlook this as functionality is more of a priority than the layout
+        Question to be asking yourself -> where are you going to be handling the logic (how are you going to implement functionality of the different objects
+        Use ctrl+a then -> ctrl+alt+L auto formats your code
+         */
+    private void populateStorePanel(){
+        for(int i=0;i<sm.getInventory().getIdQuantity().keySet().size();i++){
+            //append inventory object to the panel
+        }
+    }
     private void productDisplay () throws IOException {
     // add to body panel
 
