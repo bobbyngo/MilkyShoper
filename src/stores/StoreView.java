@@ -1,4 +1,5 @@
-package stores;// GABRIEL BENNI KELLEY EVENSEN
+package stores;
+// GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
@@ -11,6 +12,7 @@ package stores;// GABRIEL BENNI KELLEY EVENSEN
  */
 
 import java.awt.image.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
@@ -28,6 +30,14 @@ import javax.swing.event.*;
 
 public class StoreView {
 
+    private static final HashMap<Integer, String> IDIMAGE = new HashMap<>(){{
+        put(0, "2%milk.png");
+        put(1, "cowmilk.png");
+        put(2, "buffalomilk.jpg");
+        put(3, "goatmilk.jpg");
+        put(4, "camelmilk.jpg");
+    }};
+
     // Declaring the variables
     private StoreManager sm;
     private int cartID;
@@ -43,25 +53,20 @@ public class StoreView {
     private JPanel storePanel;                      // Declaring the store panel which will hold the storePanelHeader and storePanelBody
     private JPanel storePanelHeader;                // Declaring the store header panel which will display the label
     private JPanel storePanelBody;                  // Declaring the store body panel which will hold the items of the store
+
+
     private JPanel cartPanel;                       // Declaring the cart panel which will hold the cartPanelHeader and cartPanelBody
     private JPanel cartPanelHeader;                 // Declaring the cart header panel which will display the label
     private JPanel cartPanelBody;                   // Declaring the cart body panel which will display the items in your cart
 
     private JPanel footerPanel;
-//    private JPanel itemInStorePanel;              // Declaring the item panel which will house the information on each item in the store
-//    private JPanel itemInCartPanel;               // "" in the cart
 
     private JPanel productPanel;
-    private JLabel productImage;
-    private JPanel productInfo;
-    private JPanel productSlideBar;
-    private JPanel productButton;
 
     // Declaring the header label, the items list, and the quit button
     private JLabel headerLabel;                     // Declaring the header label; "The Milky Way"
     private JLabel storeLabel;                      // Declaring the store label; "Store"
     private JLabel cartLabel;                       // Declaring the cart label; "Cart"
-    private ArrayList<JPanel> itemsList;            // Declaring the panels inside of the body panel may not be needed
 
     private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
 
@@ -86,7 +91,7 @@ public class StoreView {
         this.sm = sm;
         this.cartID = cartID;
 
-        //We have 4 layouts: main panel (border) -> panel body (gird layout) -> store, cart (box layout) -> product layout ()
+        //We have 4 layouts: main panel (border) -> panel body (gird layout) -> store, cart (box layout) -> product layout (grid bag layout)
 
         this.frame = new JFrame("Milk Store");
         this.mainPanel = new JPanel(new BorderLayout());                // Initializing the main panel; BorderLayout
@@ -103,7 +108,7 @@ public class StoreView {
         this.cartPanelHeader = new JPanel(new BorderLayout());
         this.cartPanelBody = new JPanel(new GridLayout());
 
-        this.productPanel = new JPanel(new GridLayout(0,1));   //Making the panel for the product
+        this.productPanel = new JPanel(new GridLayout(0, 1));   //Making the panel for the product
 
         this.footerPanel = new JPanel(new GridBagLayout());
 
@@ -121,6 +126,7 @@ public class StoreView {
         this.cartLabel.setText("Cart");                                           // Initializing the cart label
         this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
 
+
         //This button will allow the customer to switch the store view
         this.changeStoreButton = new JButton("Change Store View");
         changeStoreButton.addActionListener(new ActionListener() {
@@ -131,71 +137,61 @@ public class StoreView {
         });
     }
 
-    private void productDisplay () throws IOException {
-    // add to body panel
-
-        InputStream in = getClass().getResourceAsStream("2%milk.png");
-        BufferedImage image = ImageIO.read(in);
-
-        Image resizeImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-
-        JLabel imagePanel = new JLabel(new ImageIcon(resizeImage));
-
-        JLabel imagePanel2 = new JLabel(new ImageIcon(resizeImage));
-
-        this.productPanel.setBackground(new Color(255, 0,0));
-
-        this.productPanel.add(imagePanel);
-        this.productPanel.add(imagePanel2);
-        //this.productPanel.add(imagePanel);
-
-        this.storePanelBody.add(productPanel);
-
+    private void updateProduct() {
 
 
     }
 
-    public void displayGUI() throws IOException {
-        this.headerPanel.setPreferredSize(new Dimension(600, 100));
-        this.bodyPanel.setPreferredSize(new Dimension(600, 400));
-        this.footerPanel.setPreferredSize(new Dimension(600, 100));
-        this.storePanel.setPreferredSize(new Dimension(300,100));
-        this.cartPanel.setPreferredSize(new Dimension(300,100));
+    private JLabel displayProduct(int id) {
+        JLabel updatedLabel = new JLabel();
+        updatedLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
+        return updatedLabel;
+    }
 
-        this.headerPanel.add(this.headerLabel);
-        this.footerPanel.add(this.changeStoreButton);
-        this.storePanelHeader.add(this.storeLabel);
-        this.cartPanelHeader.add(this.cartLabel);
+    private JLabel imageMapping (int id) throws IOException {
+        JLabel imagePanel = null;
+        if (IDIMAGE.containsKey(id)){
+            InputStream in = getClass().getResourceAsStream(IDIMAGE.get(id));
+            BufferedImage image = ImageIO.read(in);
 
+            Image resizeImage = image.getScaledInstance(150, 200, Image.SCALE_SMOOTH);
 
-       /* InputStream imageStream = this.getClass().getResourceAsStream("milk.jpg"); // Getting the milk image
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(imageStream);                            // Assigning to image
-        } catch (IOException e) {                                         // Catch for I/O exceptions
-            e.printStackTrace();                                          // Print error to StackTrace
+            imagePanel = new JLabel(new ImageIcon(resizeImage));
         }
+        return imagePanel;
+    }
 
-        JLabel picLabel = new JLabel(new ImageIcon(image));               // Assigning the image to a JLabel
-        picLabel.setPreferredSize(new Dimension(10, 10));     // Setting the preferred image dimension
+    private void productDisplay() throws IOException {
+        // add to body panel
 
-        for (Integer i : sm.getKeySet()) {
+        for (Integer id : sm.getKeySet()) {
+
             JPanel itemInStorePanel = new JPanel(new GridBagLayout());
-            itemInStorePanel.setPreferredSize(new Dimension(80, 100));
+            itemInStorePanel.setPreferredSize(new Dimension(200, 250));
+            itemInStorePanel.setBackground(new Color(173, 216, 230));
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            itemInStorePanel.setBorder(blackline);
 
+            c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = 0;
             c.gridy = 0;
-            itemInStorePanel.add(picLabel, c);
+            itemInStorePanel.add(imageMapping(id), c);
 
             c.gridx = 1;
             c.gridy = 0;
-            itemInStorePanel.add(new JLabel(sm.getProduct().get(i).getName() + " at " +
-                    sm.getProduct().get(i).getPrice() + "$/unit"), c);
+            itemInStorePanel.add(displayProduct(id) ,c);
 
             c.gridx = 0;
             c.gridy = 1;
-            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getQuantity().get(i), 0);
+            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getQuantity().get(id), 0);
+
+            //Display number of product in the slider
+            sld.setMinorTickSpacing(5);
+            sld.setMajorTickSpacing(10);
+            sld.setPaintTicks(true);
+            sld.setPaintLabels(true);
+
             // Change listener on the slider
             // When the slider is moved to some integer x, store x in the 'value' variable
             final int[] value = {0};
@@ -220,7 +216,22 @@ public class StoreView {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     try {
-                        sm.removeCartInventory(sm.getProduct().get(i).getId(), value[0], cartID);
+                        int removedID = sm.getProduct().get(id).getId();
+                        sm.removeCartInventory(removedID, value[0], cartID);
+
+                        System.out.println("Stock Quantity: " + sm.getQuantity().get(id));
+                        System.out.println("Removed value: " + value[0]);
+
+                        c.gridx = 1;
+                        c.gridy = 0;
+                        itemInStorePanel.remove(displayProduct(id));
+                        itemInStorePanel.add(displayProduct(id), c);
+
+
+                        if (value[0] > sm.getQuantity().get(id)){
+                            JOptionPane.showMessageDialog(frame, "This item is out of stock");
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -228,14 +239,36 @@ public class StoreView {
             });
             itemInStorePanel.add(btn, c);   // Adding the button to the item panel
             this.storePanelBody.add(itemInStorePanel);
-        }*/
+        }
+        //Vertical scrollable
+        JScrollPane scrollableTextArea = new JScrollPane(this.storePanelBody);
+        scrollableTextArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //scrollableTextArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        this.storePanel.add(scrollableTextArea, BorderLayout.CENTER);
+    }
+
+
+
+    public void displayGUI() throws IOException {
+        this.headerPanel.setPreferredSize(new Dimension(600, 100));
+        this.bodyPanel.setPreferredSize(new Dimension(800, 400));
+        this.footerPanel.setPreferredSize(new Dimension(600, 100));
+        this.storePanel.setPreferredSize(new Dimension(600, 600));
+        this.cartPanel.setPreferredSize(new Dimension(300, 100));
+
+        this.headerPanel.add(this.headerLabel);
+        this.footerPanel.add(this.changeStoreButton);
+        this.storePanelHeader.add(this.storeLabel);
+        this.cartPanelHeader.add(this.cartLabel);
+
 
 
         productDisplay();
 
         //Add storePanel to the main body panel
         this.storePanel.add(storePanelHeader, BorderLayout.PAGE_START);
-        this.storePanel.add(storePanelBody, BorderLayout.CENTER);
+        //this.storePanel.add(storePanelBody, BorderLayout.CENTER);
         this.bodyPanel.add(storePanel);
 
 
@@ -245,7 +278,7 @@ public class StoreView {
 
         this.mainPanel.add(headerPanel, BorderLayout.PAGE_START);
         this.mainPanel.add(bodyPanel, BorderLayout.CENTER);
-        this.mainPanel.add(footerPanel,BorderLayout.PAGE_END);
+        this.mainPanel.add(footerPanel, BorderLayout.PAGE_END);
 
         this.frame.add(this.mainPanel);                                 // Adding the main panel to the frame
         this.frame.pack();                                              // Packing the frame
@@ -254,19 +287,19 @@ public class StoreView {
         this.frame.addWindowListener(new WindowAdapter() {                                          // Listener attached to the frame, i.e., if close clicked carry out below code
             @Override
             public void windowClosing(WindowEvent we) {                                             // When the action is that of a window closing carry out below code
-            if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
-                    == JOptionPane.OK_OPTION) {
-                // close it down!
-                frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
-                frame.dispose();                                                                // Disposing of the frame
-            }
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")  // If the option selected is okay carry out below code
+                        == JOptionPane.OK_OPTION) {
+                    // close it down!
+                    frame.setVisible(false);                                                        // Setting the frame visibility of the frame to FALSE
+                    frame.dispose();                                                                // Disposing of the frame
+                    System.exit(-1);
+                }
             }
         });
 
         //Set the visible of the frame
         this.frame.setVisible(true);
     }
-
 
 
 //    ##################################
@@ -276,7 +309,7 @@ public class StoreView {
     /**
      * The helpDisplay method will give the information about the command lines
      */
-    private void helpDisplay(){
+    private void helpDisplay() {
         System.out.println("browse | add | remove | checkout | quit");
     }
 
@@ -335,12 +368,13 @@ public class StoreView {
 //
 //    }
 
-    /** YET TO IMPLEMENT
+    /**
+     * YET TO IMPLEMENT
      * The removeDisplay will be called when the user want to remove items from their cart. This methods will called the addCartInventory
      * method in the stores.StoreManager class which will remove the items from their cart and add the items back to the stores.Inventory.
      */
     private void removeDisplay() {
-        if (sm.getCustomerCart(cartID).size() == 0){
+        if (sm.getCustomerCart(cartID).size() == 0) {
             System.out.println("Your cart is empty, nothing to remove\n");
 
         } else {
@@ -380,17 +414,18 @@ public class StoreView {
 
     }
 
-    /** YET TO IMPLEMENT
+    /**
+     * YET TO IMPLEMENT
      * The checkOutDisplay will print out the information of the products in the customer's cart with the total price
      */
     private void checkOutDisplay() {
         System.out.println("|----------THE COURSE STORE----------|");
         System.out.println("\\-------------CHECK OUT-------------/\n");
         System.out.println("\\-------------YOUR CART------------/\n");
-        if (sm.getCustomerCart(cartID).size() == 0){
+        if (sm.getCustomerCart(cartID).size() == 0) {
             System.out.println("Your cart is empty, The amount to pay is $0\n");
 
-        }else {
+        } else {
             System.out.println("Amount | ID | stores.Product Name | Unit Price");
             //Display the total
             System.out.println(sm.processTransaction(cartID));
@@ -400,6 +435,7 @@ public class StoreView {
     /**
      * This method will display the user interface, it will display all the functions that the stores.StoreView has such as add items,
      * remove items, help, browse the store, check out and quit.
+     *
      * @return true if the user enters quit, otherwise false
      */
     public boolean displayUI() {
@@ -415,25 +451,25 @@ public class StoreView {
             helpDisplay();
         }
 
-        if (demand.equals("browse")){
+        if (demand.equals("browse")) {
 //            browseDisplay();
         }
 
-        if (demand.equals("add")){
+        if (demand.equals("add")) {
 //            addDisplay();
         }
 
-        if (demand.equals("remove")){
+        if (demand.equals("remove")) {
             removeDisplay();
         }
 
-        if (demand.equals("checkout")){
+        if (demand.equals("checkout")) {
             checkOutDisplay();
             System.out.println("Good bye");
             return true;
         }
 
-        if (demand.equals("quit")){             //if quit without checkout the product will be added back to the inventory
+        if (demand.equals("quit")) {             //if quit without checkout the product will be added back to the inventory
             sm.emptyCustomerCart(cartID);
             System.out.println("Good bye");
             return true;
@@ -441,7 +477,7 @@ public class StoreView {
         }
 
         if ((!demand.equals("help") && !demand.equals("browse") && !demand.equals("add") &&
-        !demand.equals("remove") && !demand.equals("checkout") && !demand.equals("quit"))) {
+                !demand.equals("remove") && !demand.equals("checkout") && !demand.equals("quit"))) {
             System.out.println("Please enter the valid command");
             System.out.println("Type help for the list of commands\n");
         }
@@ -449,8 +485,7 @@ public class StoreView {
     }
 
 
-
-    public static void main (String args[]) throws IOException {
+    public static void main(String args[]) throws IOException {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
@@ -469,38 +504,38 @@ public class StoreView {
             //Try-catch Exception block, if the user input invalid storeview number, the error will be displayed
             try {
                 choice = sc.nextInt();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Your store view choosing is not valid");
                 System.out.println("Please try again\n");
                 break;
             }
 
-                if (choice < users.length && choice >= 0) {
-                    if (users[choice] != null) {
-                        String chooseAnother = "";
-                        while (!chooseAnother.equals("y") && !chooseAnother.equals("Y")) {
-                            // this implementation of displayGUI waits for input and displays the page
-                            // corresponding to the user's input. it does this once, and then returns
-                            // true if the user entered 'checkout' or 'quit'.
-                            if (users[choice].displayUI()) {
-                                users[choice] = null;
-                                activeSV--;
-                                break;
-                            }
-                            System.out.println("GO TO ANOTHER STOREVIEW? (y) ");
-                            System.out.println("IF NOT YOU CAN ENTER ANYTHING ");
-                            chooseAnother = sc.next();
+            if (choice < users.length && choice >= 0) {
+                if (users[choice] != null) {
+                    String chooseAnother = "";
+                    while (!chooseAnother.equals("y") && !chooseAnother.equals("Y")) {
+                        // this implementation of displayGUI waits for input and displays the page
+                        // corresponding to the user's input. it does this once, and then returns
+                        // true if the user entered 'checkout' or 'quit'.
+                        if (users[choice].displayUI()) {
+                            users[choice] = null;
+                            activeSV--;
+                            break;
                         }
-                    } else {
-                        System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
+                        System.out.println("GO TO ANOTHER STOREVIEW? (y) ");
+                        System.out.println("IF NOT YOU CAN ENTER ANYTHING ");
+                        chooseAnother = sc.next();
                     }
                 } else {
-                    System.out.println(
-                            String.format("MAIN > ERROR > BAD CHOICE\nPLEASE CHOOSE IN RANGE [%d, %d]",
-                                    0, users.length - 1)
-                    );
+                    System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
                 }
+            } else {
+                System.out.println(
+                        String.format("MAIN > ERROR > BAD CHOICE\nPLEASE CHOOSE IN RANGE [%d, %d]",
+                                0, users.length - 1)
+                );
+            }
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
 
