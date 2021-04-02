@@ -121,7 +121,7 @@ public class StoreView {
 
 
     /**
-     * This method will display the product information of the Inventory class and put it to the label
+     * This method will display the product information of the Inventory class and put it to the new JLabel
      * @param id the id of the product
      * @return JLabel, the JLabel which has the information of the product of the Inventory class
      */
@@ -133,7 +133,8 @@ public class StoreView {
     }
 
     /**
-     * This method will display the JLabel which has the image corresponding to the id of the product with the width 150 and height 150
+     * This method will display the image corresponding to the id of the product with the width 150 and height 150
+     * and add the image to the new JLabel
      * @param id the id of the product
      * @return JLabel which has the image
      * @throws IOException
