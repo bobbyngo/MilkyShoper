@@ -32,7 +32,7 @@ import javax.swing.event.*;
 
 public class StoreView {
 
-    private final HashMap<Integer, String> IDIMAGE = new HashMap<>(){{
+    private final HashMap<Integer, String> IDIMAGE = new HashMap<>() {{
         put(0, "2%milk.png");
         put(1, "cowmilk.png");
         put(2, "buffalomilk.jpg");
@@ -60,7 +60,7 @@ public class StoreView {
     private JPanel cartPanelHeader;                 // Declaring the cart header panel which will display the label
     private JPanel cartPanelBody;                   // Declaring the cart body panel which will display the items in your cart
 
-    private JPanel footerPanel;
+    private JPanel footerPanel;                     // Declaring the footerPanel where will have the check out button
 
     private JLabel headerLabel;                     // Declaring the header label; "The Milky Way"
     private JLabel storeLabel;                      // Declaring the store label; "Store"
@@ -74,8 +74,8 @@ public class StoreView {
     /**
      * Constructor for the stores.StoreView
      *
-     * @param sm
-     * @param cartID
+     * @param sm StoreManager reference
+     * @param cartID unique cart ID
      */
     public StoreView(StoreManager sm, int cartID) {
         this.sm = sm;
@@ -120,6 +120,11 @@ public class StoreView {
     }
 
 
+    /**
+     * This method will display the product information of the Inventory class and put it to the label
+     * @param id the id of the product
+     * @return JLabel, the JLabel which has the information of the product of the Inventory class
+     */
     private JLabel displayProduct(int id) {
         JLabel updatedLabel = new JLabel();
         updatedLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
@@ -127,9 +132,15 @@ public class StoreView {
         return updatedLabel;
     }
 
-    private JLabel imageMapping (int id) throws IOException {
+    /**
+     * This method will display the JLabel which has the image corresponding to the id of the product with the width 150 and height 150
+     * @param id the id of the product
+     * @return JLabel which has the image
+     * @throws IOException
+     */
+    private JLabel imageMapping(int id) throws IOException {
         JLabel imagePanel = null;
-        if (IDIMAGE.containsKey(id)){
+        if (IDIMAGE.containsKey(id)) {
             InputStream in = getClass().getResourceAsStream(IDIMAGE.get(id));
             BufferedImage image = ImageIO.read(in);
 
@@ -140,13 +151,20 @@ public class StoreView {
         return imagePanel;
     }
 
+    /**
+     * This method will loop through all the products in the Inventory and create the GidBagLayout each time for each product,
+     * This method called the imageMapping and the displayProduct method to give the information of the product
+     * The Add to cart button will call the removeCartInventory from the StoreManger inside its actionListener method, so that the
+     * users can add the product to their cart
+     * @throws IOException
+     */
     private void productDisplay() throws IOException {
 
         for (Integer id : sm.getKeySet()) {
 
             JPanel itemInStorePanel = new JPanel(new GridBagLayout());
             itemInStorePanel.setPreferredSize(new Dimension(200, 250));
-            itemInStorePanel.setBackground(new Color(166,223,242));
+            itemInStorePanel.setBackground(new Color(166, 223, 242));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInStorePanel.setBorder(blackline);
 
@@ -158,7 +176,7 @@ public class StoreView {
             c.gridx = 1;
             c.gridy = 0;
             JLabel productLabel = displayProduct(id);
-            itemInStorePanel.add(productLabel ,c);
+            itemInStorePanel.add(productLabel, c);
 
             c.gridx = 0;
             c.gridy = 1;
@@ -195,7 +213,7 @@ public class StoreView {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     try {
-                        if (value[0] > sm.getQuantity().get(id)){
+                        if (value[0] > sm.getQuantity().get(id)) {
                             JOptionPane.showMessageDialog(frame, "This item is out of stock");
                             return;
                         }
@@ -236,7 +254,7 @@ public class StoreView {
         for (Integer id : sm.getCustomerCart(cartID).keySet()) {
             JPanel itemInCartPanel = new JPanel(new GridBagLayout());
             itemInCartPanel.setPreferredSize(new Dimension(200, 250));
-            itemInCartPanel.setBackground(new Color(176,242,180));
+            itemInCartPanel.setBackground(new Color(176, 242, 180));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInCartPanel.setBorder(blackline);
 
@@ -247,7 +265,7 @@ public class StoreView {
 
             c.gridx = 1;
             c.gridy = 0;
-            itemInCartPanel.add(displayProduct(id) ,c);
+            itemInCartPanel.add(displayProduct(id), c);
 
             c.gridx = 0;
             c.gridy = 1;
@@ -263,7 +281,12 @@ public class StoreView {
         }
     }
 
-    private void footerDisplay () {
+    /**
+     * This method will create the check out button at the footerPanel
+     * The checkout button will call the processTransaction method from the StoreManger class which will display the receipt message
+     * After the OK button inside the receipt message is clicked, the program will exit
+     */
+    private void footerDisplay() {
 
         JButton checkOutBtn = new JButton("Check Out");
         checkOutBtn.addActionListener(new ActionListener() {
@@ -271,7 +294,7 @@ public class StoreView {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (sm.getCustomerCart(cartID).size() == 0) {
                     JOptionPane.showMessageDialog(frame, "Your stock is empty", "Your Receipt", JOptionPane.ERROR_MESSAGE);
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(frame, "Amount | ID | stores.Product Name | Unit Price\n"
                             + sm.processTransaction(cartID), "Your Receipt", JOptionPane.PLAIN_MESSAGE);
                     System.exit(-1);
@@ -282,6 +305,10 @@ public class StoreView {
         this.footerPanel.add(checkOutBtn);
     }
 
+    /**
+     * This method will add all the panels to the frame and display the GUI
+     * @throws IOException
+     */
     public void displayGUI() throws IOException {
         this.headerPanel.setPreferredSize(new Dimension(600, 100));
         this.bodyPanel.setPreferredSize(new Dimension(800, 400));
@@ -299,12 +326,10 @@ public class StoreView {
 
         //Add storePanel to the main body panel
         this.storePanel.add(storePanelHeader, BorderLayout.PAGE_START);
-        //this.storePanel.add(storePanelBody, BorderLayout.CENTER);
         this.bodyPanel.add(storePanel);
 
 
         this.cartPanel.add(cartPanelHeader, BorderLayout.PAGE_START);
-        //this.cartPanel.add(cartPanelBody, BorderLayout.CENTER);
         this.bodyPanel.add(cartPanel);
 
         this.mainPanel.add(headerPanel, BorderLayout.PAGE_START);
