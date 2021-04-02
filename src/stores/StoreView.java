@@ -11,6 +11,8 @@ package stores;
  * @version 1.0
  */
 
+import org.junit.jupiter.api.extension.ExtensionContext;
+
 import java.awt.image.*;
 
 import java.io.*;
@@ -125,6 +127,7 @@ public class StoreView {
 
             }
         });
+
     }
 
 
@@ -270,6 +273,40 @@ public class StoreView {
         }
     }
 
+    private void footerDisplay () {
+        //Change StoreView
+        StoreView sv4 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv5 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv6 = new StoreView(sm, sm.assignNewCartID());
+        StoreView[] users = {sv4, sv5, sv6};
+        JComboBox storeList = new JComboBox(users);
+        storeList.setSelectedIndex(0);
+        storeList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        JButton checkOutBtn = new JButton("Check Out");
+        checkOutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (sm.getCustomerCart(cartID).size() == 0) {
+                    JOptionPane.showMessageDialog(frame, "Your stock is empty");
+                }else {
+                    JOptionPane.showMessageDialog(frame, "Amount | ID | stores.Product Name | Unit Price\n"
+                            + sm.processTransaction(cartID));
+                }
+            }
+        });
+
+
+        this.footerPanel.add(storeList);
+        this.footerPanel.add(this.changeStoreButton);
+        this.footerPanel.add(checkOutBtn);
+
+    }
 
     public void displayGUI() throws IOException {
         this.headerPanel.setPreferredSize(new Dimension(600, 100));
@@ -278,13 +315,12 @@ public class StoreView {
         this.storePanel.setPreferredSize(new Dimension(600, 600));
         this.cartPanel.setPreferredSize(new Dimension(600, 600));
 
+        productDisplay();
+        footerDisplay();
+
         this.headerPanel.add(this.headerLabel);
-        this.footerPanel.add(this.changeStoreButton);
         this.storePanelHeader.add(this.storeLabel);
         this.cartPanelHeader.add(this.cartLabel);
-
-
-        productDisplay();
 
 
         //Add storePanel to the main body panel
@@ -507,12 +543,25 @@ public class StoreView {
 
 
     public static void main(String args[]) throws IOException {
+        //Change StoreView
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv3 = new StoreView(sm, sm.assignNewCartID());
         StoreView[] users = {sv1, sv2, sv3};
+        JComboBox storeList = new JComboBox(users);
+        storeList.setSelectedIndex(0);
+        storeList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        //sv1.footerPanel.add(storeList);
+
         int activeSV = users.length;
+
         sv1.displayGUI();
 
 
