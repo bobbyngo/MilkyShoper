@@ -199,6 +199,11 @@ public class StoreView {
                             JOptionPane.showMessageDialog(frame, "This item is out of stock");
                             return;
                         }
+                        else if (value[0] == 0) {
+                            JOptionPane.showMessageDialog(frame, "Please choose the amount greater than 0");
+                            return;
+                        }
+
                         int removedID = sm.getProduct().get(id).getId();
                         sm.removeCartInventory(removedID, value[0], cartID);
 
@@ -258,7 +263,7 @@ public class StoreView {
             sld.setPaintTicks(true);
             sld.setPaintLabels(true);
 
-            this.storePanelBody.add(itemInCartPanel);
+            this.cartPanelBody.add(itemInCartPanel);
         }
     }
 
