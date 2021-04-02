@@ -30,7 +30,7 @@ import javax.swing.event.*;
 
 public class StoreView {
 
-    private static final HashMap<Integer, String> IDIMAGE = new HashMap<>(){{
+    private final HashMap<Integer, String> IDIMAGE = new HashMap<>(){{
         put(0, "2%milk.png");
         put(1, "cowmilk.png");
         put(2, "buffalomilk.jpg");
@@ -54,27 +54,17 @@ public class StoreView {
     private JPanel storePanelHeader;                // Declaring the store header panel which will display the label
     private JPanel storePanelBody;                  // Declaring the store body panel which will hold the items of the store
 
-
     private JPanel cartPanel;                       // Declaring the cart panel which will hold the cartPanelHeader and cartPanelBody
     private JPanel cartPanelHeader;                 // Declaring the cart header panel which will display the label
     private JPanel cartPanelBody;                   // Declaring the cart body panel which will display the items in your cart
 
     private JPanel footerPanel;
 
-    private JPanel productPanel;
-
-    // Declaring the header label, the items list, and the quit button
     private JLabel headerLabel;                     // Declaring the header label; "The Milky Way"
     private JLabel storeLabel;                      // Declaring the store label; "Store"
     private JLabel cartLabel;                       // Declaring the cart label; "Cart"
 
     private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
-
-    private JButton addItemToCartBtn;               // Declaring the button to add items FROM the store TO the cart
-    private JButton addItemToStoreBtn;              // Declaring the button to REMOVE items from the cart TO the store (i.e., add to the store from the cart)
-
-    private JSlider addItemsToCartSld;              // Declaring the slider for how many of a certain item to add to cart
-    private JSlider addItemsToStoreSld;             // Declaring the slider for how many of a certain item to remove from the cart
 
     private JButton changeStoreButton;              // Change store view button
 
@@ -105,10 +95,10 @@ public class StoreView {
 
 
         this.cartPanel = new JPanel(new BorderLayout());                // Initializing the cart panel
-        this.cartPanelHeader = new JPanel(new BorderLayout());
-        this.cartPanelBody = new JPanel(new GridLayout());
+        this.cartPanelHeader = new JPanel(new FlowLayout());
+        this.cartPanelBody = new JPanel();
+        this.cartPanelBody.setLayout(new BoxLayout(cartPanelBody, BoxLayout.Y_AXIS));
 
-        this.productPanel = new JPanel(new GridLayout(0, 1));   //Making the panel for the product
 
         this.footerPanel = new JPanel(new GridBagLayout());
 
@@ -137,15 +127,11 @@ public class StoreView {
         });
     }
 
-    private void updateProduct() {
-
-
-    }
 
     private JLabel displayProduct(int id) {
         JLabel updatedLabel = new JLabel();
         updatedLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
+                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br> " + "Quantity: " + sm.getQuantity().get(id) + "</html>");
         return updatedLabel;
     }
 
@@ -155,7 +141,7 @@ public class StoreView {
             InputStream in = getClass().getResourceAsStream(IDIMAGE.get(id));
             BufferedImage image = ImageIO.read(in);
 
-            Image resizeImage = image.getScaledInstance(150, 200, Image.SCALE_SMOOTH);
+            Image resizeImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 
             imagePanel = new JLabel(new ImageIcon(resizeImage));
         }
@@ -163,13 +149,12 @@ public class StoreView {
     }
 
     private void productDisplay() throws IOException {
-        // add to body panel
 
         for (Integer id : sm.getKeySet()) {
 
             JPanel itemInStorePanel = new JPanel(new GridBagLayout());
             itemInStorePanel.setPreferredSize(new Dimension(200, 250));
-            itemInStorePanel.setBackground(new Color(173, 216, 230));
+            itemInStorePanel.setBackground(new Color(166,223,242));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInStorePanel.setBorder(blackline);
 
@@ -180,7 +165,8 @@ public class StoreView {
 
             c.gridx = 1;
             c.gridy = 0;
-            itemInStorePanel.add(displayProduct(id) ,c);
+            JLabel productLabel = displayProduct(id);
+            itemInStorePanel.add(productLabel ,c);
 
             c.gridx = 0;
             c.gridy = 1;
@@ -194,6 +180,7 @@ public class StoreView {
 
             // Change listener on the slider
             // When the slider is moved to some integer x, store x in the 'value' variable
+            //int[] value = {0};
             final int[] value = {0};
             sld.addChangeListener(new ChangeListener() {
                 @Override
@@ -216,21 +203,21 @@ public class StoreView {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     try {
+                        if (value[0] > sm.getQuantity().get(id)){
+                            JOptionPane.showMessageDialog(frame, "This item is out of stock");
+                            return;
+                        }
                         int removedID = sm.getProduct().get(id).getId();
                         sm.removeCartInventory(removedID, value[0], cartID);
 
-                        System.out.println("Stock Quantity: " + sm.getQuantity().get(id));
-                        System.out.println("Removed value: " + value[0]);
+                        System.out.println("Inventory: " + sm.getQuantity().get(id));
+                        System.out.println("slider value " + value[0]);
+                        System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
 
-                        c.gridx = 1;
-                        c.gridy = 0;
-                        itemInStorePanel.remove(displayProduct(id));
-                        itemInStorePanel.add(displayProduct(id), c);
+                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
 
-
-                        if (value[0] > sm.getQuantity().get(id)){
-                            JOptionPane.showMessageDialog(frame, "This item is out of stock");
-                        }
+                        cartDisplay();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -239,7 +226,7 @@ public class StoreView {
             });
             itemInStorePanel.add(btn, c);   // Adding the button to the item panel
             this.storePanelBody.add(itemInStorePanel);
-            
+
             //For loop ended here
         }
         //Vertical scrollable
@@ -251,13 +238,45 @@ public class StoreView {
     }
 
 
+    private void cartDisplay() throws IOException {
+
+        for (Integer id : sm.getCustomerCart(cartID).keySet()) {
+            JPanel itemInCartPanel = new JPanel(new GridBagLayout());
+            itemInCartPanel.setPreferredSize(new Dimension(200, 250));
+            itemInCartPanel.setBackground(new Color(176,242,180));
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            itemInCartPanel.setBorder(blackline);
+
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridx = 0;
+            c.gridy = 0;
+            itemInCartPanel.add(imageMapping(id), c);
+
+            c.gridx = 1;
+            c.gridy = 0;
+            itemInCartPanel.add(displayProduct(id) ,c);
+
+            c.gridx = 0;
+            c.gridy = 1;
+            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getQuantity().get(id), 0);
+
+            //Display number of product in the slider
+            sld.setMinorTickSpacing(5);
+            sld.setMajorTickSpacing(10);
+            sld.setPaintTicks(true);
+            sld.setPaintLabels(true);
+
+            this.storePanelBody.add(itemInCartPanel);
+        }
+    }
+
 
     public void displayGUI() throws IOException {
         this.headerPanel.setPreferredSize(new Dimension(600, 100));
         this.bodyPanel.setPreferredSize(new Dimension(800, 400));
         this.footerPanel.setPreferredSize(new Dimension(600, 100));
         this.storePanel.setPreferredSize(new Dimension(600, 600));
-        this.cartPanel.setPreferredSize(new Dimension(300, 100));
+        this.cartPanel.setPreferredSize(new Dimension(600, 600));
 
         this.headerPanel.add(this.headerLabel);
         this.footerPanel.add(this.changeStoreButton);
@@ -265,8 +284,8 @@ public class StoreView {
         this.cartPanelHeader.add(this.cartLabel);
 
 
-
         productDisplay();
+
 
         //Add storePanel to the main body panel
         this.storePanel.add(storePanelHeader, BorderLayout.PAGE_START);
@@ -275,7 +294,7 @@ public class StoreView {
 
 
         this.cartPanel.add(cartPanelHeader, BorderLayout.PAGE_START);
-        this.cartPanel.add(cartPanelBody, BorderLayout.CENTER);
+        //this.cartPanel.add(cartPanelBody, BorderLayout.CENTER);
         this.bodyPanel.add(cartPanel);
 
         this.mainPanel.add(headerPanel, BorderLayout.PAGE_START);
