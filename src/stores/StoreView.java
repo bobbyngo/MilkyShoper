@@ -68,8 +68,6 @@ public class StoreView {
 
     private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
 
-    private JButton changeStoreButton;              // Change store view button
-
     GridBagConstraints c = new GridBagConstraints();
 
 
@@ -118,15 +116,6 @@ public class StoreView {
         this.cartLabel.setText("Cart");                                           // Initializing the cart label
         this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
 
-
-        //This button will allow the customer to switch the store view
-        this.changeStoreButton = new JButton("Change Store View");
-        changeStoreButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
 
     }
 
@@ -220,7 +209,7 @@ public class StoreView {
                         productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
 
-                        cartDisplay();
+                        //cartDisplay();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -274,38 +263,22 @@ public class StoreView {
     }
 
     private void footerDisplay () {
-        //Change StoreView
-        StoreView sv4 = new StoreView(sm, sm.assignNewCartID());
-        StoreView sv5 = new StoreView(sm, sm.assignNewCartID());
-        StoreView sv6 = new StoreView(sm, sm.assignNewCartID());
-        StoreView[] users = {sv4, sv5, sv6};
-        JComboBox storeList = new JComboBox(users);
-        storeList.setSelectedIndex(0);
-        storeList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
 
         JButton checkOutBtn = new JButton("Check Out");
         checkOutBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (sm.getCustomerCart(cartID).size() == 0) {
-                    JOptionPane.showMessageDialog(frame, "Your stock is empty");
+                    JOptionPane.showMessageDialog(frame, "Your stock is empty", "Your Receipt", JOptionPane.ERROR_MESSAGE);
                 }else {
                     JOptionPane.showMessageDialog(frame, "Amount | ID | stores.Product Name | Unit Price\n"
-                            + sm.processTransaction(cartID));
+                            + sm.processTransaction(cartID), "Your Receipt", JOptionPane.PLAIN_MESSAGE);
+                    System.exit(-1);
                 }
             }
         });
 
-
-        this.footerPanel.add(storeList);
-        this.footerPanel.add(this.changeStoreButton);
         this.footerPanel.add(checkOutBtn);
-
     }
 
     public void displayGUI() throws IOException {
@@ -545,7 +518,10 @@ public class StoreView {
     public static void main(String args[]) throws IOException {
         //Change StoreView
         StoreManager sm = new StoreManager();
-        StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv = new StoreView(sm, sm.assignNewCartID());
+        sv.displayGUI();
+
+/*        StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv3 = new StoreView(sm, sm.assignNewCartID());
         StoreView[] users = {sv1, sv2, sv3};
@@ -560,10 +536,10 @@ public class StoreView {
 
         //sv1.footerPanel.add(storeList);
 
-        int activeSV = users.length;
+        int activeSV = users.length;*/
 
-        sv1.displayGUI();
 
+/*
 
         Scanner sc = new Scanner(System.in);
         while (activeSV > 0) {
@@ -607,7 +583,7 @@ public class StoreView {
                 );
             }
         }
-        System.out.println("ALL STOREVIEWS DEACTIVATED");
+        System.out.println("ALL STOREVIEWS DEACTIVATED");*/
 
     }
 }
