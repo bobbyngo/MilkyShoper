@@ -59,13 +59,6 @@ public class ShoppingCart {
             //Remove product with id from the amount to the customer's cart
             customerCart.put(id, customerCart.get(id) - amount);
 
-            //Remove products that have 0 quantity in the customer cart
-            if (customerCart.get(id) == 0) {
-                customerCart.remove(id);
-            }
-        //}else {
-            //System.out.println("\nstores.Inventory: The amount you want to remove exceeding the amount in your cart");
-        //}
     }
 
     /**
