@@ -71,7 +71,7 @@ public class StoreView {
     /**
      * Constructor for the stores.StoreView
      *
-     * @param sm StoreManager reference
+     * @param sm     StoreManager reference
      * @param cartID unique cart ID
      */
     public StoreView(StoreManager sm, int cartID) {
@@ -121,6 +121,7 @@ public class StoreView {
 
     /**
      * This method will display the product information in the store panel of the Inventory class and put it to the new JLabel
+     *
      * @param id the id of the product
      * @return JLabel, the JLabel which has the information of the product of the Inventory class
      */
@@ -133,6 +134,7 @@ public class StoreView {
 
     /**
      * This method will display the product information in the cart panel of the Inventory class and put it to the new JLabel
+     *
      * @param id the id of the product
      * @return JLabel, the JLabel which has the information of the product of the Inventory class
      */
@@ -146,6 +148,7 @@ public class StoreView {
     /**
      * This method will display the image corresponding to the id of the product with the width 150 and height 150
      * and add the image to the new JLabel
+     *
      * @param id the id of the product
      * @return JLabel which has the image
      * @throws IOException
@@ -168,6 +171,7 @@ public class StoreView {
      * This method called the imageMapping and the displayProduct method to give the information of the product
      * The Add to cart button will call the removeCartInventory from the StoreManger inside its actionListener method, so that the
      * users can add the product to their cart
+     *
      * @throws IOException
      */
     private void productDisplay() throws IOException {
@@ -271,6 +275,7 @@ public class StoreView {
      * This method called the imageMapping and the displayProduct method to give the information of the product
      * The Remove from cart button will call the removeCartInventory from the StoreManger inside its actionListener method, so that the
      * users can remove the product from their cart; to the store
+     *
      * @throws IOException
      */
     private void cartDisplay() throws IOException {
@@ -279,7 +284,7 @@ public class StoreView {
 
             JPanel itemInCartPanel = new JPanel(new GridBagLayout());
             itemInCartPanel.setPreferredSize(new Dimension(200, 250));
-            itemInCartPanel.setBackground(new Color(176,242,180));
+            itemInCartPanel.setBackground(new Color(176, 242, 180));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInCartPanel.setBorder(blackline);
 
@@ -332,8 +337,7 @@ public class StoreView {
                         if (value[0] == 0) {
                             JOptionPane.showMessageDialog(frame, "Must remove at least one item");
                             return;
-                        }
-                        else if (value[0] > sm.getCustomerCart(cartID).get(id)){
+                        } else if (value[0] > sm.getCustomerCart(cartID).get(id)) {
                             JOptionPane.showMessageDialog(frame, "You are removing more items than are in your cart");
                             return;
                         }
@@ -397,6 +401,7 @@ public class StoreView {
 
     /**
      * This method will add all the panels to the frame and display the GUI
+     *
      * @throws IOException
      */
     public void displayGUI() throws IOException {

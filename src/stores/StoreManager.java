@@ -1,4 +1,5 @@
-package stores;// GABRIEL BENNI KELLEY EVENSEN
+package stores;
+// GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
@@ -9,6 +10,7 @@ package stores;// GABRIEL BENNI KELLEY EVENSEN
  * @author Ngo Huu Gia Bao, 101163137
  * @version 2.0
  */
+
 import java.util.*;
 
 
@@ -25,22 +27,21 @@ public class StoreManager {
     /**
      * Method for getting stocks
      */
-    public void checkStock(int id){
-        System.out.println( "stores.Product:- " + this.inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id) );
+    public void checkStock(int id) {
+        System.out.println("stores.Product:- " + this.inventory.getInfoProduct().get(id).getName() + " | Stock:- " + inventory.gettingQuantity(id));
     }
 
     /***
      * Method to process a transaction given an Array of stores.Product information [ [productID, buyQuantity], ...]
      */
-    public void processTransactionOld(Integer[][] product_array){
+    public void processTransactionOld(Integer[][] product_array) {
         double total = 0.00;
         Map<Integer, Integer> product_map = new HashMap<Integer, Integer>(product_array.length);
-        for (Integer[] mapping : product_array)
-        {
+        for (Integer[] mapping : product_array) {
             product_map.put(mapping[0], mapping[1]);
 
             if (inventory.getIdQuantity().get(mapping[0]) - mapping[1] >= 0) {
-                total += mapping[1]*inventory.getInfoProduct().get(mapping[0]).getPrice();
+                total += mapping[1] * inventory.getInfoProduct().get(mapping[0]).getPrice();
             }
 
             inventory.removingQuantity(mapping[0], mapping[1]);
@@ -57,6 +58,7 @@ public class StoreManager {
     /**
      * This method retrieve the quantity of the stores.Product to give the access to the stores.StoreView
      * through the hashmap in the stores.Inventory class
+     *
      * @return hashmap with ID and Quantity
      */
     public HashMap<Integer, Integer> getQuantity() {
@@ -67,6 +69,7 @@ public class StoreManager {
     /**
      * This method retrieve the information of the stores.Product to give the access to the stores.StoreView
      * through the hashmap in the stores.Inventory class
+     *
      * @return HashMap with ID and stores.Product
      */
     public HashMap<Integer, Product> getProduct() {
@@ -77,26 +80,28 @@ public class StoreManager {
     /**
      * This method retrieve the ID of of the stores.Product to give the access to the stores.StoreView
      * through the gettingProduct method in the stores.Inventory class
+     *
      * @return Set of Integer
      */
-    public Set<Integer> getKeySet () {
+    public Set<Integer> getKeySet() {
         return this.inventory.getAvailableID();
     }
 
     /**
      * Method for getting the shopping cart
      */
-    public HashMap<Integer, ShoppingCart> getShoppingCart(){
+    public HashMap<Integer, ShoppingCart> getShoppingCart() {
         return this.shoppingCart;
     }
 
     /**
      * This method will add the cartID as a key and the stores.ShoppingCart object as the value to organize.
      * It will increment the counterCartID by 1 and pass it to the cartID inside the stores.ShoppingCart class
+     *
      * @return incremented counterCartID
      */
     public int assignNewCartID() {
-       counterCartID ++;
+        counterCartID++;
         ShoppingCart sc = new ShoppingCart(counterCartID);
         shoppingCart.put(counterCartID, sc);
         return counterCartID;
@@ -105,6 +110,7 @@ public class StoreManager {
 
     /**
      * This method will give the access to the customerCart HashMap inside the stores.ShoppingCart class
+     *
      * @param cartID int, the unique cart ID of the customer
      * @return HashMap, the customerCart which stores the id and quantity of the product
      */
@@ -117,11 +123,12 @@ public class StoreManager {
      * This method is called inside the addDisplay of the stores.StoreView. It will check if the id and the amount is valid, then
      * add those information to the customerCart Hashmap in the stores.ShoppingCart class first. Then the method will remove
      * those product from inventory class
-     * @param id int, the id of the product that the customer wants to remove from their cart
+     *
+     * @param id       int, the id of the product that the customer wants to remove from their cart
      * @param quantity int, the quantity that the customer remove from their cart
-     * @param cartID int, the unique cart ID of the customer
+     * @param cartID   int, the unique cart ID of the customer
      */
-    public void removeCartInventory (int id, int quantity, int cartID) {
+    public void removeCartInventory(int id, int quantity, int cartID) {
 
         //Because the addCustomerProduct will check the availability of the product of the inventory class
         //so if we remove the product from the inventory first, we cannot add product to the cart
@@ -136,7 +143,7 @@ public class StoreManager {
 
             //Remove quantity of the given id from the inventory
             inventory.removingQuantity(id, quantity);
-        }else {
+        } else {
             System.out.println("StoreManager: The amount you entered is more than what we have in the Inventory\n");
         }
 
@@ -146,11 +153,12 @@ public class StoreManager {
     /**
      * This method is called inside the removeDisplay of the stores.StoreView. It will check if the id and the amount is valid, then
      * remove those information from the customerCart Hashmap and add those back to the inventory class
-     * @param id int, the id of the product that the customer wants to remove from their cart
+     *
+     * @param id       int, the id of the product that the customer wants to remove from their cart
      * @param quantity int, the quantity that the customer remove from their cart
-     * @param cartID int, the unique cart ID of the customer
+     * @param cartID   int, the unique cart ID of the customer
      */
-    public void addCartInventory (int id, int quantity, int cartID) {
+    public void addCartInventory(int id, int quantity, int cartID) {
         //Access to the shoppingCart hashmap to get the ShoppingCart value based on the key cartID, then accessing to the
         //customerCart hashmap inside the ShoppingCart class,
         //then get the quantity value of the customerCart hashmap by using the key id
@@ -166,7 +174,7 @@ public class StoreManager {
             int originalAmount = inventory.getIdQuantity().get(id);
             inventory.getIdQuantity().put(id, originalAmount + quantity);
 
-        }else {
+        } else {
             System.out.println("StoreManager: The amount you want to remove exceeding the amount in your cart\n");
         }
     }
@@ -175,15 +183,16 @@ public class StoreManager {
     /**
      * This method will print out the receipt of the customer by accessing the customerCart Hashmap inside the Shopping Cart class
      * and the gettingProduct method inside the stores.Inventory class to retrieve product the information
+     *
      * @param cartID int, the unique cart ID of the customer
      * @return String which have been formatting as the receipt
      */
-    public String processTransaction (int cartID) {
+    public String processTransaction(int cartID) {
 
         StringBuilder stringBuilder = new StringBuilder();
         double total = 0;
 
-        for (Integer i: shoppingCart.get(cartID).getCustomerCart().keySet()) {
+        for (Integer i : shoppingCart.get(cartID).getCustomerCart().keySet()) {
 
             //Accessing to the every value (the quantity of the product) of the HashMap in the Shopping Cart with the id i
             stringBuilder.append(shoppingCart.get(cartID).getCustomerCart().get(i))

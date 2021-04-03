@@ -1,7 +1,9 @@
-package stores;// GABRIEL BENNI KELLEY EVENSEN
+package stores;
+// GABRIEL BENNI KELLEY EVENSEN
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
+
 /**
  * A class representing a stores.Product
  *
@@ -14,28 +16,28 @@ public class Product {
     private final int id;
     private final double price;
 
-    public Product (String name, int id, double price) {
+    public Product(String name, int id, double price) {
         this.name = name;
         this.id = id;
         this.price = price;
     }
 
     /**
-        * Get the name of the stores.Product
+     * Get the name of the stores.Product
      */
     public String getName() {
         return name;
     }
 
     /**
-        * Get the ID of the stores.Product
+     * Get the ID of the stores.Product
      */
     public int getId() {
         return id;
     }
 
     /**
-        * Get the Price of the stores.Product
+     * Get the Price of the stores.Product
      */
     public double getPrice() {
         return price;
