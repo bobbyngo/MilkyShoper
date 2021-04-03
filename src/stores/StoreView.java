@@ -66,6 +66,9 @@ public class StoreView {
     private JLabel storeLabel;                      // Declaring the store label; "Store"
     private JLabel cartLabel;                       // Declaring the cart label; "Cart"
 
+    private ArrayList<Integer> storeItemQuantities;  // Declaring the ArrayList<JPanel> of the quantities in the storePanelBody
+    private ArrayList<Integer> cartItemQuantities;   // Decalring the ArrayList<JPanel> of the quantities in the cartPanelBody
+
     private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
 
     GridBagConstraints c = new GridBagConstraints();
@@ -105,6 +108,9 @@ public class StoreView {
         this.headerLabel = new JLabel();
         this.storeLabel = new JLabel();
         this.cartLabel = new JLabel();
+
+        this.cartItemQuantities = new ArrayList<>();
+        this.storeItemQuantities = new ArrayList<>();
 
         //Initializing for product panel
 
@@ -169,6 +175,8 @@ public class StoreView {
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInStorePanel.setBorder(blackline);
 
+//            storeItemQuantities.set(sm.getProduct().get(id).getId(), sm.getQuantity().get(id));
+
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = 0;
             c.gridy = 0;
@@ -226,10 +234,13 @@ public class StoreView {
                         System.out.println("slider value " + value[0]);
                         System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
 
-                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
+//                        storeItemQuantities.set(removedID, sm.getQuantity().get(id));
+//                        cartItemQuantities.set(removedID, value[0]);
 
-                        //cartDisplay();
+                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + storeItemQuantities.get(removedID) + "</html>");
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -252,12 +263,15 @@ public class StoreView {
 
     private void cartDisplay() throws IOException {
 
-        for (Integer id : sm.getCustomerCart(cartID).keySet()) {
+        for (Integer id : sm.getKeySet()) {
+
             JPanel itemInCartPanel = new JPanel(new GridBagLayout());
             itemInCartPanel.setPreferredSize(new Dimension(200, 250));
-            itemInCartPanel.setBackground(new Color(176, 242, 180));
+            itemInCartPanel.setBackground(new Color(0, 223, 0));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInCartPanel.setBorder(blackline);
+
+//            this.cartItemQuantities.set(id, 0);
 
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = 0;
@@ -266,7 +280,8 @@ public class StoreView {
 
             c.gridx = 1;
             c.gridy = 0;
-            itemInCartPanel.add(displayProduct(id), c);
+            JLabel productLabel = displayProduct(id);
+            itemInCartPanel.add(productLabel, c);
 
             c.gridx = 0;
             c.gridy = 1;
@@ -278,8 +293,65 @@ public class StoreView {
             sld.setPaintTicks(true);
             sld.setPaintLabels(true);
 
+            // Change listener on the slider
+            // When the slider is moved to some integer x, store x in the 'value' variable
+            //int[] value = {0};
+            final int[] value = {0};
+            sld.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent changeEvent) {
+                    JSlider slider = (JSlider) changeEvent.getSource();
+                    if (!slider.getValueIsAdjusting()) {    // If the slider is not currently moving carry out the below
+                        value[0] = slider.getValue();
+                    }
+                }
+            });
+            itemInCartPanel.add(sld, c);   // Adding the slider to the item panel
+
+            c.gridx = 1;
+            c.gridy = 1;
+            JButton btn = new JButton("Remove from cart");
+            // Action listener on the "Add to cart" button
+            // When an action (i.e., press) is performed on the button remove the 'value' amount (described in the
+            // above ChangeListener) of the current product, from the cart with the corresponding cartID.
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    try {
+                        if (value[0] > sm.getQuantity().get(id)) {
+                            JOptionPane.showMessageDialog(frame, "This item is out of stock");
+                            return;
+                        }
+
+                        int removedID = sm.getProduct().get(id).getId();
+                        sm.addCartInventory(removedID, value[0], cartID);
+
+//                        storeItemQuantities.set(removedID, value[0]);
+//                        cartItemQuantities.set(removedID, value[0]);
+
+                        System.out.println("Inventory: " + sm.getQuantity().get(id));
+                        System.out.println("slider value " + value[0]);
+                        System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
+
+                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: " + sm.getQuantity().get(id) + "</html>");
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            itemInCartPanel.add(btn, c);                // Adding the button to the item panel
             this.cartPanelBody.add(itemInCartPanel);
+
+            //For loop ended here
         }
+        //Vertical scrollable
+        JScrollPane scrollableTextArea = new JScrollPane(this.cartPanelBody);
+        scrollableTextArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //scrollableTextArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        this.cartPanel.add(scrollableTextArea, BorderLayout.CENTER);
     }
 
     /**
@@ -318,6 +390,7 @@ public class StoreView {
         this.cartPanel.setPreferredSize(new Dimension(600, 600));
 
         productDisplay();
+        cartDisplay();
         footerDisplay();
 
         this.headerPanel.add(this.headerLabel);
