@@ -232,8 +232,6 @@ public class StoreView {
                         int removedID = sm.getProduct().get(id).getId();
                         sm.removeCartInventory(removedID, value[0], cartID);
 
-//                        sm.getCustomerCart(cartID).put(id, value[0]);
-
                         System.out.println("Inventory: " + sm.getQuantity().get(id));
                         System.out.println("slider value " + value[0]);
                         System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
@@ -252,12 +250,12 @@ public class StoreView {
 
             //For loop ended here
         }
+
         //Vertical scrollable
         JScrollPane scrollableTextArea = new JScrollPane(this.storePanelBody);
         scrollableTextArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         this.storePanel.add(scrollableTextArea, BorderLayout.CENTER);
-
     }
 
 
