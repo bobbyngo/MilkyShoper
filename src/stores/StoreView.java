@@ -62,11 +62,13 @@ public class StoreView {
 
     private JPanel footerPanel;                     // Declaring the footerPanel where will have the check out button
 
+    private ArrayList<JLabel> listStoreBodyPanelLabels;  // Declaring the ArrayList<JPanel> to keep track of the JPanels in store
+    private ArrayList<JLabel> listCartBodyPanelLabel;   // Declaring the ArrayList<JPanel> to keep track of the JPanels in cart
+    private ArrayList<JSlider> sliderCartBodyPanel;     // Declaring the ArrayList<JSlider> to keep track of the slider in each cart item
+
     private JLabel headerLabel;                     // Declaring the header label; "The Milky Way"
     private JLabel storeLabel;                      // Declaring the store label; "Store"
     private JLabel cartLabel;                       // Declaring the cart label; "Cart"
-
-    private boolean[] itemOutOfStock;               // Declaring the array of booleans to check if an item is out of stock
 
     GridBagConstraints c = new GridBagConstraints();
 
@@ -93,7 +95,6 @@ public class StoreView {
         this.storePanelBody = new JPanel();
         this.storePanelBody.setLayout(new BoxLayout(storePanelBody, BoxLayout.Y_AXIS));
 
-
         this.cartPanel = new JPanel(new BorderLayout());                // Initializing the cart panel
         this.cartPanelHeader = new JPanel(new FlowLayout());
         this.cartPanelBody = new JPanel();
@@ -102,13 +103,15 @@ public class StoreView {
 
         this.footerPanel = new JPanel(new GridBagLayout());
 
+        this.listCartBodyPanelLabel = new ArrayList<>();
+        this.listStoreBodyPanelLabels = new ArrayList<>();
+        this.sliderCartBodyPanel = new ArrayList<>();
+
         this.headerLabel = new JLabel();
         this.storeLabel = new JLabel();
         this.cartLabel = new JLabel();
 
         //Initializing for product panel
-
-
         this.headerLabel.setText("The Milky Way");                                // Initializing the header label
         this.headerLabel.setFont(new Font("Serif", Font.BOLD, 24));     // Setting the font of the header label
         this.storeLabel.setText("Store");                                         // Initializing the store label
@@ -220,11 +223,10 @@ public class StoreView {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     try {
-                        if (value[0] == 0){
+                        if (value[0] == 0) {
                             JOptionPane.showMessageDialog(frame, "Must add at least one item");
                             return;
-                        }
-                        else if (value[0] > sm.getQuantity().get(id)) {
+                        } else if (value[0] > sm.getQuantity().get(id)) {
                             JOptionPane.showMessageDialog(frame, "This item has insufficient stock");
                             return;
                         }
@@ -240,16 +242,20 @@ public class StoreView {
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
                                 + sm.getQuantity().get(id) + "</html>");
 
+                        listCartBodyPanelLabel.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getCustomerCart(cartID).get(id) + "</html>");
+
+                        sliderCartBodyPanel.get(id).setMaximum(sm.getCustomerCart(cartID).get(id));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
-            itemInStorePanel.add(btn, c);   // Adding the button to the item panel
+            itemInStorePanel.add(btn, c);                       // Adding the button to the item panel
             this.storePanelBody.add(itemInStorePanel);
-
-            //For loop ended here
-        }
+            this.listStoreBodyPanelLabels.add(productLabel);
+        }   // End of for loop
 
         //Vertical scrollable
         JScrollPane scrollableTextArea = new JScrollPane(this.storePanelBody);
@@ -307,9 +313,11 @@ public class StoreView {
             c.gridx = 1;
             c.gridy = 1;
             JButton btn = new JButton("Remove from cart");
+
             // Action listener on the "Add to cart" button
             // When an action (i.e., press) is performed on the button remove the 'value' amount (described in the
             // above ChangeListener) of the current product, from the cart with the corresponding cartID.
+            int[] click = {0};
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -334,15 +342,18 @@ public class StoreView {
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
                                 + sm.getCustomerCart(cartID).get(id) + "</html>");
 
-
+                        listStoreBodyPanelLabels.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getQuantity().get(id) + "</html>");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
-            itemInCartPanel.add(btn, c);   // Adding the button to the item panel
+            itemInCartPanel.add(btn, c);                    // Adding the button to the item panel
             this.cartPanelBody.add(itemInCartPanel);
-
+            this.listCartBodyPanelLabel.add(productLabel);
+            this.sliderCartBodyPanel.add(sld);
             //For loop ended here
         }
         //Vertical scrollable
