@@ -452,56 +452,56 @@ public class StoreView {
      * The browseDisplay will print out all the information about the products that exist in the inventory
      * with the give format
      */
-//    private void browseDisplay() {
-//        System.out.println("|----------THE COURSE STORE----------|");
-//        System.out.println("\\---------------BROWSE---------------/\n");
-//        System.out.println("Stock | ID | stores.Product Name | Unit Price");
-//
-//        for (Integer i : sm.getKeySet()) {
-//            System.out.println(sm.getQuantity().get(i) + " | "
-//                    + sm.getProduct().get(i).getId() + " | "
-//                    + sm.getProduct().get(i).getName() + " | "
-//                    + "$" + sm.getProduct().get(i).getPrice());
-//        }
-//    }
+    private void browseDisplay() {
+        System.out.println("|----------THE COURSE STORE----------|");
+        System.out.println("\\---------------BROWSE---------------/\n");
+        System.out.println("Stock | ID | stores.Product Name | Unit Price");
+
+        for (Integer i : sm.getKeySet()) {
+            System.out.println(sm.getQuantity().get(i) + " | "
+                    + sm.getProduct().get(i).getId() + " | "
+                    + sm.getProduct().get(i).getName() + " | "
+                    + "$" + sm.getProduct().get(i).getPrice());
+        }
+    }
 
     /**
      * The addDisplay will be called when the user want to add the items into their cart. This methods will called the removeCartInventory
      * method in the stores.StoreManager class which will add the items into their cart and remove the items from the stores.Inventory.
      */
-//    private void addDisplay() {
-//        System.out.println("|----------THE COURSE STORE----------|");
-//        System.out.println("\\----------------ADD----------------/\n");
-//        System.out.println("Stock | ID | stores.Product Name | Unit Price ");
-//
-//        for (Integer i : sm.getKeySet()) {
-//            System.out.println(sm.getQuantity().get(i) + " | "
-//                    + sm.getProduct().get(i).getId() + " | "
-//                    + sm.getProduct().get(i).getName() + " | "
-//                    + "$" + sm.getProduct().get(i).getPrice());
-//        }
-//        System.out.println("\nPlease choose the ID of the stores.Product to add");
-//        Scanner myObj = new Scanner(System.in);
-//
-//        try {
-//            int id = myObj.nextInt();
-//            if (sm.getQuantity().containsKey(id)) {
-//                System.out.println("\nPlease choose the amount want to add");
-//                myObj = new Scanner(System.in);
-//                int quantity = myObj.nextInt();
-//
-//                sm.removeCartInventory(id, quantity, cartID);
-//
-//            }else {
-//                System.out.println("\nYour ID is not available " +
-//                        "\nPlease choose the available ID");
-//            }
-//        }catch (Exception e) {
-//            System.out.println(e);
-//            System.out.println("Please enter valid choice \n");
-//        }
-//
-//    }
+    private void addDisplay() {
+        System.out.println("|----------THE COURSE STORE----------|");
+        System.out.println("\\----------------ADD----------------/\n");
+        System.out.println("Stock | ID | stores.Product Name | Unit Price ");
+
+        for (Integer i : sm.getKeySet()) {
+            System.out.println(sm.getQuantity().get(i) + " | "
+                    + sm.getProduct().get(i).getId() + " | "
+                    + sm.getProduct().get(i).getName() + " | "
+                    + "$" + sm.getProduct().get(i).getPrice());
+        }
+        System.out.println("\nPlease choose the ID of the stores.Product to add");
+        Scanner myObj = new Scanner(System.in);
+
+        try {
+            int id = myObj.nextInt();
+            if (sm.getQuantity().containsKey(id)) {
+                System.out.println("\nPlease choose the amount want to add");
+                myObj = new Scanner(System.in);
+                int quantity = myObj.nextInt();
+
+                sm.removeCartInventory(id, quantity, cartID);
+
+            }else {
+                System.out.println("\nYour ID is not available " +
+                        "\nPlease choose the available ID");
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Please enter valid choice \n");
+        }
+
+    }
 
     /**
      * The removeDisplay will be called when the user want to remove items from their cart. This methods will called the addCartInventory
@@ -586,11 +586,11 @@ public class StoreView {
         }
 
         if (demand.equals("browse")) {
-//            browseDisplay();
+            browseDisplay();
         }
 
         if (demand.equals("add")) {
-//            addDisplay();
+            addDisplay();
         }
 
         if (demand.equals("remove")) {
@@ -625,7 +625,7 @@ public class StoreView {
         StoreView sv = new StoreView(sm, sm.assignNewCartID());
         sv.displayGUI();
 
-/*        StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
+        StoreView sv1 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv2 = new StoreView(sm, sm.assignNewCartID());
         StoreView sv3 = new StoreView(sm, sm.assignNewCartID());
         StoreView[] users = {sv1, sv2, sv3};
@@ -640,10 +640,9 @@ public class StoreView {
 
         //sv1.footerPanel.add(storeList);
 
-        int activeSV = users.length;*/
+        int activeSV = users.length;
 
 
-/*
 
         Scanner sc = new Scanner(System.in);
         while (activeSV > 0) {
@@ -687,7 +686,7 @@ public class StoreView {
                 );
             }
         }
-        System.out.println("ALL STOREVIEWS DEACTIVATED");*/
+        System.out.println("ALL STOREVIEWS DEACTIVATED");
 
     }
 }

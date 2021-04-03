@@ -87,6 +87,7 @@ public class Inventory {
         }*/
     }
 
+
     /**
      * Get information on a stores.Product given a stores.Product ID
      * @param id int, the id of the product

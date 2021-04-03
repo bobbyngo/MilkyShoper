@@ -43,7 +43,7 @@ public class ShoppingCart {
     public void addCustomerProduct (int id, int amount) {
         //if (amount <= storeManager.getQuantity().get(id) && storeManager.getQuantity().containsKey(id)) {
             //Add product id with the amount to the customer's cart
-            customerCart.put(id, amount);
+            customerCart.put(id, customerCart.get(id) + amount);
         //}
     }
 
