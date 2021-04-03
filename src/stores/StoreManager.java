@@ -84,14 +84,6 @@ public class StoreManager {
     }
 
     /**
-     * Method for getting the inventory
-     * @return inventory
-     */
-    public Inventory getInventory(){
-        return this.inventory;
-    }
-
-    /**
      * Method for getting the shopping cart
      */
     public HashMap<Integer, ShoppingCart> getShoppingCart(){
