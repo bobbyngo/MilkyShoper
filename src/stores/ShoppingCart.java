@@ -16,7 +16,6 @@ public class ShoppingCart {
 
     private int cartID;
     private HashMap <Integer, Integer> customerCart = new HashMap<>(); //id quantity
-    private StoreManager storeManager = new StoreManager();
 
     /**
      * The constructor of the stores.ShoppingCart class

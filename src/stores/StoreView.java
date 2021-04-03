@@ -57,7 +57,7 @@ public class StoreView {
 
     private JPanel footerPanel;                     // Declaring the footerPanel where will have the check out button
 
-    private ArrayList<JLabel> listStoreBodyPanelLabels;  // Declaring the ArrayList<JPanel> to keep track of the JPanels in store
+    private ArrayList<JLabel> listStoreBodyPanelLabel;  // Declaring the ArrayList<JPanel> to keep track of the JPanels in store
     private ArrayList<JLabel> listCartBodyPanelLabel;   // Declaring the ArrayList<JPanel> to keep track of the JPanels in cart
     private ArrayList<JSlider> sliderCartBodyPanel;     // Declaring the ArrayList<JSlider> to keep track of the slider in each cart item
 
@@ -65,7 +65,7 @@ public class StoreView {
     private JLabel storeLabel;                      // Declaring the store label; "Store"
     private JLabel cartLabel;                       // Declaring the cart label; "Cart"
 
-    GridBagConstraints c = new GridBagConstraints();
+    private GridBagConstraints c;
 
 
     /**
@@ -99,7 +99,7 @@ public class StoreView {
         this.footerPanel = new JPanel(new GridBagLayout());
 
         this.listCartBodyPanelLabel = new ArrayList<>();
-        this.listStoreBodyPanelLabels = new ArrayList<>();
+        this.listStoreBodyPanelLabel = new ArrayList<>();
         this.sliderCartBodyPanel = new ArrayList<>();
 
         this.headerLabel = new JLabel();
@@ -113,6 +113,7 @@ public class StoreView {
         this.storeLabel.setFont(new Font("Serif", Font.BOLD, 18));      // Setting the font of the store label
         this.cartLabel.setText("Cart");                                           // Initializing the cart label
         this.cartLabel.setFont(new Font("Serif", Font.BOLD, 18));       // Setting the font of the cart label
+        this.c = new GridBagConstraints();
 
 
     }
@@ -249,7 +250,7 @@ public class StoreView {
             });
             itemInStorePanel.add(btn, c);                       // Adding the button to the item panel
             this.storePanelBody.add(itemInStorePanel);
-            this.listStoreBodyPanelLabels.add(productLabel);
+            this.listStoreBodyPanelLabel.add(productLabel);
         }   // End of for loop
 
         //Vertical scrollable
@@ -266,7 +267,7 @@ public class StoreView {
 
             JPanel itemInCartPanel = new JPanel(new GridBagLayout());
             itemInCartPanel.setPreferredSize(new Dimension(200, 250));
-            itemInCartPanel.setBackground(new Color(0, 223, 0));
+            itemInCartPanel.setBackground(new Color(176,242,180));
             Border blackline = BorderFactory.createLineBorder(Color.black);
             itemInCartPanel.setBorder(blackline);
 
@@ -336,7 +337,7 @@ public class StoreView {
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
                                 + sm.getCustomerCart(cartID).get(id) + "</html>");
 
-                        listStoreBodyPanelLabels.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
+                        listStoreBodyPanelLabel.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
                                 + sm.getQuantity().get(id) + "</html>");
                     } catch (Exception e) {
