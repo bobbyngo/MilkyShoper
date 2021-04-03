@@ -326,7 +326,7 @@ public class StoreView {
                             JOptionPane.showMessageDialog(frame, "Must remove at least one item");
                             return;
                         }
-                        else if (value[0] > sm.getQuantity().get(id)){
+                        else if (value[0] > sm.getCustomerCart(cartID).get(id)){
                             JOptionPane.showMessageDialog(frame, "You are removing more items than are in your cart");
                             return;
                         }
