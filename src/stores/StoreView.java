@@ -331,8 +331,8 @@ public class StoreView {
                             return;
                         }
 
-                        int removedID = sm.getProduct().get(id).getId();
-                        sm.addCartInventory(removedID, value[0], cartID);
+                        int addedID = sm.getProduct().get(id).getId();
+                        sm.addCartInventory(addedID, value[0], cartID);
 
                         System.out.println("Inventory: " + sm.getQuantity().get(id));
                         System.out.println("slider value " + value[0]);
