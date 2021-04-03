@@ -210,24 +210,4 @@ public class StoreManager {
         return stringBuilder.toString();
 
     }
-
-    /**
-     * This method will be called inside the quit method of the stores.StoreView. For the situation that the customer quit the store without
-     * checking out. It will loop through the customerCart HashMap which is the customer's cart, the method will remove all of the items
-     * and put them back to the inventory
-     * @param cartID int, the unique cart ID of the customer
-     */
-    public void emptyCustomerCart (int cartID) {
-        for (int i: shoppingCart.get(cartID).getCustomerCart().keySet()) {
-
-            //The quantity that is inside the customer's cart
-            int currentAmount = shoppingCart.get(cartID).getCustomerCart().get(i);
-
-            //Add the quantity back to the IdQuantity HashMap inside the stores.Inventory class
-            inventory.getIdQuantity().put(i, currentAmount);
-
-            //Remove the item inside the customerCart HashMap inside the stores.ShoppingCart class
-            shoppingCart.get(cartID).getCustomerCart().remove(i);
-        }
-    }
 }

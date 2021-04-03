@@ -235,9 +235,10 @@ public class StoreView {
                         int removedID = sm.getProduct().get(id).getId();
                         sm.removeCartInventory(removedID, value[0], cartID);
 
-                        System.out.println("Inventory: " + sm.getQuantity().get(id));
-                        System.out.println("slider value " + value[0]);
-                        System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
+                        //Debugging lines
+                        //System.out.println("Inventory: " + sm.getQuantity().get(id));
+                        //System.out.println("slider value " + value[0]);
+                        //System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
 
                         productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
@@ -340,9 +341,10 @@ public class StoreView {
                         int addedID = sm.getProduct().get(id).getId();
                         sm.addCartInventory(addedID, value[0], cartID);
 
-                        System.out.println("Inventory: " + sm.getQuantity().get(id));
-                        System.out.println("slider value " + value[0]);
-                        System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
+                        //Debugging lines
+                        //System.out.println("Inventory: " + sm.getQuantity().get(id));
+                        //System.out.println("slider value " + value[0]);
+                        //System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
 
                         productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
                                 "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "

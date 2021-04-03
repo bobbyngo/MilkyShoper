@@ -45,12 +45,14 @@ public class StoreManagerTest {
         sm.removeCartInventory(0, 5, sc1.getCartID());
 
         //Test customer cart is added or not
-        assertEquals(5, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0),
+        assertEquals(5, sm.getCustomerCart(sc1.getCartID()).get(0),
                 "The customerCart hashmap in the Shopping Cart class is not added \n");
 
         //Test inventory is removed or not
-        assertEquals(15, sm.getShoppingCart().get(sc1.getCartID()),
+        assertEquals(15, sm.getQuantity().get(0),
                 "The idQuantity hashmap in the Inventory class is not removed\n");
+
+
     }
 
     /**
@@ -61,7 +63,7 @@ public class StoreManagerTest {
         sm.removeCartInventory(0, 5, sc1.getCartID());
         sm.addCartInventory(0, 5, sc1.getCartID());
 
-        assertEquals(20, sm.getInventory().getIdQuantity().get(0),
+        assertEquals(20, sm.getQuantity().get(0),
                 "The customerCart hashmap in the Inventory class is not added");
     }
 
@@ -72,17 +74,13 @@ public class StoreManagerTest {
     @Test
     public void testProcessTransaction() {
         sm.removeCartInventory(0, 10, sc1.getCartID());
-        assertEquals("10 | 0 | 1% milk | 43.0\n" + "The total is: 43.0", sm.processTransaction(sc1.getCartID()), "The testProcessTransaction() method returned unexpected result.");
+        assertEquals("10 | 0 | 2% milk | 43.0\n"
+                        + "0 | 1 | cow milk | 0.0\n"
+                        + "0 | 2 | buffalo milk | 0.0\n"
+                        + "0 | 3 | goat milk | 0.0\n"
+                        + "0 | 4 | camel milk | 0.0\n"
+                        + "The total is: 43.0"
+                , sm.processTransaction(sc1.getCartID()), "The testProcessTransaction() method returned unexpected result.");
     }
 
-    /**
-     * Method to test the processTransaction method in StoreManager.java
-     */
-    @Test
-    public void testEmptyCustomerCart () {
-        sm.emptyCustomerCart(0);
-        assertEquals(null, sm.getShoppingCart().get(sc1.getCartID()).getCustomerCart().get(0), "The emptyCustomerCart() method returned unexpected result.");
-        assertEquals(5, sm.getInventory().getIdQuantity().size());
-        assertEquals(5, sm.getInventory().getInfoProduct().size());
-    }
 }
