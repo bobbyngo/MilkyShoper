@@ -23,7 +23,14 @@ public class ShoppingCart {
      * @param cartID int, the cartID of the stores.ShoppingCart class
      */
     public ShoppingCart (int cartID) {
+
         this.cartID = cartID;
+        this.customerCart.put(0,0);
+        this.customerCart.put(1,0);
+        this.customerCart.put(2,0);
+        this.customerCart.put(3,0);
+        this.customerCart.put(4,0);
+
     }
 
     /**
