@@ -49,7 +49,7 @@ public class StoreManagerTest {
                 "The customerCart hashmap in the Shopping Cart class is not added \n");
 
         //Test inventory is removed or not
-        assertEquals(15, sm.getInventory().getIdQuantity().get(0),
+        assertEquals(15, sm.getShoppingCart().get(sc1.getCartID()),
                 "The idQuantity hashmap in the Inventory class is not removed\n");
     }
 
