@@ -11,13 +11,12 @@ package stores;
  * @version 2.0
  */
 
-import stores.Product;
-
 import java.util.HashMap;
 import java.util.Set;
 
-public class Inventory {
-    private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, stores.Product)
+public class Inventory implements ProductStockContainer{
+
+    private HashMap<Integer, Product> infoProduct = new HashMap<>(); //(id, Product)
     private HashMap<Integer, Integer> idQuantity = new HashMap<>(); //(id, quantity)
 
 
@@ -74,6 +73,17 @@ public class Inventory {
         return -1;
     }
 
+
+    /**
+     * Add a specified amount of stock for a given stores.Product ID from the inventory
+     * @param id      int, the id of the product
+     * @param amount, int the amount of the product to add
+     */
+    public void addProductQuantity(int id, int amount){
+        int originalAmount = idQuantity.get(id);
+        idQuantity.put(id, originalAmount + amount);
+    }
+
     /**
      * Remove a specified amount of stock for a given stores.Product ID from the inventory (Note: you cannot
      * have negative stock, and you cannot delete Products from the stores.Inventory; if a stores.Product’s stock
@@ -82,13 +92,8 @@ public class Inventory {
      * @param id      int, the id of the product
      * @param amount, int the amount of the product to remove
      */
-    public void removingQuantity(int id, int amount) {
-        //if (idQuantity.containsKey(id) && idQuantity.get(id) >= amount) {
+    public void removeProductQuantity(int id, int amount) {
         idQuantity.put(id, idQuantity.get(id) - amount);
-        //}
-        /*else {
-            System.out.println("\nstores.Inventory: The amount you entered is more than what we have");
-        }*/
     }
 
 
@@ -121,5 +126,53 @@ public class Inventory {
         return infoProduct;
     }
 
+
+    /**
+     *                                         MILESTONE 5
+     */
+
+    /**
+     * The implemented method which will return the quantity of product inside the Inventory
+     * that associates with the given Product
+     * @param product Product
+     * @return int, the quantity of product inside the ShoppingCart
+     */
+    @Override
+    public int getProductQuantity(Product product) {
+        return idQuantity.get(product.getId());
+    }
+
+    /**
+     * The implemented method which will add the quantity of product to the Inventory
+     * that associates with the given Product
+     * @param product Product
+     * @param amount the quantity the Inventory that wants to add
+     */
+    @Override
+    public void addProductQuantity(Product product, int amount) {
+        addProductQuantity(product.getId(), amount);
+    }
+
+    /**
+     * The implemented method which will remove the quantity of product from the Inventory
+     * that associates with the given Product
+     * @param product Product
+     * @param amount the quantity the Inventory that wants to remove
+     */
+    @Override
+    public void removeProductQuantity(Product product, int amount) {
+        removeProductQuantity(product.getId(), amount);
+    }
+
+
+    /**
+     * The implemented method will return the number of product that is available inside
+     * the Inventory
+     * @return int, the number of available products inside the Inventory
+     */
+    @Override
+    public int getNumOfProducts() {
+        return idQuantity.size();
+    }
 }
 

@@ -133,10 +133,10 @@ public class StoreView {
     }
 
     /**
-     * This method will display the product information in the cart panel of the Inventory class and put it to the new JLabel
+     * This method will display the product information in the cart panel of the ShoppingCart class and put it to the new JLabel
      *
      * @param id the id of the product
-     * @return JLabel, the JLabel which has the information of the product of the Inventory class
+     * @return JLabel, the JLabel which has the information of the product of the ShoppingCart class
      */
     private JLabel displayCartItem(int id) {
         JLabel updatedLabel = new JLabel();
@@ -271,9 +271,9 @@ public class StoreView {
     }
 
     /**
-     * This method will loop through all the products in the Inventory and create the GidBagLayout each time for each product,
+     * This method will loop through all the products in the ShoppingCart and create the GidBagLayout each time for each product,
      * This method called the imageMapping and the displayProduct method to give the information of the product
-     * The Remove from cart button will call the removeCartInventory from the StoreManger inside its actionListener method, so that the
+     * The Remove from cart button will call the addCartInventory from the StoreManger inside its actionListener method, so that the
      * users can remove the product from their cart; to the store
      *
      * @throws IOException

@@ -13,8 +13,7 @@ package stores;
 
 import java.util.HashMap;
 
-
-public class ShoppingCart {
+public class ShoppingCart implements ProductStockContainer{
 
     private int cartID;
     private HashMap<Integer, Integer> customerCart = new HashMap<>(); //id quantity
@@ -43,7 +42,7 @@ public class ShoppingCart {
      * @param id     int, the id of the product
      * @param amount int, the amount or the quantity that the customer wants to add
      */
-    public void addCustomerProduct(int id, int amount) {
+    public void addProductQuantity(int id, int amount) {
         //if (amount <= storeManager.getQuantity().get(id) && storeManager.getQuantity().containsKey(id)) {
         //Add product id with the amount to the customer's cart
         customerCart.put(id, customerCart.get(id) + amount);
@@ -58,7 +57,7 @@ public class ShoppingCart {
      * @param id     int, the id of the product
      * @param amount int, the amount or the quantity that the customer wants to remove
      */
-    public void removeCustomerProduct(int id, int amount) {
+    public void removeProductQuantity(int id, int amount) {
         //if (amount <= customerCart.get(id) && customerCart.containsKey(id)) {
         //Remove product with id from the amount to the customer's cart
         customerCart.put(id, customerCart.get(id) - amount);
@@ -81,5 +80,54 @@ public class ShoppingCart {
      */
     public HashMap<Integer, Integer> getCustomerCart() {
         return customerCart;
+    }
+
+
+    /**
+     *                                         MILESTONE 5
+     */
+
+
+    /**
+     * The implemented method which will return the quantity of product inside the ShoppingCart
+     * that associates with the given Product
+     * @param product Product
+     * @return int, the quantity of product inside the ShoppingCart
+     */
+    @Override
+    public int getProductQuantity(Product product) {
+        return customerCart.get(product.getId());
+    }
+
+    /**
+     * The implemented method which will add the quantity of product to the ShoppingCart
+     * that associates with the given Product
+     * @param product Product
+     * @param amount the quantity the ShoppingCart that wants to add
+     */
+    @Override
+    public void addProductQuantity(Product product, int amount) {
+        addProductQuantity(product.getId(), amount);
+    }
+
+    /**
+     * The implemented method which will remove the quantity of product from the ShoppingCart
+     * that associates with the given Product
+     * @param product Product
+     * @param amount the quantity the ShoppingCart that wants to remove
+     */
+    @Override
+    public void removeProductQuantity(Product product, int amount) {
+        removeProductQuantity(product.getId(), amount);
+    }
+
+    /**
+     * The implemented method will return the number of product that is available inside
+     * the ShoppingCart
+     * @return int, the number of available products inside the ShoppingCart
+     */
+    @Override
+    public int getNumOfProducts() {
+        return customerCart.size();
     }
 }

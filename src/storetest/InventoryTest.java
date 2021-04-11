@@ -56,15 +56,15 @@ public class InventoryTest {
      */
     @Test
     public void testRemovingQuantity() {
-        inventory.removingQuantity(0, 10);
+        inventory.removeProductQuantity(0, 10);
         assertEquals(10, inventory.gettingQuantity(0), "The removingQuantity() method returned unexpected result.");
-        inventory.removingQuantity(1, 10);
+        inventory.removeProductQuantity(1, 10);
         assertEquals(50, inventory.gettingQuantity(1), "The removingQuantity() method returned unexpected result.");
-        inventory.removingQuantity(2, 10);
+        inventory.removeProductQuantity(2, 10);
         assertEquals(29, inventory.gettingQuantity(2), "The removingQuantity() method returned unexpected result.");
-        inventory.removingQuantity(3, 10);
+        inventory.removeProductQuantity(3, 10);
         assertEquals(70, inventory.gettingQuantity(3), "The removingQuantity() method returned unexpected result.");
-        inventory.removingQuantity(4, 10);
+        inventory.removeProductQuantity(4, 10);
         assertEquals(15, inventory.gettingQuantity(4), "The removingQuantity() method returned unexpected result.");
     }
 

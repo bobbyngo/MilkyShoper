@@ -3,6 +3,7 @@ package stores;
 // 101119814
 // Ngo Huu Gia Bao
 // 101163137
+
 /**
  * A class representing the managing system of the store
  *
@@ -12,7 +13,6 @@ package stores;
  */
 
 import java.util.*;
-
 
 public class StoreManager {
     private Inventory inventory = new Inventory();
@@ -44,7 +44,7 @@ public class StoreManager {
                 total += mapping[1] * inventory.getInfoProduct().get(mapping[0]).getPrice();
             }
 
-            inventory.removingQuantity(mapping[0], mapping[1]);
+            inventory.removeProductQuantity(mapping[0], mapping[1]);
         }
         System.out.println("\n=============\nReceipt:-\n=============\n Your total is $" + total);
     }
@@ -139,10 +139,10 @@ public class StoreManager {
         // Add product to the cart
 
         if (quantity <= inventory.getIdQuantity().get(id) && inventory.getIdQuantity().containsKey(id)) {
-            shoppingCart.get(cartID).addCustomerProduct(id, quantity);
+            shoppingCart.get(cartID).addProductQuantity(id, quantity);
 
             //Remove quantity of the given id from the inventory
-            inventory.removingQuantity(id, quantity);
+            inventory.removeProductQuantity(id, quantity);
         } else {
             System.out.println("StoreManager: The amount you entered is more than what we have in the Inventory\n");
         }
@@ -168,11 +168,10 @@ public class StoreManager {
             //swap other way around
 
             //Remove the quantity of the given id from the cart
-            shoppingCart.get(cartID).removeCustomerProduct(id, quantity);
+            shoppingCart.get(cartID).removeProductQuantity(id, quantity);
 
             //Add product with id back the amount to the inventory
-            int originalAmount = inventory.getIdQuantity().get(id);
-            inventory.getIdQuantity().put(id, originalAmount + quantity);
+            inventory.addProductQuantity(id, quantity);
 
         } else {
             System.out.println("StoreManager: The amount you want to remove exceeding the amount in your cart\n");
