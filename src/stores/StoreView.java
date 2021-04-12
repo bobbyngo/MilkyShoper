@@ -122,26 +122,26 @@ public class StoreView {
     /**
      * This method will display the product information in the store panel of the Inventory class and put it to the new JLabel
      *
-     * @param id the id of the product
+     * @param product the id of the product
      * @return JLabel, the JLabel which has the information of the product of the Inventory class
      */
-    private JLabel displayProduct(int id) {
+    private JLabel displayProduct(Product product) {
         JLabel updatedLabel = new JLabel();
-        updatedLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br> " + "Quantity: " + sm.getQuantity().get(id) + "</html>");
+        updatedLabel.setText("<html>" + "Name: " + product.getName() +
+                "<br>Price: " + product.getPrice() + "$/unit <br> " + "Quantity: " + sm.getProductQuantity(product) + "</html>");
         return updatedLabel;
     }
 
     /**
      * This method will display the product information in the cart panel of the ShoppingCart class and put it to the new JLabel
      *
-     * @param id the id of the product
+     * @param product the id of the product
      * @return JLabel, the JLabel which has the information of the product of the ShoppingCart class
      */
-    private JLabel displayCartItem(int id) {
+    private JLabel displayCartItem(Product product) {
         JLabel updatedLabel = new JLabel();
-        updatedLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br> " + "Quantity: " + sm.getCustomerCart(cartID).get(id) + "</html>");
+        updatedLabel.setText("<html>" + "Name: " + product.getName() +
+                "<br>Price: " + product.getPrice() + "$/unit <br> " + "Quantity: " + sm.getProductQuantityCart(product, cartID) + "</html>");
         return updatedLabel;
     }
 
@@ -176,7 +176,7 @@ public class StoreView {
      */
     private void productDisplay() throws IOException {
 
-        for (Integer id : sm.getKeySet()) {
+        for (Product p : sm.getAvailableProduct()) {
 
             JPanel itemInStorePanel = new JPanel(new GridBagLayout());
             itemInStorePanel.setPreferredSize(new Dimension(200, 250));
@@ -187,16 +187,16 @@ public class StoreView {
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = 0;
             c.gridy = 0;
-            itemInStorePanel.add(imageMapping(id), c);
+            itemInStorePanel.add(imageMapping(p.getId()), c);
 
             c.gridx = 1;
             c.gridy = 0;
-            JLabel productLabel = displayProduct(id);
+            JLabel productLabel = displayProduct(p);
             itemInStorePanel.add(productLabel, c);
 
             c.gridx = 0;
             c.gridy = 1;
-            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getQuantity().get(id), 0);
+            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getProductQuantity(p), 0);
 
             //Display number of product in the slider
             sld.setMinorTickSpacing(5);
@@ -231,28 +231,23 @@ public class StoreView {
                         if (value[0] == 0) {
                             JOptionPane.showMessageDialog(frame, "Must add at least one item");
                             return;
-                        } else if (value[0] > sm.getQuantity().get(id)) {
+                        } else if (value[0] > sm.getProductQuantity(p)) {
                             JOptionPane.showMessageDialog(frame, "This item has insufficient stock");
                             return;
                         }
 
-                        int removedID = sm.getProduct().get(id).getId();
-                        sm.removeCartInventory(removedID, value[0], cartID);
+                        sm.removeCartInventory(p, value[0], cartID);
 
-                        //Debugging lines
-                        //System.out.println("Inventory: " + sm.getQuantity().get(id));
-                        //System.out.println("slider value " + value[0]);
-                        //System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
+                        productLabel.setText("<html>" + "Name: " + p.getName() +
+                                "<br>Price: " + p.getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getProductQuantity(p) + "</html>");
 
-                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
-                                + sm.getQuantity().get(id) + "</html>");
+                        listCartBodyPanelLabel.get(p.getId()).setText("<html>" + "Name: " + p.getName() +
+                                "<br>Price: " + p.getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getProductQuantityCart(p, cartID) + "</html>");
 
-                        listCartBodyPanelLabel.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
-                                + sm.getCustomerCart(cartID).get(id) + "</html>");
+                        sliderCartBodyPanel.get(p.getId()).setMaximum(sm.getProductQuantityCart(p, cartID));
 
-                        sliderCartBodyPanel.get(id).setMaximum(sm.getCustomerCart(cartID).get(id));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -280,7 +275,7 @@ public class StoreView {
      */
     private void cartDisplay() throws IOException {
 
-        for (Integer id : sm.getCustomerCart(cartID).keySet()) {
+        for (Product p : sm.getAvailableProduct()) {
 
             JPanel itemInCartPanel = new JPanel(new GridBagLayout());
             itemInCartPanel.setPreferredSize(new Dimension(200, 250));
@@ -291,16 +286,16 @@ public class StoreView {
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = 0;
             c.gridy = 0;
-            itemInCartPanel.add(imageMapping(id), c);
+            itemInCartPanel.add(imageMapping(p.getId()), c);
 
             c.gridx = 1;
             c.gridy = 0;
-            JLabel productLabel = displayCartItem(id);
+            JLabel productLabel = displayCartItem(p);
             itemInCartPanel.add(productLabel, c);
 
             c.gridx = 0;
             c.gridy = 1;
-            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getCustomerCart(cartID).get(id), 0);
+            JSlider sld = new JSlider(JSlider.HORIZONTAL, 0, sm.getProductQuantityCart(p, cartID), 0);
 
             //Display number of product in the slider
             sld.setMinorTickSpacing(5);
@@ -337,26 +332,22 @@ public class StoreView {
                         if (value[0] == 0) {
                             JOptionPane.showMessageDialog(frame, "Must remove at least one item");
                             return;
-                        } else if (value[0] > sm.getCustomerCart(cartID).get(id)) {
+                        } else if (value[0] > sm.getProductQuantityCart(p, cartID)) {
                             JOptionPane.showMessageDialog(frame, "You are removing more items than are in your cart");
                             return;
                         }
 
-                        int addedID = sm.getProduct().get(id).getId();
-                        sm.addCartInventory(addedID, value[0], cartID);
+                        sm.addCartInventory(p, value[0], cartID);
 
-                        //Debugging lines
-                        //System.out.println("Inventory: " + sm.getQuantity().get(id));
-                        //System.out.println("slider value " + value[0]);
-                        //System.out.println("ShoppingCart: " + sm.getCustomerCart(cartID).get(id));
+                        productLabel.setText("<html>" + "Name: " + p.getName() +
+                                "<br>Price: " + p.getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getProductQuantityCart(p, cartID) + "</html>");
 
-                        productLabel.setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
-                                + sm.getCustomerCart(cartID).get(id) + "</html>");
+                        listStoreBodyPanelLabel.get(p.getId()).setText("<html>" + "Name: " + p.getName() +
+                                "<br>Price: " + p.getPrice() + "$/unit <br>" + "Quantity: "
+                                + sm.getProductQuantity(p) + "</html>");
 
-                        listStoreBodyPanelLabel.get(id).setText("<html>" + "Name: " + sm.getProduct().get(id).getName() +
-                                "<br>Price: " + sm.getProduct().get(id).getPrice() + "$/unit <br>" + "Quantity: "
-                                + sm.getQuantity().get(id) + "</html>");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -401,7 +392,6 @@ public class StoreView {
 
     /**
      * This method will add all the panels to the frame and display the GUI
-     *
      * @throws IOException
      */
     public void displayGUI() throws IOException {

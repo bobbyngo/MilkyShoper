@@ -12,6 +12,7 @@ package stores;
  */
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Inventory implements ProductStockContainer{
@@ -50,50 +51,10 @@ public class Inventory implements ProductStockContainer{
 
     /**
      * Get all the ID of the product from the HashMap
-     *
-     * @return Set of Integer
+     * @return Set of Product
      */
-    public Set<Integer> getAvailableID() {
-        return infoProduct.keySet();
-    }
-
-    /**
-     * Get the amount of stock for a given stores.Product ID (Note: it is possible the stores.Product does not exist in
-     * the stores.Inventory!)
-     *
-     * @param id int, the id that the user wants to get the info
-     * @return int, the quantity of the given id
-     */
-    public int gettingQuantity(int id) {
-        for (Integer i : idQuantity.keySet()) {
-            if (i == id) {
-                return getIdQuantity().get(i);
-            }
-        }
-        return -1;
-    }
-
-
-    /**
-     * Add a specified amount of stock for a given stores.Product ID from the inventory
-     * @param id      int, the id of the product
-     * @param amount, int the amount of the product to add
-     */
-    public void addProductQuantity(int id, int amount){
-        int originalAmount = idQuantity.get(id);
-        idQuantity.put(id, originalAmount + amount);
-    }
-
-    /**
-     * Remove a specified amount of stock for a given stores.Product ID from the inventory (Note: you cannot
-     * have negative stock, and you cannot delete Products from the stores.Inventory; if a stores.Product’s stock
-     * reaches 0, leave it).
-     *
-     * @param id      int, the id of the product
-     * @param amount, int the amount of the product to remove
-     */
-    public void removeProductQuantity(int id, int amount) {
-        idQuantity.put(id, idQuantity.get(id) - amount);
+    public Set<Product> getAvailableProduct() {
+        return new HashSet<Product> (infoProduct.values());
     }
 
 
@@ -104,26 +65,6 @@ public class Inventory implements ProductStockContainer{
      */
     public Product getProduct(int id) {
         return infoProduct.get(id);
-    }
-
-
-    /**
-     * Get methods for the hashmap id and quantity in stock
-     *
-     * @return idQuantity, the HashMap storing the id and quantity in the stores.Inventory class
-     */
-    public HashMap<Integer, Integer> getIdQuantity() {
-        return idQuantity;
-    }
-
-    /**
-     * Get methods for the hashmap id and product in stock
-     *
-     * @return infoProduct, the HashMap storing the id and the stores.Product in the stores.Inventory class
-     */
-
-    public HashMap<Integer, Product> getInfoProduct() {
-        return infoProduct;
     }
 
 
@@ -139,7 +80,10 @@ public class Inventory implements ProductStockContainer{
      */
     @Override
     public int getProductQuantity(Product product) {
-        return idQuantity.get(product.getId());
+        if (idQuantity.containsKey(product.getId())) {
+            return idQuantity.get(product.getId());
+        }
+        return -1;
     }
 
     /**
@@ -150,7 +94,8 @@ public class Inventory implements ProductStockContainer{
      */
     @Override
     public void addProductQuantity(Product product, int amount) {
-        addProductQuantity(product.getId(), amount);
+        int originalAmount = idQuantity.get(product.getId());
+        idQuantity.put(product.getId(), originalAmount + amount);
     }
 
     /**
@@ -161,7 +106,7 @@ public class Inventory implements ProductStockContainer{
      */
     @Override
     public void removeProductQuantity(Product product, int amount) {
-        removeProductQuantity(product.getId(), amount);
+        idQuantity.put(product.getId(), idQuantity.get(product.getId()) - amount);
     }
 
 
